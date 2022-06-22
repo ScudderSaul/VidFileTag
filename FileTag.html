@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <h3>FileTag -- A program for tagging files.</h3>
+    </div>
+    <div>
+        <p>
+            FileTag is a tool that creates and updates a local sqlite database that connects user created tags to
+            Video, audio and picture file information. It's helpful in organizing collections of videos with non-descriptive filenames.
+
+        </p>
+    </div>
+    <div>
+        <p>
+            I.e.  a tag "cosplay movie" could be linked in the database to a cosplay video file.
+
+        </p>
+    </div>
+
+    <p>
+        Filetag never modifys your file, just the database. The database filetag.db is created the first time FileTag runs.
+    </p>
+    <hr />
+    <p>
+        FileTag is a Net Core 3.0 Desktop application, it is packaged as a self-contained set of files in a .zip,
+        Download the zip file, unblock it in properties, unzip it into a directory, and execute FileTag.exe within.
+        The .zip file is very large as the trim and single file features of self-contained net core 3.o applications are still a work in progress.
+        <hr />
+        <a href="https://dragonsawaken.net/Leho/Zen_Soft/Download/FileTag.zip">FileTag.Zip</a>
+    </p>
+    <hr />
+    <p>
+        VideoLAN's LibVLC Library is used <a href="https://code.videolan.org/videolan/libvlc-nuget">libvlc-nuget</a> for the FileTags media player.
+        Also see <a href="https://www.videolan.org/vlc/">the  VLC media player</a> 
+
+        The video and audio player is included in filetag to help with deciding the tags to be linked to files.
+    </p>
+    <image src="./inuse.png" width="300"></image>
+
+    <p>
+        Generating playlists of files tagged with tags the user selects is the main reason Filetag was written.
+    </p>
+    <ul>
+        <li>
+            For example:
+        </li>
+        <li>
+            If the tags "Erica" and "Jeffry" were selected then a playlist of movies tagged with both "Erica" and "Jeffry" could be created.
+        </li>
+        <li>
+            Or if the same tags "Erica" and "Jeffry" were selected then a playlist of movies tagged with either "Erica" or "Jeffry" but not both could be made.
+        </li>
+    </ul>
+
+    <p>
+        There are multiple choices in how tags may be used to create playlists.
+    </p>
+    <ul>
+        <li>Playlists with just one of the selected tags for each file. </li>
+        <li>Playlists with any of the selected tags for the files.</li>
+        <li>Playlists with all of the selected tags on each file.</li>
+    </ul>
+
+    <p>
+
+
+
+    </p>
+
+</body>
+</html>
