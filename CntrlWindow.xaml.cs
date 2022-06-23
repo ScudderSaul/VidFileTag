@@ -229,8 +229,11 @@ namespace VidFileTag
 
         private void StopFileButton_Click(object sender, RoutedEventArgs e)
         {
-            MediaPlayer.Stop();
-            Vid.Hide();
+            if (MediaPlayer != null)
+            {
+                MediaPlayer.Stop();
+                Vid.Hide();
+            }
         }
 
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

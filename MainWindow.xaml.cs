@@ -235,7 +235,7 @@ namespace VidFileTag
         }
 
 
-        // find files when the user selecst a child of the current directory 
+        // find files when the user selects a child of the current directory 
         private void DirsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (sender is System.Windows.Controls.ListView lst)
@@ -591,6 +591,12 @@ namespace VidFileTag
         #endregion
 
         #region add Tags to files
+
+        /// <summary>
+        /// A tag is selected or unselected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TagsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -1498,6 +1504,9 @@ namespace VidFileTag
             }
         }
 
+        /// <summary>
+        /// Moce the files with any selected tag to a new location
+        /// </summary>
         private void MoveFilesWithSelectedTags()
         {
             var ff = from TagInfo su in TagsListView.SelectedItems
@@ -1602,6 +1611,11 @@ namespace VidFileTag
             }
         }
 
+        /// <summary>
+        /// Delete the file from TagFileInfo tz
+        /// </summary>
+        /// <param name="tz"></param>
+        /// <returns></returns>
         private bool DeleteFile(TagFileInfo tz)
         {
             if (File.Exists(tz.FilePath) == true)
@@ -1641,6 +1655,7 @@ namespace VidFileTag
 
         }
 
+
         private void AllCheckSum_Click(object sender, RoutedEventArgs e)
         {
             var rr = from vv in Context.TagFileInfos
@@ -1670,6 +1685,11 @@ namespace VidFileTag
         }
 
 
+        /// <summary>
+        /// Delete TagFileInfo tz if a file does not exist
+        /// </summary>
+        /// <param name="tz"></param>
+        /// <returns></returns>
         private bool DeleteFileEntrieWithoutAFile(TagFileInfo tz)
         {
             if (File.Exists(tz.FilePath) == false)
@@ -1737,7 +1757,7 @@ namespace VidFileTag
 
         }
 
-
+        #region CRC
         /// <summary>
         /// Calculate file CRC
         /// </summary>
@@ -1814,6 +1834,14 @@ namespace VidFileTag
             return iscrc;
         }
 
+        #endregion
+
+        /// <summary>
+        /// If the selected file has the same crc as one in the database and a different path
+        /// write a file with the information in it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CompareCheckSum_Click(object sender, RoutedEventArgs e)
         {
             var rr = from vv in Context.TagFileInfos
@@ -1870,6 +1898,13 @@ namespace VidFileTag
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+#region About Box
+
+        /// <summary>
+        /// About popup
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AboutFileTag_Click(object sender, RoutedEventArgs e)
         {
             AboutPopup.IsOpen = true;
@@ -1901,11 +1936,18 @@ namespace VidFileTag
 
         }
 
+        /// <summary>
+        /// close about popup
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PopupClose_Click(object sender, RoutedEventArgs e)
         {
             AboutPopup.IsOpen = false;
         }
 
+
+        #endregion
 
 
         private void ResetpathsButton_Click(object sender, RoutedEventArgs e)
@@ -2239,54 +2281,58 @@ namespace VidFileTag
 
         #region nexttagged
 
-        // finds next in view with a tag
-        private void FindNextTaggedButton_Click(object sender, RoutedEventArgs e)
-        {
+        /// <summary>
+        ///  finds next in view with a tag
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        //private void FindNextTaggedButton_Click(object sender, RoutedEventArgs e)
+        //{
 
-            int fnd;
-            int start = 0;
-            int cnt = FilesListView.Items.Count;
-            if (cnt == 0)
-            {
-                return;
-            }
-            if (FilesListView.SelectedItem == null)
-            {
-                start = 0;
-            }
-            else
-            {
-                start = FilesListView.Items.IndexOf(FilesListView.SelectedItem);
-            }
+        //    int fnd;
+        //    int start = 0;
+        //    int cnt = FilesListView.Items.Count;
+        //    if (cnt == 0)
+        //    {
+        //        return;
+        //    }
+        //    if (FilesListView.SelectedItem == null)
+        //    {
+        //        start = 0;
+        //    }
+        //    else
+        //    {
+        //        start = FilesListView.Items.IndexOf(FilesListView.SelectedItem);
+        //    }
 
-            for (int ii = 0; ii < cnt; ii++)
-            {
-                int kk = (ii + 1 + start) % cnt;
-                TagFileInfo tt = FilesListView.Items[kk] as TagFileInfo;
+        //    for (int ii = 0; ii < cnt; ii++)
+        //    {
+        //        int kk = (ii + 1 + start) % cnt;
+        //        TagFileInfo tt = FilesListView.Items[kk] as TagFileInfo;
 
-                if (tt != null)
-                {
+        //        if (tt != null)
+        //        {
 
-                    var uu = from ww in Context.TagFileInfos
-                             where ww.FilePath == tt.FilePath
-                             select ww;
+        //            var uu = from ww in Context.TagFileInfos
+        //                     where ww.FilePath == tt.FilePath
+        //                     select ww;
 
-                    if (uu.Any())
-                    {
+        //            if (uu.Any())
+        //            {
 
-                        TagFileInfo ss = uu.First();
+        //                TagFileInfo ss = uu.First();
 
-                        if (ss.TagInfos.Count > 0)
-                        {
-                            //   tt = ss;
-                            fnd = FilesListView.Items.IndexOf(tt);
-                            FilesListView.SelectedIndex = fnd;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+        //                if (ss.TagInfos.Count > 0)
+        //                {
+        //                    //   tt = ss;
+        //                    fnd = FilesListView.Items.IndexOf(tt);
+        //                    FilesListView.SelectedIndex = fnd;
+        //                    break;
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
 
 
 
@@ -2437,6 +2483,94 @@ namespace VidFileTag
                 catch (Exception ex)
                 {
                     System.Windows.MessageBox.Show(ex.Message, " write tags", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+            }
+        }
+
+
+        private void AddChosenFile(TagFileInfo chosen)
+        {
+            var ff = from su in Context.TagFileInfos
+                     where su.FilePath == chosen.FilePath
+                     select su;
+
+            // add crc to new and old 
+            if (ff.Any())
+            { 
+                chosen = ff.First();
+                chosen.Crc32 = CalculateCRC(chosen);
+                Context.TagFileInfos.Update(chosen);
+                Context.SaveChanges();
+                return;
+            }
+
+            FileInfo fi1 = new(chosen.FilePath);
+
+            chosen.FileSize = fi1.Length;
+            chosen.FileExtension = fi1.Extension;
+            chosen.Crc32 = CalculateCRC(fi1);
+
+         
+            Context.TagFileInfos.Add(chosen);
+            Context.SaveChanges();
+        }
+
+        private void AddTagFromFileName(object sender, RoutedEventArgs e)
+        {
+            var ff = from TagInfo su in TagsListView.SelectedItems
+                     select su;
+            if (ff.Any() == false)
+            {
+                return;
+            }
+            if (ff.Count() > 1)
+            {
+                return;
+            }
+
+            TagInfo tt = ff.First();
+
+            string firstword = tt.Tag.Split(' ').First(); 
+            if(string.IsNullOrEmpty(firstword) == true)
+            {
+                firstword = tt.Tag;
+            }
+
+            foreach (TagFileInfo a in FilesListView.Items)
+            {
+                if (a.FileName.Contains(firstword, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    AddChosenFile(a);
+
+                    // reload it
+                    var gg = from su in Context.TagFileInfos
+                             where su.FilePath == a.FilePath
+                             select su;
+
+                    TagFileInfo work;
+                    if (gg.Any())
+                    {
+                        work = gg.First();
+
+                        var qq = from tftf in Context.TagFileInfoTagInfos
+                                 where tftf.TagInfoId == tt.Id &&
+                                 tftf.TagFileInfoId == work.Id
+                                 select tftf;
+
+                        // if not add it
+                        if (qq.Any() == false)
+                        {
+                            var rr = new TagFileInfoTagInfo
+                            {
+                                TagFileInfoId = work.Id,
+                                TagInfoId = tt.Id,
+                            };
+
+                            Context.TagFileInfoTagInfos.Add(rr);
+                            Context.SaveChanges();
+                        }
+                    }
                 }
 
             }

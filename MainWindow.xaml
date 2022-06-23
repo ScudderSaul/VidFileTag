@@ -65,7 +65,7 @@
                                 </Button.ToolTip>
                                 <TextBlock Text="Remove Tags" FontSize="12" TextWrapping="Wrap" ></TextBlock>
                             </Button>
-                            <Button x:Name="FindNextTaggedButton" Background="#FFAADDAA"
+                            <!--<Button x:Name="FindNextTaggedButton" Background="#FFAADDAA"
                                HorizontalAlignment="Center"
                                 Margin="2"
                                 
@@ -74,7 +74,7 @@
                                     <TextBlock Text="Find the next file in the list with a selected tag." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
                                 <TextBlock Text="Find Next Tagged" TextWrapping="Wrap" FontSize="12"></TextBlock>
-                            </Button>
+                            </Button>-->
                             <Button x:Name="FilesWithASelectedTagInPath" Background="#FFAADDAA"
                                 HorizontalAlignment="Center" 
                                 Margin="2"
@@ -308,107 +308,85 @@
 
             </Grid>
         </Grid>
+        
         <Grid x:Name="MenuGrid" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="4*" ></ColumnDefinition>
-                <ColumnDefinition Width="6*" ></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <GroupBox Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="6*" ></RowDefinition>
+                <RowDefinition Height="6*" ></RowDefinition>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Column="0" Grid.Row="0">
                 <StackPanel>
 
                     <GroupBox BorderThickness="3" Margin="2" BorderBrush="BlueViolet">
                         <GroupBox.Header>
-                            <TextBlock Text="Operations (Menu)"  FontWeight="DemiBold"  />
+                            <TextBlock Text="Operations"  FontWeight="DemiBold"  />
                         </GroupBox.Header>
-                        <Menu>
-                            <MenuItem Header="Playlist" FontSize="14" Background="#FFAADDAA">
-                                <MenuItem Header="Add files with any of the selected _Tags to a playlist" IsEnabled="False"
-                                    x:Name="PlayListButton" HorizontalAlignment="Left" 
-                                    Click="PlayListButton_Click"  Margin="2">
-                                    <MenuItem.ToolTip>
-                                        <TextBlock Text="Add any files that are marked in the database with one of the tags selected in the tags list to a LVC playlist." Foreground="DarkGreen" FontSize="12" />
-                                    </MenuItem.ToolTip>
-                                </MenuItem>
-                                <MenuItem Header="Add files with _all of the selected Tags to a playlist" IsEnabled="False"
-                                    x:Name="PlayListAllButton" HorizontalAlignment="Left" 
-                                    Click="PlayListAllButton_Click"  Margin="2">
-                                    <MenuItem.ToolTip>
-                                        <TextBlock Text="Add any files that are marked in the database with all of the tags selected in the tags list to a LVC playlist." Foreground="DarkGreen" FontSize="12" />
-                                    </MenuItem.ToolTip>
-                                </MenuItem>
-                                <MenuItem Header="Add files with a _single one of the selected Tags to a playlist" IsEnabled="False"
-                                    x:Name="PlayListOneButton" HorizontalAlignment="Left" 
-                                    Click="PlayListOneButton_Click"  Margin="2">
-                                    <MenuItem.ToolTip>
-                                        <TextBlock Text="Add any files that are marked in the database with only one of the tags selected in the tags list to a LVC playlist." Foreground="DarkGreen" FontSize="12" />
-                                    </MenuItem.ToolTip>
-                                </MenuItem>
-                            </MenuItem>
+                        <WrapPanel Margin="2" >
 
-                            <MenuItem Header="File" FontSize="14" Background="#FFAADDAA">
-                                <!--<MenuItem Header="Add Media Files" x:Name="AddMediaFiles" Click="AddMediaFiles_Click">
-                                    <MenuItem.ToolTip>
-                                        <TextBlock Text="Add media files in the current selected directory to the database"
-                                                   Foreground="DarkGreen" FontSize="12" />
-                                    </MenuItem.ToolTip>
-                                </MenuItem>-->
-                                <MenuItem Header="Tag directory media files" x:Name="TagMediaFiles" Click="TagMediaFiles_Click">
-                                    <MenuItem.ToolTip>
-                                        <TextBlock Text="Tag media files in the current selected directory with selected tags and add them to the database if needed" Foreground="DarkGreen" FontSize="12" />
-                                    </MenuItem.ToolTip>
-                                </MenuItem>
-                                <MenuItem Header="Copy files with the selected tags" x:Name="CopyTaggedFiles" Click="CopyTaggedFiles_Click">
-                                    <MenuItem.ToolTip>
-                                        <TextBlock Text="Copy all files with the selected tags to a new directory" Foreground="DarkGreen" FontSize="12" />
-                                    </MenuItem.ToolTip>
-                                </MenuItem>
-                                <MenuItem Header="Move files with the selected tags" x:Name="MoveTaggedFiles" Click="MoveTaggedFiles_Click">
-                                    <MenuItem.ToolTip>
-                                        <TextBlock Text="Move all files with the selected tags to a new directory" Foreground="DarkGreen" FontSize="12" />
-                                    </MenuItem.ToolTip>
-                                </MenuItem>
-                                <MenuItem Header="Delete selected file" x:Name="DeleteTheSelected" Click="DeleteTheSelected_Click">
-                                    <MenuItem.ToolTip>
-                                        <TextBlock Text="Delete the selected file" Foreground="DarkGreen" FontSize="12" />
-                                    </MenuItem.ToolTip>
-                                </MenuItem>
+                            <Button Content="Add any files with Selected Tags to a playlist" FontSize="14" BorderThickness="2"
+                                     Click="PlayListButton_Click"  Margin="3"  Background="Bisque" x:Name="PlayListButton">
+                                <Button.ToolTip>
+                                    <TextBlock Text="Add any files that are marked in the database with one of the tags selected in the tags list to a LVC playlist." Foreground="DarkGreen" FontSize="12" />
+                                </Button.ToolTip>
+                            </Button>
+                            <Button Content="Add any files with all of the Selected Tags to a playlist" FontSize="14" BorderThickness="2"
+                                    Click="PlayListAllButton_Click"  Margin="3"  Background="Bisque" x:Name="PlayListAllButton">
+                                <Button.ToolTip>
+                                    <TextBlock Text="Add any files that are marked in the database with all of the tags selected in the tags list to a LVC playlist." Foreground="DarkGreen" FontSize="12" />
+                                </Button.ToolTip>
+                            </Button>
+                            <Button Content="Add any files with only one of the Selected Tags to a playlist" FontSize="14" BorderThickness="2"
+                                    Click="PlayListOneButton_Click"  Margin="3" Background="Bisque" x:Name="PlayListOneButton">
+                                <Button.ToolTip>
+                                    <TextBlock Text="Add any files that are marked in the database with only one of the tags selected in the tags list to a LVC playlist." Foreground="DarkGreen" FontSize="12" />
+                                </Button.ToolTip>
+                            </Button>
 
-                            </MenuItem>
-                            <MenuItem Header="Tags" FontSize="14" Background="#FFAADDAA">
-                                <MenuItem Header="Read Tags" x:Name="ReadTagsTextFile" Click="ReadTagsTextFile_Click">
+                            <Button Content="Read Tags" FontSize="14" BorderThickness="2"
+                                    Click="ReadTagsTextFile_Click"  Margin="3" Background="Bisque">
+                                <Button.ToolTip>
+                                    <TextBlock Text="Read a list of tags from a file." Foreground="DarkGreen" FontSize="12" />
+                                </Button.ToolTip>
+                            </Button>
 
-                                </MenuItem>
-                                <MenuItem Header="Write Tags" x:Name="WriteTagsTextFile" Click="WriteTagsTextFile_Click">
+                            <Button Content="Write Tags" FontSize="14" BorderThickness="2"
+                                     Click="WriteTagsTextFile_Click"  Margin="3" Background="Bisque">
+                                <Button.ToolTip>
+                                    <TextBlock Text="Write all tags to a text file." Foreground="DarkGreen" FontSize="12" />
+                                </Button.ToolTip>
+                            </Button>
 
-                                </MenuItem>
-                            </MenuItem>
-                            <MenuItem Header="Set up" FontSize="14" Background="#FFAADDAA">
-                                <MenuItem Header="Add Destination folder" x:Name="DestinationFolderAdd" Click="AddDestButton_Click">
+                            <Button Content="Add Seleted Tag if the Tag is in Filename" FontSize="14" BorderThickness="2"
+                                     Click="AddTagFromFileName"  Margin="3" Background="Bisque">
+                                <Button.ToolTip>
+                                    <TextBlock Text="If the first word of the selected tag is in a file in the list add the tag." Foreground="DarkGreen" FontSize="12" />
+                                </Button.ToolTip>
+                            </Button>
 
-                                </MenuItem>
-
-                            </MenuItem>
+                            <Button Content="About VidFileTag" FontSize="14" BorderThickness="2"
+                                     Click="AboutFileTag_Click" Margin="3" Background="Bisque">
+                                
+                            </Button>
 
 
-                            <MenuItem Header="About" FontSize="14" Background="#FFAADDAA">
-                                <MenuItem Header="About FileTag" x:Name="AboutFileTag" Click="AboutFileTag_Click">
+                           
 
-                                </MenuItem>
 
-                            </MenuItem>
-                        </Menu>
+                          
+                        </WrapPanel>
                     </GroupBox>
 
 
                 </StackPanel>
             </GroupBox>
-            <Grid Grid.Column="2">
+            <Grid Grid.Column="0" Grid.Row="1" Visibility="Hidden">
                 <StackPanel Orientation="Vertical">
-                   
-          
+
                     <GroupBox   BorderThickness="3" Margin="2" BorderBrush="MediumPurple">
                         <GroupBox.Header>
-
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Destinations for file " FontSize="14" FontWeight="DemiBold" HorizontalAlignment="Left" Margin="1" />
                                 <CheckBox x:Name="MoveCopyCheckBox" Content="Move" IsChecked="True" Margin="4" IsThreeState="True"
@@ -416,13 +394,10 @@
                                           Indeterminate="MoveCopyCheckBox_Indeterminate"
                                           Unchecked="MoveCopyCheckBox_Unchecked"></CheckBox>
                             </StackPanel>
-
-
                         </GroupBox.Header>
-                        <StackPanel Orientation="Vertical">
 
+                        <StackPanel Orientation="Vertical">
                             <Border BorderThickness="2" BorderBrush="MediumPurple" Margin="2">
-                                <!-- -->
                                 <ListBox  x:Name="DestinationstView"  Margin="2" HorizontalAlignment="Left" FontSize="10" SelectionMode="Single" 
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                   SelectionChanged="DestinationstView_SelectionChanged">
@@ -436,10 +411,9 @@
                                     </ListBox.ItemsPanel>
                                 </ListBox>
                             </Border>
-
-
                         </StackPanel>
                     </GroupBox>
+
                     <!--<GroupBox   BorderThickness="3" Margin="2" BorderBrush="ForestGreen" MaxHeight="120">
                         <GroupBox.Header>
                             <StackPanel Orientation="Horizontal">
