@@ -36,6 +36,7 @@ namespace VidFileTag
         Random rand = new();
 
         SortedList<string, TagInfo> SortedTags = new();
+        private Dictionary<string, string> mediaInfo;
 
         //    List<TagFileInfoTagInfo> fileTags = new List<TagFileInfoTagInfo>();
 
@@ -85,6 +86,12 @@ namespace VidFileTag
         #region Properties
 
         public string SelectedCopyDestination { get; set; } = string.Empty;
+
+        public Dictionary<string, string> MediaInfo
+        {
+            get => mediaInfo;
+            private set => Set(nameof(MediaInfo), ref mediaInfo, value);
+        }
 
 
         // sqlite dc context property
@@ -418,7 +425,7 @@ namespace VidFileTag
                             SelectedFileInfo.Crc32 = CalculateCRC(fi1);
                         }
 
-
+                       
                       //  FileXtraDetailsGet();
                     }
 
@@ -426,6 +433,7 @@ namespace VidFileTag
                     {
                         Cntrl.FilePath = SelectedFileInfo.FilePath;
                         Cntrl.Show();
+                        FillMediaInfo(SelectedFileInfo.FilePath);
                     }
                     else
                     {
@@ -2574,6 +2582,227 @@ namespace VidFileTag
                 }
 
             }
+        }
+
+        void WhenFileWithSameNameandCRCExists(object sender, RoutedEventArgs e)
+        {
+            if (FilesListView == null)
+            {
+                return;
+            }
+            foreach (var wa in FilesListView.Items)
+            {
+                if(wa == null)
+                {
+                    continue;
+                }
+                TagFileInfo aa = wa as TagFileInfo;
+                var dbf = from ss in Context.TagFileInfos
+                          where ss.FileName == aa.FileName && ss.FilePath != aa.FilePath
+                          select ss;
+
+                if(dbf.Any())
+                {
+                    TagFileInfo samename = dbf.First();
+
+                    AddChosenFile(aa);
+
+
+                    // reload aa as gg
+                    var gg = from su in Context.TagFileInfos
+                             where su.FilePath == aa.FilePath
+                             select su;
+
+                    if(gg.Any())
+                    {
+                        TagFileInfo listfile = gg.First();
+                   
+
+                        if (samename.Crc32 == listfile.Crc32 && samename.FileSize == listfile.FileSize)
+                        {
+
+                            var qq = from atftf in Context.TagFileInfoTagInfos
+                                     where  atftf.TagFileInfoId == samename.Id
+                                     select atftf;
+
+                            if(qq.Any())
+                            {
+                               foreach(TagFileInfoTagInfo otfitf in qq)
+                                {
+                                    var chk = from rr in Context.TagFileInfoTagInfos
+                                              where rr.TagFileInfoId == listfile.Id && rr.TagInfoId == otfitf.TagInfo.Id
+                                              select rr;
+
+                                    if (chk.Any() == false)
+                                    {
+
+                                        var rr = new TagFileInfoTagInfo
+                                        {
+                                            TagFileInfoId = listfile.Id,
+                                            TagInfoId = otfitf.TagInfo.Id,
+                                        };
+
+                                        Context.TagFileInfoTagInfos.Add(rr);
+                                        Context.SaveChanges();
+                                    }
+                                }
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+       }
+
+        public void FillMediaInfo(string path)
+        {
+
+            mediaInfo = new Dictionary<string, string>();
+            var media = new LibVLCSharp.Shared.Media(LibVLC, path);
+
+            string inf = media.Meta(MetadataType.Title);
+            if (inf != null)
+            {
+                mediaInfo.Add("Title", inf);
+            }
+
+            inf = media.Meta(MetadataType.Artist);
+            if (inf != null)
+            {
+                mediaInfo.Add("Artist", inf);
+            }
+            inf = media.Meta(MetadataType.Genre);
+            if (inf != null)
+            {
+                mediaInfo.Add("Genre", inf);
+            }
+            inf = media.Meta(MetadataType.Copyright);
+            if (inf != null)
+            {
+                mediaInfo.Add("Copyright", inf);
+            }
+            inf = media.Meta(MetadataType.Album);
+            if (inf != null)
+            {
+                mediaInfo.Add("Album", inf);
+            }
+            inf = media.Meta(MetadataType.TrackNumber);
+            if (inf != null)
+            {
+                mediaInfo.Add("TrackNumber", inf);
+            }
+            inf = media.Meta(MetadataType.Description);
+            if (inf != null)
+            {
+                mediaInfo.Add("Description", inf);
+            }
+            inf = media.Meta(MetadataType.Rating);
+            if (inf != null)
+            {
+                mediaInfo.Add("Rating", inf);
+            }
+            inf = media.Meta(MetadataType.Date);
+            if (inf != null)
+            {
+                mediaInfo.Add("Date", inf);
+            }
+            inf = media.Meta(MetadataType.Setting);
+            if (inf != null)
+            {
+                mediaInfo.Add("Setting", inf);
+            }
+            inf = media.Meta(MetadataType.URL);
+            if (inf != null)
+            {
+                mediaInfo.Add("URL", inf);
+            }
+            inf = media.Meta(MetadataType.Language);
+            if (inf != null)
+            {
+                mediaInfo.Add("Language", inf);
+            }
+            inf = media.Meta(MetadataType.NowPlaying);
+            if (inf != null)
+            {
+                mediaInfo.Add("NowPlaying", inf);
+            }
+            inf = media.Meta(MetadataType.Publisher);
+            if (inf != null)
+            {
+                mediaInfo.Add("Publisher", inf);
+            }
+            inf = media.Meta(MetadataType.EncodedBy);
+            if (inf != null)
+            {
+                mediaInfo.Add("EncodedBy", inf);
+            }
+            inf = media.Meta(MetadataType.ArtworkURL);
+            if (inf != null)
+            {
+                mediaInfo.Add("ArtworkURL", inf);
+            }
+            inf = media.Meta(MetadataType.TrackID);
+            if (inf != null)
+            {
+                mediaInfo.Add("TrackID", inf);
+            }
+            inf = media.Meta(MetadataType.TrackTotal);
+            if (inf != null)
+            {
+                mediaInfo.Add("TrackTotal", inf);
+            }
+            inf = media.Meta(MetadataType.Director);
+            if (inf != null)
+            {
+                mediaInfo.Add("Director", inf);
+            }
+            inf = media.Meta(MetadataType.Season);
+            if (inf != null)
+            {
+                mediaInfo.Add("Season", inf);
+            }
+            inf = media.Meta(MetadataType.Episode);
+            if (inf != null)
+            {
+                mediaInfo.Add("Episode", inf);
+            }
+            inf = media.Meta(MetadataType.ShowName);
+            if (inf != null)
+            {
+                mediaInfo.Add("ShowName", inf);
+            }
+            inf = media.Meta(MetadataType.Actors);
+            if (inf != null)
+            {
+                mediaInfo.Add("Actors", inf);
+            }
+            inf = media.Meta(MetadataType.AlbumArtist);
+            if (inf != null)
+            {
+                mediaInfo.Add("AlbumArtist", inf);
+            }
+            inf = media.Meta(MetadataType.DiscNumber);
+            if (inf != null)
+            {
+                mediaInfo.Add("DiscNumber", inf);
+            }
+            inf = media.Meta(MetadataType.DiscTotal);
+            if (inf != null)
+            {
+                mediaInfo.Add("DiscTotal", inf);
+            }
+            FileInfoList.Items.Clear();
+            foreach (var kk in mediaInfo.Keys)
+            {
+                string aa = kk + " is " + mediaInfo[kk];
+
+                FileInfoList.Items.Add(aa);
+            }
+            FileInfoList.InvalidateVisual();
         }
 
         private void MoveCopyCheckBox_Checked(object sender, RoutedEventArgs e)

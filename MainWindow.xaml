@@ -195,7 +195,12 @@
                 <TextBlock x:Name="FileNameTextBlock"   FontSize="12" />
               
                 <Menu Height="100"/>
-
+                <GroupBox Grid.Row="0"  BorderThickness="3" Margin="2" BorderBrush="MidnightBlue"  x:Name="FileInfoGroupBox">
+                    <GroupBox.Header>
+                        <TextBlock Text="File Information"  FontWeight="DemiBold"  />
+                    </GroupBox.Header>
+                    <ListBox x:Name="FileInfoList" Visibility="Visible"></ListBox>
+                </GroupBox>
 
             </StackPanel>
             <Grid Grid.Column="1" x:Name="PathGrid">
@@ -306,10 +311,12 @@
                     </StackPanel>
                 </GroupBox>
 
+               
             </Grid>
         </Grid>
-        
-        <Grid x:Name="MenuGrid" >
+
+  
+        <Grid x:Name="OperationGrid" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="4*" ></ColumnDefinition>
             </Grid.ColumnDefinitions>
@@ -363,6 +370,13 @@
                                      Click="AddTagFromFileName"  Margin="3" Background="Bisque">
                                 <Button.ToolTip>
                                     <TextBlock Text="If the first word of the selected tag is in a file in the list add the tag." Foreground="DarkGreen" FontSize="12" />
+                                </Button.ToolTip>
+                            </Button>
+
+                            <Button Content="Update listed files known from other paths" FontSize="14" BorderThickness="2"
+                                     Click="WhenFileWithSameNameandCRCExists"  Margin="3" Background="Bisque">
+                                <Button.ToolTip>
+                                    <TextBlock Text="If a file in the list's name, size and crc are the same as another in the database update the list files tags." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
                             </Button>
 

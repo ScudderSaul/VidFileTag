@@ -140,7 +140,11 @@ namespace VidFileTag
 
                 var media = new LibVLCSharp.Shared.Media(LibVLC, FilePath);
 
+
+                
+
                 string titl = media.Meta(MetadataType.Title);
+
 
                 if (MediaPlayer != null)
                 {

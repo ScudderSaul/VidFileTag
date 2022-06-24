@@ -9,6 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="MediaInfo.cs" />
+    <Compile Remove="ShowMediaInfo.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="ShowMediaInfo.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CRC.Fast.Net" Version="1.1.0" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="LibVLCSharp" Version="3.6.6" />
