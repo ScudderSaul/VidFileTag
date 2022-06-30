@@ -10,10 +10,12 @@
 
   <ItemGroup>
     <Compile Remove="MediaInfo.cs" />
+    <Compile Remove="SearchInFilename.xaml.cs" />
     <Compile Remove="ShowMediaInfo.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="SearchInFilename.xaml" />
     <Page Remove="ShowMediaInfo.xaml" />
   </ItemGroup>
 

@@ -425,8 +425,8 @@ namespace VidFileTag
                             SelectedFileInfo.Crc32 = CalculateCRC(fi1);
                         }
 
-                       
-                      //  FileXtraDetailsGet();
+
+                        //  FileXtraDetailsGet();
                     }
 
                     if (_VLCfileformats.Keys.Contains<string>(SelectedFileInfo.FileExtension.ToUpper()) == true)
@@ -663,7 +663,7 @@ namespace VidFileTag
             SelectedFileInfo.FileExtension = fi1.Extension;
             SelectedFileInfo.Crc32 = CalculateCRC(fi1);
 
-         //   ShellObject mmd = ShellObject.FromParsingName(SelectedFileInfo.FilePath);
+            //   ShellObject mmd = ShellObject.FromParsingName(SelectedFileInfo.FilePath);
             //           SelectedFileInfo.FrameHeight = GetValue(mmd.Properties.GetProperty(SystemProperties.System.Video.FrameHeight));
             //            SelectedFileInfo.FrameWidth = GetValue(mmd.Properties.GetProperty(SystemProperties.System.Video.FrameWidth));
 
@@ -1367,7 +1367,7 @@ namespace VidFileTag
                 {
                     return true;
                 }
-              //  FileXtraDetailsGet();
+                //  FileXtraDetailsGet();
                 return true;
             }
             else
@@ -1403,7 +1403,7 @@ namespace VidFileTag
                     SelectedFileInfo.Crc32 = CalculateCRC(SelectedFileInfo);
                 }
 
-               // FileXtraDetailsGet();
+                // FileXtraDetailsGet();
 
                 Context.TagFileInfos.Update(SelectedFileInfo);
                 Context.SaveChanges();
@@ -1906,7 +1906,7 @@ namespace VidFileTag
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-#region About Box
+        #region About Box
 
         /// <summary>
         /// About popup
@@ -1922,7 +1922,7 @@ namespace VidFileTag
         {
             try
             {
-             //   Process.Start(((Hyperlink)sender).NavigateUri.ToString());
+                //   Process.Start(((Hyperlink)sender).NavigateUri.ToString());
             }
             catch (Exception ee)
             {
@@ -1935,7 +1935,7 @@ namespace VidFileTag
         {
             try
             {
-             //   Process.Start(((Hyperlink)sender).NavigateUri.ToString());
+                //   Process.Start(((Hyperlink)sender).NavigateUri.ToString());
             }
             catch (Exception ee)
             {
@@ -2505,7 +2505,7 @@ namespace VidFileTag
 
             // add crc to new and old 
             if (ff.Any())
-            { 
+            {
                 chosen = ff.First();
                 chosen.Crc32 = CalculateCRC(chosen);
                 Context.TagFileInfos.Update(chosen);
@@ -2519,11 +2519,13 @@ namespace VidFileTag
             chosen.FileExtension = fi1.Extension;
             chosen.Crc32 = CalculateCRC(fi1);
 
-         
+
             Context.TagFileInfos.Add(chosen);
             Context.SaveChanges();
         }
 
+
+        TagInfo FullTagInfo;
         private void AddTagFromFileName(object sender, RoutedEventArgs e)
         {
             var ff = from TagInfo su in TagsListView.SelectedItems
@@ -2537,51 +2539,55 @@ namespace VidFileTag
                 return;
             }
 
-            TagInfo tt = ff.First();
+            FullTagInfo = ff.First();
 
-            string firstword = tt.Tag.Split(' ').First(); 
-            if(string.IsNullOrEmpty(firstword) == true)
-            {
-                firstword = tt.Tag;
-            }
+            FullTag = FullTagInfo.Tag;
 
-            foreach (TagFileInfo a in FilesListView.Items)
-            {
-                if (a.FileName.Contains(firstword, StringComparison.CurrentCultureIgnoreCase))
-                {
-                    AddChosenFile(a);
+            TagSearchPopup.IsOpen = true;
 
-                    // reload it
-                    var gg = from su in Context.TagFileInfos
-                             where su.FilePath == a.FilePath
-                             select su;
+            //string firstword = tt.Tag.Split(' ').First();
+            //if (string.IsNullOrEmpty(firstword) == true)
+            //{
+            //    firstword = tt.Tag;
+            //}
 
-                    TagFileInfo work;
-                    if (gg.Any())
-                    {
-                        work = gg.First();
+            //foreach (TagFileInfo a in FilesListView.Items)
+            //{
+            //    if (a.FileName.Contains(firstword, StringComparison.CurrentCultureIgnoreCase))
+            //    {
+            //        AddChosenFile(a);
 
-                        var qq = from tftf in Context.TagFileInfoTagInfos
-                                 where tftf.TagInfoId == tt.Id &&
-                                 tftf.TagFileInfoId == work.Id
-                                 select tftf;
+            //        // reload it
+            //        var gg = from su in Context.TagFileInfos
+            //                 where su.FilePath == a.FilePath
+            //                 select su;
 
-                        // if not add it
-                        if (qq.Any() == false)
-                        {
-                            var rr = new TagFileInfoTagInfo
-                            {
-                                TagFileInfoId = work.Id,
-                                TagInfoId = tt.Id,
-                            };
+            //        TagFileInfo work;
+            //        if (gg.Any())
+            //        {
+            //            work = gg.First();
 
-                            Context.TagFileInfoTagInfos.Add(rr);
-                            Context.SaveChanges();
-                        }
-                    }
-                }
+            //            var qq = from tftf in Context.TagFileInfoTagInfos
+            //                     where tftf.TagInfoId == tt.Id &&
+            //                     tftf.TagFileInfoId == work.Id
+            //                     select tftf;
 
-            }
+            //            // if not add it
+            //            if (qq.Any() == false)
+            //            {
+            //                var rr = new TagFileInfoTagInfo
+            //                {
+            //                    TagFileInfoId = work.Id,
+            //                    TagInfoId = tt.Id,
+            //                };
+
+            //                Context.TagFileInfoTagInfos.Add(rr);
+            //                Context.SaveChanges();
+            //            }
+            //        }
+            //    }
+
+            //}
         }
 
         void WhenFileWithSameNameandCRCExists(object sender, RoutedEventArgs e)
@@ -2592,7 +2598,7 @@ namespace VidFileTag
             }
             foreach (var wa in FilesListView.Items)
             {
-                if(wa == null)
+                if (wa == null)
                 {
                     continue;
                 }
@@ -2601,7 +2607,7 @@ namespace VidFileTag
                           where ss.FileName == aa.FileName && ss.FilePath != aa.FilePath
                           select ss;
 
-                if(dbf.Any())
+                if (dbf.Any())
                 {
                     TagFileInfo samename = dbf.First();
 
@@ -2613,21 +2619,21 @@ namespace VidFileTag
                              where su.FilePath == aa.FilePath
                              select su;
 
-                    if(gg.Any())
+                    if (gg.Any())
                     {
                         TagFileInfo listfile = gg.First();
-                   
+
 
                         if (samename.Crc32 == listfile.Crc32 && samename.FileSize == listfile.FileSize)
                         {
 
                             var qq = from atftf in Context.TagFileInfoTagInfos
-                                     where  atftf.TagFileInfoId == samename.Id
+                                     where atftf.TagFileInfoId == samename.Id
                                      select atftf;
 
-                            if(qq.Any())
+                            if (qq.Any())
                             {
-                               foreach(TagFileInfoTagInfo otfitf in qq)
+                                foreach (TagFileInfoTagInfo otfitf in qq)
                                 {
                                     var chk = from rr in Context.TagFileInfoTagInfos
                                               where rr.TagFileInfoId == listfile.Id && rr.TagInfoId == otfitf.TagInfo.Id
@@ -2656,7 +2662,7 @@ namespace VidFileTag
 
             }
 
-       }
+        }
 
         public async void FillMediaInfo(string path)
         {
@@ -2687,139 +2693,139 @@ namespace VidFileTag
             if (inf != null)
             {
                 mediaInfo["Copyright"] = inf;
-               
+
             }
             inf = media.Meta(MetadataType.Album);
             if (inf != null)
             {
                 mediaInfo["Album"] = inf;
-               
+
             }
             inf = media.Meta(MetadataType.TrackNumber);
             if (inf != null)
             {
                 mediaInfo["TrackNumber"] = inf;
-               
+
             }
             inf = media.Meta(MetadataType.Description);
             if (inf != null)
             {
                 mediaInfo["Description"] = inf;
-              
+
             }
             inf = media.Meta(MetadataType.Rating);
             if (inf != null)
             {
                 mediaInfo["Rating"] = inf;
-              
+
             }
             inf = media.Meta(MetadataType.Date);
             if (inf != null)
             {
                 mediaInfo["Date"] = inf;
-               
+
             }
             inf = media.Meta(MetadataType.Setting);
             if (inf != null)
             {
                 mediaInfo["Setting"] = inf;
-             
+
             }
             inf = media.Meta(MetadataType.URL);
             if (inf != null)
             {
                 mediaInfo["URL"] = inf;
-               
+
             }
             inf = media.Meta(MetadataType.Language);
             if (inf != null)
             {
                 mediaInfo["Language"] = inf;
-               
+
             }
             inf = media.Meta(MetadataType.NowPlaying);
             if (inf != null)
             {
                 mediaInfo["NowPlaying"] = inf;
-              
+
             }
             inf = media.Meta(MetadataType.Publisher);
             if (inf != null)
             {
                 mediaInfo["Publisher"] = inf;
-               
+
             }
             inf = media.Meta(MetadataType.EncodedBy);
             if (inf != null)
             {
                 mediaInfo["EncodedBy"] = inf;
-               
+
             }
             inf = media.Meta(MetadataType.ArtworkURL);
             if (inf != null)
             {
                 mediaInfo["ArtworkURL"] = inf;
-              
+
             }
             inf = media.Meta(MetadataType.TrackID);
             if (inf != null)
             {
                 mediaInfo["TrackID"] = inf;
-               
+
             }
             inf = media.Meta(MetadataType.TrackTotal);
             if (inf != null)
             {
                 mediaInfo["TrackTotal"] = inf;
-               
+
             }
             inf = media.Meta(MetadataType.Director);
             if (inf != null)
             {
                 mediaInfo["Director"] = inf;
-               
+
             }
             inf = media.Meta(MetadataType.Season);
             if (inf != null)
             {
                 mediaInfo["Season"] = inf;
-               
+
             }
             inf = media.Meta(MetadataType.Episode);
             if (inf != null)
             {
                 mediaInfo["Episode"] = inf;
-             
+
             }
             inf = media.Meta(MetadataType.ShowName);
             if (inf != null)
             {
                 mediaInfo["ShowName"] = inf;
-              
+
             }
             inf = media.Meta(MetadataType.Actors);
             if (inf != null)
             {
                 mediaInfo["Actors"] = inf;
-             
+
             }
             inf = media.Meta(MetadataType.AlbumArtist);
             if (inf != null)
             {
                 mediaInfo["AlbumArtist"] = inf;
-              
+
             }
             inf = media.Meta(MetadataType.DiscNumber);
             if (inf != null)
             {
                 mediaInfo["DiscNumber"] = inf;
-             
+
             }
             inf = media.Meta(MetadataType.DiscTotal);
             if (inf != null)
             {
                 mediaInfo["DiscTotal"] = inf;
-              
+
             }
 
             foreach (var track in media.Tracks)
@@ -2828,7 +2834,7 @@ namespace VidFileTag
                 switch (track.TrackType)
                 {
                     case TrackType.Audio:
-                       
+
                         mediaInfo[$"{nameof(track.Data.Audio.Channels)}"] = $"{track.Data.Audio.Channels}";
                         mediaInfo[$"{nameof(track.Data.Audio.Rate)}"] =  $"{track.Data.Audio.Rate}";
                         break;
@@ -2842,7 +2848,7 @@ namespace VidFileTag
                 }
             }
 
-                FileInfoList.Items.Clear();
+            FileInfoList.Items.Clear();
             foreach (var kk in mediaInfo.Keys)
             {
                 string aa = kk + " is " + mediaInfo[kk];
@@ -2869,6 +2875,201 @@ namespace VidFileTag
             SetupOn = true;
             MoveCopyCheckBox.Content = "Remove Destination";
         }
+
+
+        #region SearcgFileForTag
+        bool _firstOne = false;
+
+        bool _lastOne = false;
+
+        bool _phrase = false;
+
+        bool _custom = false;
+
+        string? _fullTag = null;
+        public string? FullTag
+        {
+            get { return _fullTag; }
+            set
+            {
+                _fullTag = value;
+                TagString.Text = value;
+                FirstOne = true;
+            }
+
+        }
+
+        public bool FirstOne
+        {
+            get
+            {
+                return _firstOne;
+            }
+            set
+            {
+                _firstOne = value;
+
+                if (value)
+                {
+                    string[] partsoftag;
+                    if (_fullTag != null)
+                    {
+                        partsoftag = _fullTag.Split(' ', 5, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                        FirstOneCheck.IsChecked = true;
+                        LastOneCheck.IsChecked = false;
+                        PhraseCheck.IsChecked = false;
+                        CustomCheck.IsChecked = false;
+                        SearchText.Text = partsoftag[0];
+                    }
+                }
+            }
+        }
+
+        public bool LastOne
+        {
+            get
+            {
+                return _lastOne;
+            }
+            set
+            {
+                _lastOne = value;
+
+                if (value)
+                {
+                    string[] partsoftag;
+                    if (_fullTag != null)
+                    {
+                        partsoftag = _fullTag.Split(' ', 5, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                        LastOneCheck.IsChecked = true;
+                        FirstOneCheck.IsChecked = false;
+                        PhraseCheck.IsChecked = false;
+                        CustomCheck.IsChecked = false;
+                        SearchText.Text =  partsoftag.Last();
+                    }
+                }
+            }
+        }
+
+        public bool Phrase
+        {
+            get
+            {
+                return _phrase;
+            }
+            set
+            {
+                _phrase = value;
+                if (value)
+                {
+
+                    if (_fullTag != null)
+                    {
+                        LastOneCheck.IsChecked = false;
+                        FirstOneCheck.IsChecked = false;
+                        PhraseCheck.IsChecked = true;
+                        CustomCheck.IsChecked = false;
+                        SearchText.Text =  _fullTag;
+                    }
+                }
+            }
+        }
+
+        public bool Custom
+        {
+
+            get
+            {
+                return _custom;
+            }
+            set
+            {
+                _custom = value;
+                if (value)
+                {
+                    if (_fullTag != null)
+                    {
+                        LastOneCheck.IsChecked = false;
+                        FirstOneCheck.IsChecked = false;
+                        PhraseCheck.IsChecked = false;
+                        CustomCheck.IsChecked = true;
+                        //  SearchText.Text =  ;
+                    }
+                }
+            }
+        }
+
+        private void FirstOneCheck_Checked(object sender, RoutedEventArgs e)
+        {
+            FirstOne = true;
+        }
+
+        private void LastOneCheck_Checked(object sender, RoutedEventArgs e)
+        {
+            LastOne = true;
+        }
+
+        private void PhraseCheck_Checked(object sender, RoutedEventArgs e)
+        {
+            Phrase = true;
+        }
+
+        private void CustomCheck_Checked(object sender, RoutedEventArgs e)
+        {
+            Custom = true;
+        }
+
+        public void DoSearch_Click(object sender, RoutedEventArgs e)
+        {
+            if(string.IsNullOrEmpty(SearchText.Text) == true)
+            {
+                return;
+            }
+
+            foreach (TagFileInfo a in FilesListView.Items)
+            {
+                if (a.FileName.Contains(SearchText.Text, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    AddChosenFile(a);
+
+                    // reload it
+                    var gg = from su in Context.TagFileInfos
+                             where su.FilePath == a.FilePath
+                             select su;
+
+                    TagFileInfo work;
+                    if (gg.Any())
+                    {
+                        work = gg.First();
+
+                        var qq = from tftf in Context.TagFileInfoTagInfos
+                                 where tftf.TagInfoId == FullTagInfo.Id &&
+                                 tftf.TagFileInfoId == work.Id
+                                 select tftf;
+
+                        // if not add it
+                        if (qq.Any() == false)
+                        {
+                            var rr = new TagFileInfoTagInfo
+                            {
+                                TagFileInfoId = work.Id,
+                                TagInfoId = FullTagInfo.Id,
+                            };
+
+                            Context.TagFileInfoTagInfos.Add(rr);
+                            Context.SaveChanges();
+                        }
+                    }
+                }
+
+            }
+            TagSearchPopup.IsOpen = false;
+        }
+
+        private void NoSearch_Click(object sender, RoutedEventArgs e)
+        {
+            TagSearchPopup.IsOpen = false;
+        }
+        #endregion
     }
 }
-    

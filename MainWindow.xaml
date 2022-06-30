@@ -368,7 +368,7 @@
                                 </Button.ToolTip>
                             </Button>
 
-                            <Button Content="Add Seleted Tag if the Tag is in Filename" FontSize="14" BorderThickness="2"
+                            <Button x:Name="TagInFilenameButton"  Content="Add Seleted Tag if the Tag is in Filename" FontSize="14" BorderThickness="2"
                                      Click="AddTagFromFileName"  Margin="3" Background="Bisque">
                                 <Button.ToolTip>
                                     <TextBlock Text="If the first word of the selected tag is in a file in the list add the tag." Foreground="DarkGreen" FontSize="12" />
@@ -508,6 +508,41 @@
                 </GroupBox>
                 <Button Width="120" x:Name="ResetpathsButton" Content="Change" Grid.Row="0" Grid.Column="1" Click="ResetpathsButton_Click"/>
                 <Button Width="120" Content="Cancel" x:Name="CancelResetButton" Grid.Row="1" Grid.Column="1" Click="CancelResetButton_Click"/>
+            </Grid>
+
+        </Popup>
+
+
+        <Popup IsOpen="False" x:Name="TagSearchPopup" PlacementTarget="{Binding ElementName=TagInFilenameButton}" Width="400" Placement="Top" Margin="3">
+            <Grid Background="Cornsilk">
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="DoSearch" Grid.Column="2" Grid.Row="1" Content="Ok" Height="25" Width="80" Click="DoSearch_Click"></Button>
+                <Button x:Name="NoSearch" Grid.Column="2" Grid.Row="2" Content="Cancel"  Height="25" Width="80" Click="NoSearch_Click"></Button>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Select Text part used in Search" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" FontSize="14" Margin="2,1,1,2" x:Name="TitleShown" ></TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="" x:Name="TagString" FontSize="12"  Background="LightSkyBlue"></TextBlock>
+                <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="2">
+                    <CheckBox x:Name="FirstOneCheck" IsChecked="True" FontSize="11" Content="First Word" Checked="FirstOneCheck_Checked" />
+                    <CheckBox x:Name="LastOneCheck" IsChecked="False" FontSize="11"  Content="Last Word" Checked="LastOneCheck_Checked" />
+                    <CheckBox x:Name="PhraseCheck" IsChecked="False" FontSize="11"  Content="Entire Phrase" Checked="PhraseCheck_Checked" />
+                    <CheckBox x:Name="CustomCheck" IsChecked="False" FontSize="11"  Content="Custom String" Checked="CustomCheck_Checked" />
+                </StackPanel>
+                <GroupBox x:Name="FindItStringGroupBox" Grid.Column="0" Grid.Row="3" Height="50">
+                    <GroupBox.Header>
+                        <TextBlock Text="Search For" HorizontalAlignment="Left" FontSize="12" />
+                    </GroupBox.Header>
+                    <TextBox x:Name="SearchText" Margin="3" Text="" FontSize="13" IsReadOnly="True"></TextBox>
+                </GroupBox>
             </Grid>
 
         </Popup>
