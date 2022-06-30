@@ -4,17 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VidFileTag" 
-        xmlns:vlc1="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF" Background="LightGray" 
+        xmlns:vlc1="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"  
         mc:Ignorable="d"
-        Title="Vidio Control" Height="223" Width="359">
-    <StackPanel Margin="0,0,0,0">
-        <StackPanel x:Name="Other" />
-        <vlc1:VideoView x:Name="VideoView">
+        Title="Video Control" MaxHeight="205" MaxWidth="350" Background="Transparent">
+    <StackPanel Margin="0,0,0,0" >
+       
+        <vlc1:VideoView x:Name="VideoView" Visibility="Collapsed">
           
         </vlc1:VideoView>
         <Border Background="Linen"  BorderThickness="3" BorderBrush="Black" >
             <StackPanel Orientation="Vertical" Margin="0,0,0,0">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Content="Show" x:Name="ShowFileButton"  Width="91" FontSize="14" FontWeight="ExtraBlack"
                                     HorizontalAlignment="Left" IsEnabled="False" Background="WhiteSmoke" BorderThickness="3" BorderBrush="DarkGray" 
                                     Click="ShowFileButton_Click"  Margin="2">

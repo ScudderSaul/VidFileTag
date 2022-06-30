@@ -2658,144 +2658,191 @@ namespace VidFileTag
 
        }
 
-        public void FillMediaInfo(string path)
+        public async void FillMediaInfo(string path)
         {
 
             mediaInfo = new Dictionary<string, string>();
             var media = new LibVLCSharp.Shared.Media(LibVLC, path);
+            await media.Parse(MediaParseOptions.FetchLocal);
 
-            string inf = media.Meta(MetadataType.Title);
+            string? inf = null;
+
+            inf = media.Meta(MetadataType.Title);
             if (inf != null)
             {
-                mediaInfo.Add("Title", inf);
+                mediaInfo["Title"] = inf;
             }
 
             inf = media.Meta(MetadataType.Artist);
             if (inf != null)
             {
-                mediaInfo.Add("Artist", inf);
+                mediaInfo["Artist"] = inf;
             }
             inf = media.Meta(MetadataType.Genre);
             if (inf != null)
             {
-                mediaInfo.Add("Genre", inf);
+                mediaInfo["Genre"] = inf;
             }
             inf = media.Meta(MetadataType.Copyright);
             if (inf != null)
             {
-                mediaInfo.Add("Copyright", inf);
+                mediaInfo["Copyright"] = inf;
+               
             }
             inf = media.Meta(MetadataType.Album);
             if (inf != null)
             {
-                mediaInfo.Add("Album", inf);
+                mediaInfo["Album"] = inf;
+               
             }
             inf = media.Meta(MetadataType.TrackNumber);
             if (inf != null)
             {
-                mediaInfo.Add("TrackNumber", inf);
+                mediaInfo["TrackNumber"] = inf;
+               
             }
             inf = media.Meta(MetadataType.Description);
             if (inf != null)
             {
-                mediaInfo.Add("Description", inf);
+                mediaInfo["Description"] = inf;
+              
             }
             inf = media.Meta(MetadataType.Rating);
             if (inf != null)
             {
-                mediaInfo.Add("Rating", inf);
+                mediaInfo["Rating"] = inf;
+              
             }
             inf = media.Meta(MetadataType.Date);
             if (inf != null)
             {
-                mediaInfo.Add("Date", inf);
+                mediaInfo["Date"] = inf;
+               
             }
             inf = media.Meta(MetadataType.Setting);
             if (inf != null)
             {
-                mediaInfo.Add("Setting", inf);
+                mediaInfo["Setting"] = inf;
+             
             }
             inf = media.Meta(MetadataType.URL);
             if (inf != null)
             {
-                mediaInfo.Add("URL", inf);
+                mediaInfo["URL"] = inf;
+               
             }
             inf = media.Meta(MetadataType.Language);
             if (inf != null)
             {
-                mediaInfo.Add("Language", inf);
+                mediaInfo["Language"] = inf;
+               
             }
             inf = media.Meta(MetadataType.NowPlaying);
             if (inf != null)
             {
-                mediaInfo.Add("NowPlaying", inf);
+                mediaInfo["NowPlaying"] = inf;
+              
             }
             inf = media.Meta(MetadataType.Publisher);
             if (inf != null)
             {
-                mediaInfo.Add("Publisher", inf);
+                mediaInfo["Publisher"] = inf;
+               
             }
             inf = media.Meta(MetadataType.EncodedBy);
             if (inf != null)
             {
-                mediaInfo.Add("EncodedBy", inf);
+                mediaInfo["EncodedBy"] = inf;
+               
             }
             inf = media.Meta(MetadataType.ArtworkURL);
             if (inf != null)
             {
-                mediaInfo.Add("ArtworkURL", inf);
+                mediaInfo["ArtworkURL"] = inf;
+              
             }
             inf = media.Meta(MetadataType.TrackID);
             if (inf != null)
             {
-                mediaInfo.Add("TrackID", inf);
+                mediaInfo["TrackID"] = inf;
+               
             }
             inf = media.Meta(MetadataType.TrackTotal);
             if (inf != null)
             {
-                mediaInfo.Add("TrackTotal", inf);
+                mediaInfo["TrackTotal"] = inf;
+               
             }
             inf = media.Meta(MetadataType.Director);
             if (inf != null)
             {
-                mediaInfo.Add("Director", inf);
+                mediaInfo["Director"] = inf;
+               
             }
             inf = media.Meta(MetadataType.Season);
             if (inf != null)
             {
-                mediaInfo.Add("Season", inf);
+                mediaInfo["Season"] = inf;
+               
             }
             inf = media.Meta(MetadataType.Episode);
             if (inf != null)
             {
-                mediaInfo.Add("Episode", inf);
+                mediaInfo["Episode"] = inf;
+             
             }
             inf = media.Meta(MetadataType.ShowName);
             if (inf != null)
             {
-                mediaInfo.Add("ShowName", inf);
+                mediaInfo["ShowName"] = inf;
+              
             }
             inf = media.Meta(MetadataType.Actors);
             if (inf != null)
             {
-                mediaInfo.Add("Actors", inf);
+                mediaInfo["Actors"] = inf;
+             
             }
             inf = media.Meta(MetadataType.AlbumArtist);
             if (inf != null)
             {
-                mediaInfo.Add("AlbumArtist", inf);
+                mediaInfo["AlbumArtist"] = inf;
+              
             }
             inf = media.Meta(MetadataType.DiscNumber);
             if (inf != null)
             {
-                mediaInfo.Add("DiscNumber", inf);
+                mediaInfo["DiscNumber"] = inf;
+             
             }
             inf = media.Meta(MetadataType.DiscTotal);
             if (inf != null)
             {
-                mediaInfo.Add("DiscTotal", inf);
+                mediaInfo["DiscTotal"] = inf;
+              
             }
-            FileInfoList.Items.Clear();
+
+            foreach (var track in media.Tracks)
+            {
+
+                switch (track.TrackType)
+                {
+                    case TrackType.Audio:
+                       
+                        mediaInfo[$"{nameof(track.Data.Audio.Channels)}"] = $"{track.Data.Audio.Channels}";
+                        mediaInfo[$"{nameof(track.Data.Audio.Rate)}"] =  $"{track.Data.Audio.Rate}";
+                        break;
+                    case TrackType.Video:
+
+                        mediaInfo[$"{nameof(track.Data.Video.FrameRateNum)}"] =  $"{track.Data.Video.FrameRateNum}";
+                        mediaInfo[$"{nameof(track.Data.Video.FrameRateDen)}"] =  $"{track.Data.Video.FrameRateDen}";
+                        mediaInfo[$"{nameof(track.Data.Video.Height)}"] =  $"{track.Data.Video.Height}";
+                        mediaInfo[$"{nameof(track.Data.Video.Width)}"] =  $"{track.Data.Video.Width}";
+                        break;
+                }
+            }
+
+                FileInfoList.Items.Clear();
             foreach (var kk in mediaInfo.Keys)
             {
                 string aa = kk + " is " + mediaInfo[kk];

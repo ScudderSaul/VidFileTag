@@ -27,7 +27,9 @@
 
 
                         <!-- TagsListView is All tags -->
-                        <ListBox  x:Name="TagsListView" DisplayMemberPath="Tag" Margin="2" HorizontalAlignment="Left" FontSize="10" SelectionMode="Multiple"
+                        <ListBox  x:Name="TagsListView" DisplayMemberPath="Tag" Margin="2" 
+                                  HorizontalAlignment="Left" FontSize="10" 
+                                  SelectionMode="Multiple" 
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                   SelectionChanged="TagsListView_SelectionChanged" >
                             <ListBox.ToolTip>
