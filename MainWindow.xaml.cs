@@ -46,7 +46,7 @@ namespace VidFileTag
 
 
         //  DirectoryInfo vlcLibDirectory;
-        private static TagModel _context;
+        private static TagModel? _context;
         public static string ConnectionOther = string.Empty;
 
         private TagFileInfo _selectedFileInfo = null;
@@ -94,7 +94,7 @@ namespace VidFileTag
         }
 
 
-        // sqlite dc context property
+        // sqlite dc Context property
         public static TagModel Context
         {
             get
@@ -124,7 +124,11 @@ namespace VidFileTag
         //    public List<TagFileInfoTagInfo> FileTags { get => fileTags; set => fileTags = value; }
 
         // info for the current selected file
-        public TagFileInfo SelectedFileInfo { get => _selectedFileInfo; set => _selectedFileInfo = value; }
+        public TagFileInfo SelectedFileInfo 
+        { 
+            get => _selectedFileInfo; 
+            set => _selectedFileInfo = value; 
+        }
 
 
         public string Seldir { get; set; }
@@ -341,8 +345,7 @@ namespace VidFileTag
                     }
                     else  // when it is not in the database create an info class
                     {
-                        //  FileInfo fff = new FileInfo(st);
-
+                        
                         fti = new TagFileInfo
                         {
                             FilePath = st,
@@ -486,11 +489,78 @@ namespace VidFileTag
             return uri.ToString();
         }
 
+
+        private void AllFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            PathCalks(path);
+            return;
+        }
+
+        private void TagsToWildcard_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> tfilenames = new List<string>(Directory.EnumerateFiles(path, "*", SearchOption.TopDirectoryOnly));
+            Dictionary<string, TagFileInfo> allfound = new Dictionary<string, TagFileInfo>();
+            FilesListView.Items.Clear();
+
+            var ff = from TagInfo su in TagsListView.SelectedItems
+                     select su;
+            if (ff.Any() == false)
+            {
+                return;
+            }
+
+            foreach(var seltag in ff)
+            {
+                TagInfo tt = seltag as TagInfo;
+                foreach(string s in tfilenames)
+                {
+                    string finame = System.IO.Path.GetFileName(s);
+
+                    if (string.IsNullOrWhiteSpace(finame))
+                    {
+                        continue;
+                    }
+
+                    if (s.Contains(tt.Tag))
+                    {
+                        TagFileInfo fti = null;
+                        var wff = from su in Context.TagFileInfos
+                                 where su.FilePath == s
+                                 select su;
+                        if (wff.Any())
+                        {
+                            fti = wff.First();
+                            allfound[s] = fti;
+                        }
+                        else  // when it is not in the database create an info class
+                        {
+
+                            fti = new TagFileInfo
+                            {
+                                FilePath = s,
+                                FileName = finame
+                            };
+                            allfound[s] = fti;
+                            //    fti.FileSize = fff.Length;
+                            //   fti.FileExtension = fff.Extension;
+                          //  FilesListView.Items.Add(fti);
+                        }
+                    }
+                }
+                if(allfound.Count > 0)
+                {
+                  foreach(var ftv in allfound)
+                    {
+                        TagFileInfo fti = ftv.Value;
+                        FilesListView.Items.Add(fti);
+                    }
+                }
+            }
+        }
+
         // Show the files matching a wild card
         private void WildFileButton_Click(object sender, RoutedEventArgs e)
         {
-
-
             string pattern = WildFileTextBox.Text;
             if (pattern == string.Empty)
             {
@@ -503,6 +573,7 @@ namespace VidFileTag
                 return;
             }
             Cursor = System.Windows.Input.Cursors.Wait;
+
 
             try
             {
@@ -3026,6 +3097,8 @@ namespace VidFileTag
                 return;
             }
 
+            Cursor = System.Windows.Input.Cursors.Wait;
+
             foreach (TagFileInfo a in FilesListView.Items)
             {
                 if (a.FileName.Contains(SearchText.Text, StringComparison.CurrentCultureIgnoreCase))
@@ -3063,6 +3136,7 @@ namespace VidFileTag
                 }
 
             }
+            Cursor = System.Windows.Input.Cursors.Arrow;
             TagSearchPopup.IsOpen = false;
         }
 
@@ -3070,6 +3144,9 @@ namespace VidFileTag
         {
             TagSearchPopup.IsOpen = false;
         }
+
         #endregion
+
+       
     }
 }

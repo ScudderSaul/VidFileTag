@@ -22,7 +22,7 @@
                     </Grid.ColumnDefinitions>
                     <GroupBox  BorderBrush="Purple" BorderThickness="3" Margin="2" Grid.Column="0" x:Name="TagsGroupBox">
                         <GroupBox.Header>
-                            <TextBlock Text="Tags" FontSize="13" FontWeight="DemiBold" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Tags Selection" FontSize="13" FontWeight="DemiBold" HorizontalAlignment="Left"/>
                         </GroupBox.Header>
 
 
@@ -53,9 +53,9 @@
                                     x:Name="TagAddButton" HorizontalAlignment="Center"
                                     Click="TagAddButton_Click" Margin="2">
                                 <Button.ToolTip>
-                                    <TextBlock Text="Apply any tags selected in the Tags box to the selected file by creating a database entry." Foreground="DarkGreen" FontSize="12" />
+                                    <TextBlock Text="Apply any selected tags to the selected file by creating a database entry." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
-                                <TextBlock Text="Add Tags" FontSize="12" TextWrapping="Wrap" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text="Add Tags" Margin="2" FontSize="12" TextWrapping="Wrap" HorizontalAlignment="Center"></TextBlock>
                             </Button>
                             <Button  IsEnabled="False" Background="#FFAADDAA" HorizontalAlignment="Center"
                                     x:Name="TagRemoveButton" 
@@ -63,9 +63,9 @@
                                
                                 Margin="2" >
                                 <Button.ToolTip>
-                                    <TextBlock Text="Remove any tags selected in the Tags box from the selected file." Foreground="DarkGreen" FontSize="12" />
+                                    <TextBlock Text="Remove any selected tags from the selected file." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
-                                <TextBlock Text="Remove Tags" FontSize="12" TextWrapping="Wrap" ></TextBlock>
+                                <TextBlock Text="Remove Tags" FontSize="12" Margin="2" HorizontalAlignment="Center" TextWrapping="Wrap" ></TextBlock>
                             </Button>
                             <!--<Button x:Name="FindNextTaggedButton" Background="#FFAADDAA"
                                HorizontalAlignment="Center"
@@ -84,9 +84,9 @@
                                 Click="FilesWithASelectedTagInPath_Click" 
                                 IsEnabled="False">
                                 <Button.ToolTip>
-                                    <TextBlock Text="List any the files with one of the selected tags in the directory" Foreground="DarkGreen" FontSize="12" />
+                                    <TextBlock Text="List any media files in the directory with one of the selected tags" Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
-                                <TextBlock Text="Find All Tagged" TextWrapping="Wrap" FontSize="12"></TextBlock>
+                                <TextBlock Text="List files with Tag" Margin="2" TextWrapping="Wrap" FontSize="12"></TextBlock>
                             </Button>
                         </StackPanel>
                     </GroupBox>
@@ -191,17 +191,27 @@
                         </GroupBox>
                     </StackPanel>
                 </GroupBox>
-                
+
 
 
                 <TextBlock x:Name="FileNameTextBlock"   FontSize="12" />
-              
-                <Menu Height="100"/>
+
+
                 <GroupBox Grid.Row="0"  BorderThickness="3" Margin="2" BorderBrush="MidnightBlue"  x:Name="FileInfoGroupBox">
                     <GroupBox.Header>
                         <TextBlock Text="File Information"  FontWeight="DemiBold"  />
                     </GroupBox.Header>
-                    <ListBox x:Name="FileInfoList" Visibility="Visible"></ListBox>
+                    <ListView x:Name="FileInfoList"  MaxHeight="160"
+                          ScrollViewer.VerticalScrollBarVisibility="Visible" >
+                        <ListView.ToolTip>
+                            <TextBlock Text="The media files found searching in the current directory. Select a file to add tags to it or view it." Foreground="DarkGreen" FontSize="12" />
+                        </ListView.ToolTip>
+
+                    </ListView>
+
+
+
+
                 </GroupBox>
 
             </StackPanel>
@@ -209,7 +219,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="130" />
                     <RowDefinition Height="1*"  />
-                    <RowDefinition Height="45"  />
+                    <RowDefinition Height="90"  />
                     <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
                 <GroupBox Grid.Row="0"  BorderThickness="3" Margin="2" BorderBrush="BlueViolet" x:Name="PathGroupBox">
@@ -268,8 +278,21 @@
                     <GroupBox.Header>
                         <TextBlock Text="File List Wildcard"  FontWeight="DemiBold" ></TextBlock>
                     </GroupBox.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox x:Name="WildFileTextBox"  Width="200" Height="26" Margin="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*">
+                            </ColumnDefinition>
+                            <ColumnDefinition Width="2*">
+                            </ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+                        <TextBox x:Name="WildFileTextBox"   Grid.Row="0" Grid.Column="0"
+                                 Height="26" 
+                                 Margin="2" >
                             <TextBox.ToolTip>
                                 <TextBlock Text="Directory wildcard. *Alice* will find all files with the word Alice in the filename."
                                               Foreground="DarkGreen" FontSize="11">
@@ -277,7 +300,10 @@
                                 </TextBlock>
                             </TextBox.ToolTip>
                         </TextBox>
-                        <Button x:Name="WildFileButton" Content="Search with wildcard or ALL" Width="200" Margin="2" Background="#FFAADDAA"
+
+                        <Button x:Name="WildFileButton"  Grid.Row="0" Grid.Column="1"  Height="25" 
+                                Content="Search with wildcard" Width="160" HorizontalAlignment="Center"
+                                    Margin="2" Background="#FFAADDAA"
                                     Click="WildFileButton_Click">
                             <Button.ToolTip>
                                 <TextBlock Text="Using a wildcard. *Alice* will find all files with the word Alice in the filename."
@@ -286,14 +312,36 @@
                                 </TextBlock>
                             </Button.ToolTip>
                         </Button>
+                        <Button x:Name="AllFileButton"  Grid.Row="1" Grid.Column="1"
+                                    Content="Show all media files"  Height="25" 
+                                    Width="160" Margin="2" HorizontalAlignment="Center"
+                                    Background="#FFAADDAA"
+                                    Click="AllFileButton_Click">
+                            <Button.ToolTip>
+                                <TextBlock Text="Show all media files in the current directory"
+                                              Foreground="DarkGreen" FontSize="11">
+                                </TextBlock>
+                            </Button.ToolTip>
+                        </Button>
+                        <Button x:Name="TagsToWildcard"  Grid.Row="1" Grid.Column="0"  Height="25" 
+                                    Content="List files with any Selected Tag(s) in filenames" Width="240" Margin="2" HorizontalAlignment="Center"
+                                    Background="#FFAADDAA" 
+                                    Click="TagsToWildcard_Click">
+                            <Button.ToolTip>
+                                <TextBlock Text="Find Files with Selected Tag(s} in filenames"
+                                              Foreground="DarkGreen" FontSize="11">
+                                </TextBlock>
+                            </Button.ToolTip>
+                        </Button>
 
-                    </StackPanel>
+
+                    </Grid>
 
                 </GroupBox>
 
                 <GroupBox Grid.Row="3"  BorderThickness="3" BorderBrush="LightGreen" x:Name="FileGroupBox">
                     <GroupBox.Header>
-                        <TextBlock Text="File List"  FontWeight="DemiBold" ></TextBlock>
+                        <TextBlock Text="Media File List"  FontWeight="DemiBold" ></TextBlock>
                     </GroupBox.Header>
                     <StackPanel Orientation="Vertical" VerticalAlignment="Top">
 
@@ -301,7 +349,7 @@
                         <ListView x:Name="FilesListView" Grid.Row="1" DisplayMemberPath="FileName" MaxHeight="400"
                           ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="FilesListView_SelectionChanged">
                             <ListView.ToolTip>
-                                <TextBlock Text="A list of all files at the current location. Select a file to add tags to it or view it." Foreground="DarkGreen" FontSize="12" />
+                                <TextBlock Text="The media files found searching in the current directory. Select a file to add tags to it or view it." Foreground="DarkGreen" FontSize="12" />
                             </ListView.ToolTip>
 
                         </ListView>
@@ -313,11 +361,11 @@
                     </StackPanel>
                 </GroupBox>
 
-               
+
             </Grid>
         </Grid>
 
-  
+
         <Grid x:Name="OperationGrid" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="4*" ></ColumnDefinition>
@@ -368,10 +416,10 @@
                                 </Button.ToolTip>
                             </Button>
 
-                            <Button x:Name="TagInFilenameButton"  Content="Add Seleted Tag if the Tag is in Filename" FontSize="14" BorderThickness="2"
+                            <Button x:Name="TagInFilenameButton"  Content="Add Seleted Tag if the Tag is in a file's name" FontSize="14" BorderThickness="2"
                                      Click="AddTagFromFileName"  Margin="3" Background="Bisque">
                                 <Button.ToolTip>
-                                    <TextBlock Text="If the first word of the selected tag is in a file in the list add the tag." Foreground="DarkGreen" FontSize="12" />
+                                    <TextBlock Text="Choose a part of the selected tag. is in media file in the current dirrectory add the tag." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
                             </Button>
 
@@ -384,14 +432,14 @@
 
                             <Button Content="About VidFileTag" FontSize="14" BorderThickness="2"
                                      Click="AboutFileTag_Click" Margin="3" Background="Bisque">
-                                
+
                             </Button>
 
 
-                           
 
 
-                          
+
+
                         </WrapPanel>
                     </GroupBox>
 
