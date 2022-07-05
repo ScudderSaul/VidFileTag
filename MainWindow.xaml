@@ -5,20 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VidFileTag"
         mc:Ignorable="d"
-        Title="VidFileTag" Height="950" Width="1000" Background="WhiteSmoke">
+        Title="VidFileTag" Height="950" Width="1100" Background="WhiteSmoke">
     <StackPanel>
 
         <Grid x:Name="DirectoryGrid" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*" ></ColumnDefinition>
-                <ColumnDefinition Width="6*" ></ColumnDefinition>
+                <ColumnDefinition Width="5*" ></ColumnDefinition>
+                <ColumnDefinition Width="9*" ></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0">
 
                 <Grid x:Name="TagGrid">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="9*"></ColumnDefinition>
-                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="15*"></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <GroupBox  BorderBrush="Purple" BorderThickness="3" Margin="2" Grid.Column="0" x:Name="TagsGroupBox">
                         <GroupBox.Header>
@@ -45,31 +45,34 @@
                     </GroupBox>
                     <GroupBox  BorderBrush="Purple" BorderThickness="3" Margin="2" Grid.Column="1" x:Name="TagButtonGoupBox">
                         <GroupBox.Header>
-                            <TextBlock Text="Tag Files" FontSize="13" FontWeight="DemiBold" HorizontalAlignment="Left"/>
+                            <TextBlock Text="+/- Tags" FontSize="13" FontWeight="DemiBold" HorizontalAlignment="Left"/>
                         </GroupBox.Header>
                         <StackPanel Orientation="Vertical">
                             <Button 
-                                    IsEnabled="False" Background="#FFAADDAA" 
+                                    IsEnabled="False" Background="Linen" BorderBrush="Purple" BorderThickness="3"
                                     x:Name="TagAddButton" HorizontalAlignment="Center"
-                                    Click="TagAddButton_Click" Margin="2">
+                                    Click="TagAddButton_Click" Margin="1">
                                 <Button.ToolTip>
                                     <TextBlock Text="Apply any selected tags to the selected file by creating a database entry." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
-                                <TextBlock Text="Add Tags" Margin="2" FontSize="12" TextWrapping="Wrap" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text="Add Tags" Margin="2" Foreground="Purple" FontSize="13"
+                                           TextWrapping="Wrap" HorizontalAlignment="Center"></TextBlock>
                             </Button>
-                            <Button  IsEnabled="False" Background="#FFAADDAA" HorizontalAlignment="Center"
-                                    x:Name="TagRemoveButton" 
+                            <Button  IsEnabled="False" Background="Linen"  HorizontalAlignment="Center"
+                                    x:Name="TagRemoveButton"  BorderBrush="Purple" BorderThickness="3"
                                 Click="TagRemoveButton_Click" 
                                
-                                Margin="2" >
+                                Margin="1" >
                                 <Button.ToolTip>
                                     <TextBlock Text="Remove any selected tags from the selected file." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
-                                <TextBlock Text="Remove Tags" FontSize="12" Margin="2" HorizontalAlignment="Center" TextWrapping="Wrap" ></TextBlock>
+                                <TextBlock Text="Remove Tags" 
+                                           Foreground="Purple" FontSize="13" 
+                                           Margin="1" HorizontalAlignment="Center" TextWrapping="Wrap" ></TextBlock>
                             </Button>
                             <!--<Button x:Name="FindNextTaggedButton" Background="#FFAADDAA"
                                HorizontalAlignment="Center"
-                                Margin="2"
+                                Margin="1"
                                 
                                 Click="FindNextTaggedButton_Click" >
                                 <Button.ToolTip>
@@ -77,16 +80,17 @@
                                 </Button.ToolTip>
                                 <TextBlock Text="Find Next Tagged" TextWrapping="Wrap" FontSize="12"></TextBlock>
                             </Button>-->
-                            <Button x:Name="FilesWithASelectedTagInPath" Background="#FFAADDAA"
+                            <Button x:Name="FilesWithASelectedTagInPath" Background="Linen"
                                 HorizontalAlignment="Center" 
-                                Margin="2"
-                                 
+                                Margin="1"
+                                  BorderBrush="Purple" BorderThickness="3"
                                 Click="FilesWithASelectedTagInPath_Click" 
                                 IsEnabled="False">
                                 <Button.ToolTip>
                                     <TextBlock Text="List any media files in the directory with one of the selected tags" Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
-                                <TextBlock Text="List files with Tag" Margin="2" TextWrapping="Wrap" FontSize="12"></TextBlock>
+                                <TextBlock Text="List files with Tag" Margin="2" TextWrapping="Wrap"
+                                    Foreground="Purple" FontSize="13"></TextBlock>
                             </Button>
                         </StackPanel>
                     </GroupBox>
@@ -121,16 +125,21 @@
                     <StackPanel Orientation="Vertical" >
                         <TextBox x:Name="OperationTagTextBox" Width="220" Margin="2" HorizontalAlignment="Left" SpellCheck.IsEnabled="True"></TextBox>
                         <WrapPanel>
-                            <Button x:Name="DeleteTagButton" Width="90" Background="#FFAADDAA"
-                                    Content="Delete Tag" Click="DeleteTagButton_Click"  
+                            <Button x:Name="DeleteTagButton" Width="90"
+                                    Background="Linen"
+                                     Click="DeleteTagButton_Click"  
                                     Margin="2" HorizontalAlignment="Left">
+                                <TextBlock Text="Delete Tag"
+                                              Foreground="Purple"  FontSize="13" />
                                 <Button.ToolTip>
                                     <TextBlock Text="Delete a tag from the database." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
                             </Button>
-                            <Button x:Name="UpdateTagButton" Width="90" Background="#FFAADDAA"
-                                    Content="Update Tag" Click="UpdateTagButton_Click"  
+                            <Button x:Name="UpdateTagButton" Width="90" Background="Linen"
+                                    Click="UpdateTagButton_Click"  
                                     Margin="2" HorizontalAlignment="Left">
+                                <TextBlock Text="Update Tag"
+                                              Foreground="Purple"  FontSize="13" />
                                 <Button.ToolTip>
                                     <TextBlock Text="Update a tag's text in the database." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
@@ -290,12 +299,12 @@
                             <RowDefinition Height="30" />
                             <RowDefinition Height="30" />
                         </Grid.RowDefinitions>
-                        <TextBox x:Name="WildFileTextBox"   Grid.Row="0" Grid.Column="0"
-                                 Height="26" 
+                        <TextBox x:Name="WildFileTextBox"   Grid.Row="0" Grid.Column="0" Background="Linen" FontSize="13"
+                                 Height="25" 
                                  Margin="2" >
                             <TextBox.ToolTip>
                                 <TextBlock Text="Directory wildcard. *Alice* will find all files with the word Alice in the filename."
-                                              Foreground="DarkGreen" FontSize="11">
+                                              Foreground="Purple"  FontSize="13">
 
                                 </TextBlock>
                             </TextBox.ToolTip>
@@ -303,33 +312,33 @@
 
                         <Button x:Name="WildFileButton"  Grid.Row="0" Grid.Column="1"  Height="25" 
                                 Content="Search with wildcard" Width="160" HorizontalAlignment="Center"
-                                    Margin="2" Background="#FFAADDAA"
+                                    Margin="2" Background="Linen" FontSize="13"
                                     Click="WildFileButton_Click">
                             <Button.ToolTip>
                                 <TextBlock Text="Using a wildcard. *Alice* will find all files with the word Alice in the filename."
-                                              Foreground="DarkGreen" FontSize="11">
+                                               Foreground="Purple"  FontSize="13">
 
                                 </TextBlock>
                             </Button.ToolTip>
                         </Button>
                         <Button x:Name="AllFileButton"  Grid.Row="1" Grid.Column="1"
                                     Content="Show all media files"  Height="25" 
-                                    Width="160" Margin="2" HorizontalAlignment="Center"
-                                    Background="#FFAADDAA"
+                                    Width="180" Margin="2" HorizontalAlignment="Center"
+                                    Background="Linen" FontSize="13"
                                     Click="AllFileButton_Click">
                             <Button.ToolTip>
                                 <TextBlock Text="Show all media files in the current directory"
-                                              Foreground="DarkGreen" FontSize="11">
+                                              Foreground="Purple"  FontSize="13">
                                 </TextBlock>
                             </Button.ToolTip>
                         </Button>
                         <Button x:Name="TagsToWildcard"  Grid.Row="1" Grid.Column="0"  Height="25" 
-                                    Content="List files with any Selected Tag(s) in filenames" Width="240" Margin="2" HorizontalAlignment="Center"
-                                    Background="#FFAADDAA" 
+                                    Content="List files with any Selected Tag(s) in filenames" Width="266" Margin="2" HorizontalAlignment="Center"
+                                    Background="Linen" FontSize="13"
                                     Click="TagsToWildcard_Click">
                             <Button.ToolTip>
                                 <TextBlock Text="Find Files with Selected Tag(s} in filenames"
-                                              Foreground="DarkGreen" FontSize="11">
+                                              Foreground="Purple" FontSize="13">
                                 </TextBlock>
                             </Button.ToolTip>
                         </Button>
@@ -383,56 +392,75 @@
                         </GroupBox.Header>
                         <WrapPanel Margin="2" >
 
-                            <Button Content="Add any files with Selected Tags to a playlist" FontSize="14" BorderThickness="2"
-                                     Click="PlayListButton_Click"  Margin="3"  Background="Bisque" x:Name="PlayListButton">
+                            <Button FontSize="13" BorderThickness="2"
+                                     Click="PlayListButton_Click"  Margin="3"  Background="Linen"  x:Name="PlayListButton">
+                                <TextBlock Text="Add any files with Selected Tags to a playlist" FontSize="13" Foreground="Purple">
+                                </TextBlock>
                                 <Button.ToolTip>
                                     <TextBlock Text="Add any files that are marked in the database with one of the tags selected in the tags list to a LVC playlist." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
                             </Button>
-                            <Button Content="Add any files with all of the Selected Tags to a playlist" FontSize="14" BorderThickness="2"
-                                    Click="PlayListAllButton_Click"  Margin="3"  Background="Bisque" x:Name="PlayListAllButton">
+                            <Button  BorderThickness="2"
+                                    Click="PlayListAllButton_Click"  Margin="3"  Background="Linen" FontSize="13" x:Name="PlayListAllButton">
+                                <TextBlock Text="Add any files with all of the Selected Tags to a playlist" FontSize="13" Foreground="Purple">
+                                </TextBlock>
+
                                 <Button.ToolTip>
                                     <TextBlock Text="Add any files that are marked in the database with all of the tags selected in the tags list to a LVC playlist." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
                             </Button>
-                            <Button Content="Add any files with only one of the Selected Tags to a playlist" FontSize="14" BorderThickness="2"
-                                    Click="PlayListOneButton_Click"  Margin="3" Background="Bisque" x:Name="PlayListOneButton">
+                            <Button  BorderThickness="2"
+                                    Click="PlayListOneButton_Click"  Margin="3" Background="Linen" FontSize="13" x:Name="PlayListOneButton">
+                                <TextBlock Text="Add any files with only one of the Selected Tags to a playlist" FontSize="13" Foreground="Purple">
+                                </TextBlock>
                                 <Button.ToolTip>
                                     <TextBlock Text="Add any files that are marked in the database with only one of the tags selected in the tags list to a LVC playlist." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
                             </Button>
 
-                            <Button Content="Read Tags" FontSize="14" BorderThickness="2"
-                                    Click="ReadTagsTextFile_Click"  Margin="3" Background="Bisque">
+                            <Button   BorderThickness="2" Background="Linen" FontSize="13"
+                                    Click="ReadTagsTextFile_Click"  Margin="3">
+                                <TextBlock Text="Read Tags" FontSize="13" Foreground="Purple">
+                                </TextBlock>
                                 <Button.ToolTip>
                                     <TextBlock Text="Read a list of tags from a file." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
                             </Button>
 
-                            <Button Content="Write Tags" FontSize="14" BorderThickness="2"
-                                     Click="WriteTagsTextFile_Click"  Margin="3" Background="Bisque">
+                            <Button  BorderThickness="2"
+                                     Click="WriteTagsTextFile_Click"  Margin="3" Background="Linen" FontSize="13">
+                                <TextBlock Text="Write Tags" FontSize="13" Foreground="Purple">
+                                </TextBlock>
                                 <Button.ToolTip>
                                     <TextBlock Text="Write all tags to a text file." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
                             </Button>
 
-                            <Button x:Name="TagInFilenameButton"  Content="Add Seleted Tag if the Tag is in a file's name" FontSize="14" BorderThickness="2"
-                                     Click="AddTagFromFileName"  Margin="3" Background="Bisque">
+                            <Button x:Name="TagInFilenameButton"   BorderThickness="2"
+                                     Click="AddTagFromFileName"  Margin="3" Background="Linen" FontSize="13">
+                                <TextBlock Text="Add Seleted Tag if the Tag is in a file's name" FontSize="13" Foreground="Purple">
+                                </TextBlock>
                                 <Button.ToolTip>
                                     <TextBlock Text="Choose a part of the selected tag. is in media file in the current dirrectory add the tag." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
                             </Button>
 
-                            <Button Content="Update listed files known from other paths" FontSize="14" BorderThickness="2"
-                                     Click="WhenFileWithSameNameandCRCExists"  Margin="3" Background="Bisque">
+                            <Button  BorderThickness="2"
+                                     Click="WhenFileWithSameNameandCRCExists"  Margin="3" Background="Linen" FontSize="13">
+                                <TextBlock Text="Update listed files known from other paths" FontSize="13" Foreground="Purple">
+                                </TextBlock>
+
                                 <Button.ToolTip>
-                                    <TextBlock Text="If a file in the list's name, size and crc are the same as another in the database update the list files tags." Foreground="DarkGreen" FontSize="12" />
+                                    <TextBlock 
+                                        Text="If a file in the list's name, size and crc are the same as another in the database update the list files tags."
+                                        Foreground="Purple"  FontSize="12" />
                                 </Button.ToolTip>
                             </Button>
 
-                            <Button Content="About VidFileTag" FontSize="14" BorderThickness="2"
-                                     Click="AboutFileTag_Click" Margin="3" Background="Bisque">
-
+                            <Button  BorderThickness="2" 
+                                     Click="AboutFileTag_Click" Margin="3" Background="Linen" FontSize="13">
+                                <TextBlock Text="About VidFileTag" FontSize="13" Foreground="Purple">
+                                </TextBlock>
                             </Button>
 
 
