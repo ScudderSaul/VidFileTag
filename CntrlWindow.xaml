@@ -12,12 +12,17 @@
         <vlc1:VideoView x:Name="VideoView" Visibility="Collapsed">
           
         </vlc1:VideoView>
-        <Border Background="Linen"  BorderThickness="3" BorderBrush="Black" >
+        <Border Background="Linen"  BorderThickness="3" BorderBrush="Black" CornerRadius="6" >
             <StackPanel Orientation="Vertical" Margin="0,0,0,0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Content="Show" x:Name="ShowFileButton"  Width="91" FontSize="14" FontWeight="ExtraBlack"
                                     HorizontalAlignment="Left" IsEnabled="False" Background="WhiteSmoke" BorderThickness="3" BorderBrush="DarkGray" 
                                     Click="ShowFileButton_Click"  Margin="2">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
                         <Button.ToolTip>
                             <TextBlock Text="Play the selected file if it is a video or music, show it if it is an image." Foreground="DarkGreen" FontSize="12" />
                         </Button.ToolTip>
@@ -25,6 +30,11 @@
                     <Button Content="Pause" x:Name="PauseFileButton"  Width="91" FontSize="14" FontWeight="Heavy"
                                     HorizontalAlignment="Left" IsEnabled="False" Background="WhiteSmoke" BorderThickness="3" BorderBrush="DarkGray"
                                     Click="PauseFileButton_Click"  Margin="2">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
                         <Button.ToolTip>
                             <TextBlock Text="Pause display of the selected file." Foreground="DarkGreen" FontSize="12" />
                         </Button.ToolTip>
@@ -32,6 +42,11 @@
                     <Button Content="Stop Play" x:Name="StopFileButton"  Width="91" FontSize="14" FontWeight="Heavy"
                                     HorizontalAlignment="Left" IsEnabled="False" Background="WhiteSmoke" BorderThickness="3" BorderBrush="DarkGray"
                                     Click="StopFileButton_Click"  Margin="2">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
                         <Button.ToolTip>
                             <TextBlock Text="Stop" Foreground="DarkGreen" FontSize="12" />
                         </Button.ToolTip>
