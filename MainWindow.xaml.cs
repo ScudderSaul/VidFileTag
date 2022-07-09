@@ -1487,7 +1487,7 @@ namespace VidFileTag
         }
 
 
-        private void CopyFilesWithSelectedTags()
+        private void CopyFilesWithSelectedTags(object sender, RoutedEventArgs e)
         {
             var ff = from TagInfo su in TagsListView.SelectedItems
                      select su;
@@ -1575,7 +1575,7 @@ namespace VidFileTag
 
 
 
-                            // Directory.Move(aa.FilePath, System.IO.Path.Combine(folderName, aa.FileName));
+                           
                         }
                     }
 
@@ -1584,9 +1584,9 @@ namespace VidFileTag
         }
 
         /// <summary>
-        /// Moce the files with any selected tag to a new location
+        /// Move the files with any selected tag to a new location
         /// </summary>
-        private void MoveFilesWithSelectedTags()
+        private void MoveFilesWithSelectedTags(object sender, RoutedEventArgs e)
         {
             var ff = from TagInfo su in TagsListView.SelectedItems
                      select su;
@@ -1612,7 +1612,7 @@ namespace VidFileTag
                     return;
                 }
 
-                // a list forcopied files
+                // a list for moved files
 
                 List<TagFileInfo> done = new List<TagFileInfo>();
 
@@ -1688,6 +1688,7 @@ namespace VidFileTag
 
                 }
             }
+            PathCalks(path);
         }
 
         /// <summary>
@@ -2457,15 +2458,6 @@ namespace VidFileTag
 
         }
 
-        private void CopyTaggedFiles_Click(object sender, RoutedEventArgs e)
-        {
-            CopyFilesWithSelectedTags();
-        }
-
-        private void MoveTaggedFiles_Click(object sender, RoutedEventArgs e)
-        {
-            MoveFilesWithSelectedTags();
-        }
 
         private void DeleteTheSelected_Click(object sender, RoutedEventArgs e)
         {

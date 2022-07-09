@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VidFileTag"
         mc:Ignorable="d"
-        Title="VidFileTag" Height="950" Width="1100" Background="#FFF1F3F7" Foreground="#FF0C1854">
+        
+        Title="VidFileTag" 
+        Height="950"
+        Width="1100" Background="#FFF1F3F7" 
+        Foreground="#FF0C1854">
 
     <Window.Resources>
 
@@ -120,7 +124,7 @@
                     </GroupBox>
                 </Grid>
 
-                <GroupBox BorderThickness="3" BorderBrush="BlueViolet" x:Name="TagCreationGroupBox">
+                <GroupBox BorderThickness="3" BorderBrush="Purple" x:Name="TagCreationGroupBox">
                     <GroupBox.Header>
                         <TextBlock Text="Tag Creation"  FontWeight="DemiBold"  FontSize="12" Margin="1"></TextBlock>
                     </GroupBox.Header>
@@ -147,7 +151,7 @@
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox BorderThickness="3" BorderBrush="Sienna" x:Name="TagChangeRemoveGroupBox">
+                <GroupBox BorderThickness="3" BorderBrush="Purple" x:Name="TagChangeRemoveGroupBox">
                     <GroupBox.Header>
                         <TextBlock Text="Tag Operations"  FontWeight="DemiBold"  FontSize="12" Margin="1"></TextBlock>
                     </GroupBox.Header>
@@ -314,7 +318,7 @@
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox Grid.Row="1"  BorderThickness="3" BorderBrush="LightGreen" x:Name="DirectoryGroupBox">
+                <GroupBox Grid.Row="1"  BorderThickness="3" BorderBrush="BlueViolet" x:Name="DirectoryGroupBox">
                     <GroupBox.Header>
                         <TextBlock Text="Directories under path"  FontWeight="DemiBold" ></TextBlock>
                     </GroupBox.Header>
@@ -328,7 +332,7 @@
                     </ListView>
                 </GroupBox>
 
-                <GroupBox Grid.Row="2"  BorderThickness="3" BorderBrush="LightGreen" x:Name="WildCardGroupBox">
+                <GroupBox Grid.Row="2"  BorderThickness="3" BorderBrush="BlueViolet" x:Name="WildCardGroupBox">
                     <GroupBox.Header>
                         <TextBlock Text="File List Wildcard"  FontWeight="DemiBold" ></TextBlock>
                     </GroupBox.Header>
@@ -357,8 +361,8 @@
 
                         <Button x:Name="WildFileButton"  Grid.Row="0" Grid.Column="1"  Height="25" 
                                 Content="Search with wildcard" Width="160" HorizontalAlignment="Center"
-                                    Margin="2" Background="#FFE5E084" FontSize="13"
-                                    Click="WildFileButton_Click" FontWeight="Bold">
+                                    Margin="0,2,0,0" Background="#FFE5E084" FontSize="13"
+                                    Click="WildFileButton_Click" FontWeight="Bold" VerticalAlignment="Top">
                             <Button.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="5"/>
@@ -408,7 +412,7 @@
 
                 </GroupBox>
 
-                <GroupBox Grid.Row="3"  BorderThickness="3" BorderBrush="LightGreen" x:Name="FileGroupBox">
+                <GroupBox Grid.Row="3"  BorderThickness="3" BorderBrush="BlueViolet" x:Name="FileGroupBox">
                     <GroupBox.Header>
                         <TextBlock Text="Media File List"  FontWeight="DemiBold" ></TextBlock>
                     </GroupBox.Header>
@@ -534,6 +538,8 @@
                                 </Button.ToolTip>
                             </Button>
 
+                           
+
                             <Button 
                                    BorderThickness="2" BorderBrush="Purple" 
                                      Click="WhenFileWithSameNameandCRCExists"  Margin="3" Background="Linen" FontSize="13">
@@ -552,10 +558,10 @@
 
                             </Button>
 
-                            <Button  BorderThickness="2" 
-                                    
-                                Click="AboutFileTag_Click" Margin="3" Background="Linen" FontSize="13">
-                                <TextBlock Text="About VidFileTag" FontSize="13" Foreground="Purple">
+                            <Button  BorderThickness="2" x:Name="CopyTaggedButton"
+                                  Click="CopyFilesWithSelectedTags"  
+                                 Margin="3" Background="Linen" FontSize="13">
+                                <TextBlock Text="Copy listed files with the selected tags to a location" FontSize="13" Foreground="Purple">
                                 </TextBlock>
                                 <Button.Resources>
                                     <Style TargetType="Border">
@@ -564,7 +570,17 @@
                                 </Button.Resources>
                             </Button>
 
-
+                            <Button  BorderThickness="2" x:Name="MoveTaggedButton"
+                                  Click="MoveFilesWithSelectedTags"  
+                                 Margin="3" Background="Linen" FontSize="13">
+                                <TextBlock Text="Move listed files with the selected tags to a location" FontSize="13" Foreground="Purple">
+                                </TextBlock>
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
 
 
 
@@ -626,32 +642,61 @@
 
 
 
-        <Popup IsOpen="False" x:Name="AboutPopup" PlacementTarget="{Binding ElementName=TagsListView}" Width="600" Placement="Top" Margin="5" Opacity="90" HorizontalOffset="70">
-            <Grid  Margin="2"  Background="AntiqueWhite"  >
+        <Popup IsOpen="False" x:Name="AboutPopup" PlacementTarget="{Binding ElementName=TagsListView}" 
+               Width="600" Placement="Top" Margin="5" Opacity="90" VerticalOffset="40"
+               HorizontalOffset="70">
+            <Grid  Margin="2"  Background="#FFF1F3F7" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="9*" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="FileTags" HorizontalAlignment="Left" FontSize="16" />
 
-                    </StackPanel>
-                    <TextBlock   Text="FileTags is a tool that creates and updates a local sqlite database that connects user created tags to video, audio and picture file information. It's helpful in organizing collections of videos with non-descriptive filenames and in creating playlists" TextWrapping="Wrap" FontSize="12" Margin="2"/>
-                    <TextBlock Text="FileTags was writen by Saul Scudder " FontSize="12" Margin="2" >
-                        <Hyperlink NavigateUri="https://dragonsawaken.net/index.html" Click="Hyperlink_Click"> https://dragonsawaken.net/index.html
-                      </Hyperlink>
+                <FlowDocumentReader Grid.Column="0">
+                    <FlowDocument  ColumnWidth="400"  
+                                   IsOptimalParagraphEnabled="True" 
+                                   IsHyphenationEnabled="True">
+                        <Section FontSize="13" Foreground="Purple">
+                            <Paragraph>
+                                <Bold>VidFileTag</Bold> is a tool to maintain tags describing media file in a sqlite database. 
+                                 The media files themselves are not modified. 
+                                 It's helpful in organizing collections of media 
+                                 and in creating media playlists by actor, location, etc.  VidFileTag uses 
+                                 VideoLAN's LibVLC to provide a media viewer allowing quick viewing of media.
 
-                    </TextBlock>
-                    <TextBlock TextWrapping="Wrap" FontSize="12" Margin="2" > 
-                      VideoLAN's LibVLC Library is used <Hyperlink NavigateUri="https://code.videolan.org/videolan/libvlc-nuget" Click="Hyperlink_Click"> https://code.videolan.org/videolan/libvlc-nuget
-                      </Hyperlink>
-                    for media player.  
-                        Also see <Hyperlink NavigateUri="https://www.videolan.org/vlc/" Click="Hyperlink1_Click">https://www.videolan.org/vlc/</Hyperlink>
+                            </Paragraph>
+                            <Paragraph FontSize="13" Foreground="Purple">
+                                <Bold>VidFileTag</Bold>
+                                <Italic>was writen by Saul Scudder</Italic> "  />
+                            </Paragraph>
+                            <Paragraph FontSize="12" FontStyle="Italic">
+                                VideoLAN's LibVLC Library is found at
+                                <Hyperlink 
+                                     NavigateUri="https://code.videolan.org/videolan/libvlc-nuget" 
+                                    Click="Hyperlink_Click" >https://code.videolan.org/videolan/libvlc-nuget
+                                </Hyperlink>
 
-                    </TextBlock>
-                </StackPanel>
-                <Button Content="Close" Grid.Column="1" Margin="2" HorizontalAlignment="Right" VerticalAlignment="Top" x:Name="PopupClose" Click="PopupClose_Click" />
+                            </Paragraph>
+
+
+
+
+
+
+                            <Paragraph>
+
+                                for a media player. Also see"
+                                <Hyperlink 
+                                    NavigateUri="https://www.videolan.org/vlc/"
+                                    Click="Hyperlink1_Click">
+                                    https://www.videolan.org/vlc/
+                                </Hyperlink>
+                            </Paragraph>
+                        </Section>
+                    </FlowDocument>
+                </FlowDocumentReader>
+                <Button Content="Close" 
+                        Grid.Column="1" Margin="2" HorizontalAlignment="Right" Foreground="Purple"
+                        VerticalAlignment="Top" x:Name="PopupClose" Click="PopupClose_Click" />
             </Grid>
 
         </Popup>
