@@ -538,7 +538,7 @@
                                 </Button.ToolTip>
                             </Button>
 
-                           
+
 
                             <Button 
                                    BorderThickness="2" BorderBrush="Purple" 
@@ -582,7 +582,17 @@
                                 </Button.Resources>
                             </Button>
 
-
+                            <Button  BorderThickness="2" x:Name="HelpButton"
+                                  Click="HelpButton_Click" 
+                                 Margin="3" Background="Linen" FontSize="13">
+                                <TextBlock Text="Show help page" FontSize="13" Foreground="Purple">
+                                </TextBlock>
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
 
 
                         </WrapPanel>
@@ -700,6 +710,138 @@
             </Grid>
 
         </Popup>
+
+        <Popup IsOpen="False" x:Name="HelpPopup" PlacementTarget="{Binding ElementName=TagsListView}" 
+               Width="600" Placement="Top" Margin="5" Opacity="90" VerticalOffset="20" 
+               HorizontalOffset="30">
+
+
+            <FlowDocumentReader Background="#FFF1F3F7" BorderBrush="Purple" BorderThickness="3" >
+                <FlowDocument  ColumnWidth="400"  Background="#FFF1F3F7"
+                                   IsOptimalParagraphEnabled="True"  >
+                    <BlockUIContainer >
+                        <Button Content="Close Help" 
+                               Grid.Column="1" Margin="2" HorizontalAlignment="Right" Foreground="Purple"
+                               VerticalAlignment="Top" x:Name="HelpClose" Click="HelpClose_Click" />
+                    </BlockUIContainer>
+                    <Section FontSize="13" Foreground="Purple" BorderBrush="Purple"  BorderThickness="1">
+                        <Paragraph>
+                            <Bold>VidFileTag Help</Bold>
+                        </Paragraph>
+                        <Paragraph>
+                            Setting the current directory location uses three controls, the "disk drive selector to choose a disk drive,
+                            , a mouse click on the Up Arrow to move to the parent directory and the a mouse click on a child directory 
+                            in the list of child directorys to move to that child.
+                            <LineBreak/>
+                            The current directory path is shown above the Up arrow.
+                            <LineBreak/>
+                            Tag and other operations use the files in the current directory path.
+                            <Figure 
+                              Width="210" 
+                               TextAlignment="Left" 
+                                 HorizontalAnchor="ContentLeft">
+                                <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                                    <StackPanel>
+                                        <Border BorderBrush="Purple" BorderThickness="2">
+                                            <StackPanel>
+                                                <Label Target="{Binding ElementName=PathChoiceImage}" BorderBrush="Purple" BorderThickness="1">
+                                                    <TextBlock Text="Set Target Directory" />
+                                                </Label>
+                                                <Image x:Name="PathChoiceImage" 
+                                        Visibility="Visible"  Source="DirectoryToll.png" Width="200"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </BlockUIContainer>
+                            </Figure>
+                        </Paragraph>
+                    </Section>
+                    <Section FontSize="13" Foreground="Purple"
+                             BorderBrush="Purple"  BorderThickness="1">
+                        <Paragraph>
+                            Files in the current directory are listed in the media file list. 
+                            Pressing the "Show all Media files" button will show all file. The list can also filtered 
+                            using a simple pattern or by showing only files that have selected tags in their filename.
+                            <Figure 
+                              Width="206" 
+                               TextAlignment="Left" 
+                                 HorizontalAnchor="ContentLeft">
+                                <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                                    <StackPanel>
+                                        <Border BorderBrush="Purple" BorderThickness="2">
+                                            <StackPanel>
+                                                <Label Target="{Binding ElementName=FileListImage}" BorderBrush="Purple" BorderThickness="1">
+                                                    <TextBlock Text="All Media Shown" />
+                                                </Label>
+                                                <Image x:Name="FileListImage"  Margin="3" 
+                                             Visibility="Visible"  Source="mediaListOne.png" Width="200"/>
+                                            </StackPanel>
+                                        </Border>
+                                        <Border  BorderBrush="Purple" BorderThickness="2">
+                                            <StackPanel>
+                                                <Label Target="{Binding ElementName=FileWildImage}" BorderBrush="Purple" BorderThickness="1">
+                                                    <TextBlock Text="Patern media shown" />
+                                                </Label>
+                                                <Image x:Name="FileWildImage"  Margin="3"
+                                        Visibility="Visible"  Source="WildCardfILES7.png" Width="200"/>
+                                            </StackPanel>
+                                        </Border>
+                                        <Border BorderBrush="Purple" BorderThickness="2">
+                                            <StackPanel>
+                                                <Label Target="{Binding ElementName=FileTagImage}" BorderBrush="Purple" BorderThickness="1">
+                                                    <TextBlock Text="Tag in file media shown" />
+                                                </Label>
+                                                <Image x:Name="FileTagImage" Margin="3"
+                                                Visibility="Visible"  Source="TagSearcgFiles1.png" Width="160"/>
+                                            </StackPanel>
+                                        </Border>
+
+                                    </StackPanel>
+                                </BlockUIContainer>
+                            </Figure>
+                            <LineBreak />
+                            
+                           
+                        </Paragraph>
+                       
+                    </Section>
+                    
+                    <Section FontSize="13" Foreground="Purple" BorderBrush="Purple"  BorderThickness="1">
+                        <Paragraph>
+
+                            <Figure  Width="226" 
+                               TextAlignment="Left" 
+                                 HorizontalAnchor="ContentLeft">
+                                <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                                <StackPanel>
+                                    <Border BorderBrush="Purple" BorderThickness="2">
+                                        <StackPanel>
+                                                <Label Target="{Binding ElementName=AfterFileSelect}" BorderBrush="Purple" BorderThickness="1">
+                                                <TextBlock Text="After Media Selected" />
+                                            </Label>
+                                            <Image x:Name="AfterFileSelect"  Margin="3" 
+                                             Visibility="Visible"  Source="AfterMediaSelected.png" Width="220"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </BlockUIContainer>
+                            </Figure>
+                            <LineBreak />
+                            When a file is selected in the file list The file names is displayed in the Selected file box and any 
+                            tags in the database for that file instance are shown also. If the file is a media file media 
+                            information is displayed in the File information area.
+                            <LineBreak />
+                            Also If the file is a media file a popup media player appears and 
+                            the media may be played  by the user.
+                        </Paragraph>
+                    </Section>
+                </FlowDocument>
+            </FlowDocumentReader>
+
+
+
+        </Popup>
+
 
         <Popup IsOpen="False" x:Name="LocationChangePopup" PlacementTarget="{Binding ElementName=Back}" Width="600" Placement="Top" Margin="5" 
                Opacity="90" HorizontalOffset="50">

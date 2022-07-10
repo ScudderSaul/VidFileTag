@@ -3137,8 +3137,17 @@ namespace VidFileTag
             TagSearchPopup.IsOpen = false;
         }
 
+
         #endregion
 
-       
+        private void HelpButton_Click(object sender, RoutedEventArgs e)
+        {
+            HelpPopup.IsOpen = true;
+        }
+
+        private void HelpClose_Click(object sender, RoutedEventArgs e)
+        {
+            HelpPopup.IsOpen = false;
+        }
     }
 }

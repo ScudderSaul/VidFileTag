@@ -15,8 +15,34 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="AfterMediaSelected.png" />
+    <None Remove="DirectoryToll.png" />
+    <None Remove="mediaListOne.png" />
+    <None Remove="TagSearcgFiles1.png" />
+    <None Remove="WildCardfILES7.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Remove="SearchInFilename.xaml" />
     <Page Remove="ShowMediaInfo.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="AfterMediaSelected.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DirectoryToll.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="mediaListOne.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TagSearcgFiles1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WildCardfILES7.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
