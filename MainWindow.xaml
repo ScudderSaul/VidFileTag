@@ -27,8 +27,6 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0">
 
-
-
                 <Grid x:Name="TagGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="20*"></ColumnDefinition>
@@ -38,7 +36,6 @@
                         <GroupBox.Header>
                             <TextBlock Text="Tags Selection" FontSize="13" FontWeight="DemiBold" HorizontalAlignment="Left"/>
                         </GroupBox.Header>
-
 
                         <!-- TagsListView is All tags -->
                         <ListBox  x:Name="TagsListView" DisplayMemberPath="Tag" Margin="2" 
@@ -729,17 +726,16 @@
                             <Bold>VidFileTag Help</Bold>
                         </Paragraph>
                         <Paragraph>
-                            Setting the current directory location uses three controls, the "disk drive selector to choose a disk drive,
-                            , a mouse click on the Up Arrow to move to the parent directory and the a mouse click on a child directory 
-                            in the list of child directorys to move to that child.
-                            <LineBreak/>
-                            The current directory path is shown above the Up arrow.
-                            <LineBreak/>
-                            Tag and other operations use the files in the current directory path.
+                           
                             <Figure 
-                              Width="210" 
+                              Width="390" 
                                TextAlignment="Left" 
                                  HorizontalAnchor="ContentLeft">
+                                <Paragraph>
+                                    <Run>
+                                        Tag and other operations use the files in the current directory.
+                                    </Run>
+                                </Paragraph>
                                 <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
                                     <StackPanel>
                                         <Border BorderBrush="Purple" BorderThickness="2">
@@ -748,59 +744,91 @@
                                                     <TextBlock Text="Set Target Directory" />
                                                 </Label>
                                                 <Image x:Name="PathChoiceImage" 
-                                        Visibility="Visible"  Source="DirectoryToll.png" Width="200"/>
+                                        Visibility="Visible"  Source="DirectoryToll.png" Width="380"/>
                                             </StackPanel>
                                         </Border>
                                     </StackPanel>
                                 </BlockUIContainer>
+                                <Paragraph>
+                                    <Run>
+                                        To Set the current directory location use three controls, 
+                                        the "disk drive selector" to choose a disk drive,
+                                        , a mouse "click on a child directory" in the list of child directorys to move to that child. 
+                                        and the "up arrow" to move to the parent of the current directory.
+                                     </Run>
+                                    <LineBreak/>
+                                    <Run>
+                                        The current directory path is shown above the Up arrow.
+
+                                    </Run>
+                                </Paragraph>
                             </Figure>
+                           
                         </Paragraph>
                     </Section>
                     <Section FontSize="13" Foreground="Purple"
                              BorderBrush="Purple"  BorderThickness="1">
                         <Paragraph>
-                            Files in the current directory are listed in the media file list. 
-                            Pressing the "Show all Media files" button will show all file. The list can also filtered 
-                            using a simple pattern or by showing only files that have selected tags in their filename.
                             <Figure 
-                              Width="206" 
+                              
                                TextAlignment="Left" 
                                  HorizontalAnchor="ContentLeft">
                                 <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
-                                    <StackPanel>
+                                    
                                         <Border BorderBrush="Purple" BorderThickness="2">
                                             <StackPanel>
                                                 <Label Target="{Binding ElementName=FileListImage}" BorderBrush="Purple" BorderThickness="1">
                                                     <TextBlock Text="All Media Shown" />
                                                 </Label>
                                                 <Image x:Name="FileListImage"  Margin="3" 
-                                             Visibility="Visible"  Source="mediaListOne.png" Width="200"/>
+                                             Visibility="Visible"  Source="mediaListOne.png" />
                                             </StackPanel>
                                         </Border>
-                                        <Border  BorderBrush="Purple" BorderThickness="2">
-                                            <StackPanel>
-                                                <Label Target="{Binding ElementName=FileWildImage}" BorderBrush="Purple" BorderThickness="1">
-                                                    <TextBlock Text="Patern media shown" />
-                                                </Label>
-                                                <Image x:Name="FileWildImage"  Margin="3"
-                                        Visibility="Visible"  Source="WildCardfILES7.png" Width="200"/>
-                                            </StackPanel>
-                                        </Border>
-                                        <Border BorderBrush="Purple" BorderThickness="2">
-                                            <StackPanel>
-                                                <Label Target="{Binding ElementName=FileTagImage}" BorderBrush="Purple" BorderThickness="1">
-                                                    <TextBlock Text="Tag in file media shown" />
-                                                </Label>
-                                                <Image x:Name="FileTagImage" Margin="3"
-                                                Visibility="Visible"  Source="TagSearcgFiles1.png" Width="160"/>
-                                            </StackPanel>
-                                        </Border>
-
-                                    </StackPanel>
+                                   
                                 </BlockUIContainer>
+                                <Paragraph>
+                                    <Run>
+                                        Files in the current directory are listed in the media file list. 
+                                        Pressing the "Show all Media files" button will show all file.
+                                    </Run>
+                                </Paragraph>
                             </Figure>
-                            <LineBreak />
                             
+                            <Figure>
+                                <BlockUIContainer  BorderBrush="Purple" BorderThickness="1">
+                                    <Border  BorderBrush="Purple" BorderThickness="2">
+                                        <StackPanel>
+                                            <Label Target="{Binding ElementName=FileWildImage}" BorderBrush="Purple" BorderThickness="1">
+                                                <TextBlock Text="Show media with 'bach' " />
+                                            </Label>
+                                            <Image x:Name="FileWildImage"  Margin="3"
+                                        Visibility="Visible"  Source="WildCardfILES7.png" Width="380"/>
+                                        </StackPanel>
+                                    </Border>
+                                </BlockUIContainer>
+                                <Paragraph>
+                                    The list can also filtered using a simple pattern like 
+                                        <Italic>*text*</Italic>
+                                    
+                                </Paragraph>
+                            </Figure>
+                            <Figure>
+                                <BlockUIContainer  BorderBrush="Purple" BorderThickness="1">
+                                    <Border BorderBrush="Purple" BorderThickness="2">
+                                        <StackPanel>
+                                            <Label Target="{Binding ElementName=FileTagImage}" BorderBrush="Purple" BorderThickness="1">
+                                                <TextBlock Text="Tag in file media shown" />
+                                            </Label>
+                                            <Image x:Name="FileTagImage" Margin="3"
+                                                Visibility="Visible"  Source="TagSearcgFiles1.png" />
+                                        </StackPanel>
+                                    </Border>
+                                </BlockUIContainer>
+                                <Paragraph>
+                                    <Run>The list can also show only files that have selected tags in their filename.
+                                    </Run>
+                                </Paragraph>
+                            </Figure>
                            
                         </Paragraph>
                        
@@ -809,7 +837,7 @@
                     <Section FontSize="13" Foreground="Purple" BorderBrush="Purple"  BorderThickness="1">
                         <Paragraph>
 
-                            <Figure  Width="226" 
+                            <Figure   
                                TextAlignment="Left" 
                                  HorizontalAnchor="ContentLeft">
                                 <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
@@ -820,19 +848,22 @@
                                                 <TextBlock Text="After Media Selected" />
                                             </Label>
                                             <Image x:Name="AfterFileSelect"  Margin="3" 
-                                             Visibility="Visible"  Source="AfterMediaSelected.png" Width="220"/>
+                                             Visibility="Visible"  Source="AfterMediaSelected.png" />
                                         </StackPanel>
                                     </Border>
                                 </StackPanel>
                             </BlockUIContainer>
-                            </Figure>
-                            <LineBreak />
-                            When a file is selected in the file list The file names is displayed in the Selected file box and any 
+                                <Paragraph>
+                                    When a file is selected in the file list The file names is displayed in the Selected file box and any 
                             tags in the database for that file instance are shown also. If the file is a media file media 
                             information is displayed in the File information area.
-                            <LineBreak />
-                            Also If the file is a media file a popup media player appears and 
+                                    <LineBreak />
+                                    Also If the file is a media file a popup media player appears and 
                             the media may be played  by the user.
+                                </Paragraph>
+                            </Figure>
+                          
+                          
                         </Paragraph>
                     </Section>
                 </FlowDocument>
