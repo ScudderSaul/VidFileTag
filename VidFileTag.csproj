@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <None Remove="AfterMediaSelected.png" />
+    <None Remove="BasicTagOperations.png" />
     <None Remove="DirectoryToll.png" />
     <None Remove="mediaListOne.png" />
     <None Remove="TagSearcgFiles1.png" />
@@ -29,6 +30,9 @@
 
   <ItemGroup>
     <Content Include="AfterMediaSelected.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="BasicTagOperations.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DirectoryToll.png">
