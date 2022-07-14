@@ -425,7 +425,7 @@
                         </ListView>
                         <StackPanel Orientation="Horizontal">
 
-                            <!--<Button x:Name="ShowTaggedButton" Content="Show Taged" Height="29" Width="140" Background="Azure" 
+                            <!--<Button x:Name="ShowTaggedButton" Content="Show tagged" Height="29" Width="140" Background="Azure" 
                                     Click="ShowTaggedButton_Click" ></Button>-->
                         </StackPanel>
                     </StackPanel>
@@ -446,16 +446,22 @@
             </Grid.RowDefinitions>
             <GroupBox Grid.Column="0" Grid.Row="0">
                 <StackPanel>
-
                     <GroupBox BorderThickness="3" Margin="2" BorderBrush="BlueViolet">
                         <GroupBox.Header>
-                            <TextBlock Text="Operations"  FontWeight="DemiBold"  />
+                            <TextBlock Text="Playlist Operations"  FontWeight="DemiBold"  />
                         </GroupBox.Header>
                         <WrapPanel Margin="2" >
+                            <CheckBox IsChecked="True" Margin="2" 
+                                      Content="File Source" ForceCursor="False"
+                                      x:Name="PlayListSourceCheckBox"
+                                      Checked="PlayListSourceCheckBox_Checked"
+                                      Unchecked="PlayListSourceCheckBox_Unchecked"></CheckBox>
+                             
 
                             <Button FontSize="13" BorderThickness="2"
-                                     Click="PlayListDbButton_Click"  Margin="3"  Background="Linen"  x:Name="PlayListDbButton">
-                                <TextBlock Text="Add all data base files with the selected Tags to a playlist" FontSize="13" Foreground="Purple">
+                                     Click="PlayListButton_Click" Margin="3"  Background="Linen"  
+                                    x:Name="PlayListButton">
+                                <TextBlock Text="Add files with any selected tags to a playlist" FontSize="13" Foreground="Purple">
                                 </TextBlock>
                                 <Button.Resources>
                                     <Style TargetType="Border">
@@ -463,12 +469,72 @@
                                     </Style>
                                 </Button.Resources>
                                 <Button.ToolTip>
-                                    <TextBlock Text="Add all files that are marked in the database with one of the tags selected in the tags list to a LVC playlist." Foreground="DarkGreen" FontSize="12" />
+                                    <TextBlock Text="Add source files that are marked in the database with any of the selected tags in the tags list to playlist." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
                             </Button>
 
-                            <Button FontSize="13" BorderThickness="2"
-                                     Click="PlayListButton_Click"  Margin="3"  Background="Linen"  x:Name="PlayListButton">
+                            <Button  BorderThickness="2"
+                                    Click="PlayListAllButton_Click"  Margin="3"  Background="Linen" FontSize="13" 
+                                     x:Name="PlayListAllButton">
+                                <TextBlock Text="Add files with all of the selected tags to a playlist" FontSize="13" Foreground="Purple">
+                                </TextBlock>
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </Button.Resources>
+                                <Button.ToolTip>
+                                    <TextBlock Text="Add source files that are marked in the database with all of the selected tags in the tags list to a playlist." Foreground="DarkGreen" FontSize="12" />
+                                </Button.ToolTip>
+                            </Button>
+
+                            <Button  BorderThickness="2"
+                                    Click="PlayListOneButton_Click"  Margin="3" Background="Linen" FontSize="13" 
+                                     x:Name="PlayListOneButton">
+                                <TextBlock Text="Add any files with only one of the Selected Tags to a playlist" FontSize="13" Foreground="Purple">
+                                </TextBlock>
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </Button.Resources>
+                                <Button.ToolTip>
+                                    <TextBlock Text="Add any files that are marked in the database with only one of the tags selected in the tags list to a playlist." Foreground="DarkGreen" FontSize="12" />
+                                </Button.ToolTip>
+                            </Button>
+                        </WrapPanel>
+                    </GroupBox>
+
+                    <GroupBox BorderThickness="3" Margin="2" BorderBrush="BlueViolet">
+                        <GroupBox.Header>
+                            <TextBlock Text="File Move/Copy Operations"  FontWeight="DemiBold"  />
+                        </GroupBox.Header>
+                        <WrapPanel Margin="2" >
+
+                           
+                                <CheckBox IsChecked="True" Margin="2" 
+                                      Content="File Source" ForceCursor="False"
+                                      x:Name="FileCopyMoveSourceCheckBox"
+                                      Checked="FileCopyMoveSourceCheckBox_Checked"
+                                      Unchecked="FileCopyMoveSourceCheckBox_Unchecked"></CheckBox>
+                             
+
+
+
+                        </WrapPanel>
+                    </GroupBox>
+                    
+
+                    <GroupBox BorderThickness="3" Margin="2" BorderBrush="BlueViolet">
+                        <GroupBox.Header>
+                            <TextBlock Text="Operations"  FontWeight="DemiBold"  />
+                        </GroupBox.Header>
+                        <WrapPanel Margin="2" >
+
+                         
+
+                            <!--<Button FontSize="13" BorderThickness="2"
+                                     Click="PlayListDirectoryButton_Click"  Margin="3"  Background="Linen"  x:Name="PlayListButton">
                                 <TextBlock Text="Add all current directory files with the selected Tags to a playlist" FontSize="13" Foreground="Purple">
                                 </TextBlock>
                                 <Button.Resources>
@@ -479,24 +545,10 @@
                                 <Button.ToolTip>
                                     <TextBlock Text="Add any current directory files that are marked in the database with one of the tags selected in the tags list to a LVC playlist." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
-                            </Button>
-                            
-                            <Button  BorderThickness="2"
-                                    Click="PlayListAllDbButton_Click"  Margin="3"  Background="Linen" FontSize="13" x:Name="PlayListAllDbButton">
-                                <TextBlock Text="Add database files with all of the Selected Tags to a playlist" FontSize="13" Foreground="Purple">
-                                </TextBlock>
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                                <Button.ToolTip>
-                                    <TextBlock Text="Add database files that are marked in the database with all of the tags selected in the tags list to a LVC playlist." Foreground="DarkGreen" FontSize="12" />
-                                </Button.ToolTip>
-                            </Button>
+                            </Button>-->
 
-                            <Button  BorderThickness="2"
-                                    Click="PlayListAllButton_Click"  Margin="3"  Background="Linen" FontSize="13" x:Name="PlayListAllButton">
+                            <!--<Button  BorderThickness="2"
+                                    Click="PlayListAllDirectoryButton_Click"  Margin="3"  Background="Linen" FontSize="13" x:Name="PlayListAllButton">
                                 <TextBlock Text="Add current directory files with all of the Selected Tags to a playlist" FontSize="13" Foreground="Purple">
                                 </TextBlock>
                                 <Button.Resources>
@@ -507,20 +559,9 @@
                                 <Button.ToolTip>
                                     <TextBlock Text="Add current directory files that are marked in the database with all of the tags selected in the tags list to a LVC playlist." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
-                            </Button>
-                            <Button  BorderThickness="2"
-                                    Click="PlayListOneButton_Click"  Margin="3" Background="Linen" FontSize="13" x:Name="PlayListOneButton">
-                                <TextBlock Text="Add any current directory files with only one of the Selected Tags to a playlist" FontSize="13" Foreground="Purple">
-                                </TextBlock>
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                                <Button.ToolTip>
-                                    <TextBlock Text="Add any files that are marked in the database with only one of the tags selected in the tags list to a LVC playlist." Foreground="DarkGreen" FontSize="12" />
-                                </Button.ToolTip>
-                            </Button>
+                            </Button>-->
+                            
+                            
 
                             <Button   BorderThickness="2" Background="Linen" FontSize="13" 
                                     Click="ReadTagsTextFile_Click"  Margin="3">
@@ -635,7 +676,7 @@
                             <Button  BorderThickness="2" x:Name="HelpButton"
                                   Click="HelpButton_Click" 
                                  Margin="3" Background="Linen" FontSize="13">
-                                <TextBlock Text="Show help" FontSize="13" Foreground="Purple">
+                                <TextBlock Text="Show/Close help" FontSize="13" Foreground="Purple">
                                 </TextBlock>
                                 <Button.Resources>
                                     <Style TargetType="Border">

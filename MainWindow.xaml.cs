@@ -124,10 +124,10 @@ namespace VidFileTag
         //    public List<TagFileInfoTagInfo> FileTags { get => fileTags; set => fileTags = value; }
 
         // info for the current selected file
-        public TagFileInfo SelectedFileInfo 
-        { 
-            get => _selectedFileInfo; 
-            set => _selectedFileInfo = value; 
+        public TagFileInfo SelectedFileInfo
+        {
+            get => _selectedFileInfo;
+            set => _selectedFileInfo = value;
         }
 
 
@@ -345,7 +345,7 @@ namespace VidFileTag
                     }
                     else  // when it is not in the database create an info class
                     {
-                        
+
                         fti = new TagFileInfo
                         {
                             FilePath = st,
@@ -509,10 +509,10 @@ namespace VidFileTag
                 return;
             }
 
-            foreach(var seltag in ff)
+            foreach (var seltag in ff)
             {
                 TagInfo tt = seltag as TagInfo;
-                foreach(string s in tfilenames)
+                foreach (string s in tfilenames)
                 {
                     string finame = System.IO.Path.GetFileName(s);
 
@@ -525,8 +525,8 @@ namespace VidFileTag
                     {
                         TagFileInfo fti = null;
                         var wff = from su in Context.TagFileInfos
-                                 where su.FilePath == s
-                                 select su;
+                                  where su.FilePath == s
+                                  select su;
                         if (wff.Any())
                         {
                             fti = wff.First();
@@ -543,13 +543,13 @@ namespace VidFileTag
                             allfound[s] = fti;
                             //    fti.FileSize = fff.Length;
                             //   fti.FileExtension = fff.Extension;
-                          //  FilesListView.Items.Add(fti);
+                            //  FilesListView.Items.Add(fti);
                         }
                     }
                 }
-                if(allfound.Count > 0)
+                if (allfound.Count > 0)
                 {
-                  foreach(var ftv in allfound)
+                    foreach (var ftv in allfound)
                     {
                         TagFileInfo fti = ftv.Value;
                         FilesListView.Items.Add(fti);
@@ -695,6 +695,8 @@ namespace VidFileTag
                 PlayListButton.IsEnabled = true;
                 PlayListAllButton.IsEnabled = true;
                 PlayListOneButton.IsEnabled = true;
+                CopyTaggedButton.IsEnabled = true;
+                CopyCurrentTaggedButton.IsEnabled=true;
                 FilesWithASelectedTagInPath.IsEnabled = true;
             }
             else
@@ -703,6 +705,8 @@ namespace VidFileTag
                 PlayListButton.IsEnabled = false;
                 PlayListAllButton.IsEnabled = false;
                 PlayListOneButton.IsEnabled = false;
+                CopyTaggedButton.IsEnabled = false;
+                CopyCurrentTaggedButton.IsEnabled=false;
                 TagRemoveButton.IsEnabled = false;
                 FilesWithASelectedTagInPath.IsEnabled = false;
             }
@@ -1060,6 +1064,32 @@ namespace VidFileTag
 
         #region playlists
 
+        private void PlayListButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_playListSource == true)
+            {
+                PlayListDbButton_Click(sender, e);
+            }
+            else
+            {
+                PlayListDirectoryButton_Click(sender, e);
+            }
+
+        }
+
+        private void PlayListAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_playListSource == true)
+            {
+                PlayListAllDbButton_Click(sender, e);
+            }
+            else
+            {
+                PlayListAllDirectoryButton_Click(sender, e);
+            }
+        }
+
+
         private void PlayListDbButton_Click(object sender, RoutedEventArgs e)
         {
             Random rand = new Random();
@@ -1090,7 +1120,7 @@ namespace VidFileTag
                                 foreach (var tfit in gu)
                                 {
                                     TagFileInfo tfi = tfit as TagFileInfo;
-                                   
+
                                     if (FileList.Contains(tfi) == false)
                                     {
                                         FileList.Add(tfi);
@@ -1120,7 +1150,7 @@ namespace VidFileTag
                 }
             }
         }
-        private void PlayListButton_Click(object sender, RoutedEventArgs e)
+        private void PlayListDirectoryButton_Click(object sender, RoutedEventArgs e)
         {
             Random rand = new Random();
             List<TagFileInfo> FileList = new List<TagFileInfo>();
@@ -1166,7 +1196,7 @@ namespace VidFileTag
                                                 }
                                             }
                                         }
-                                    
+
                                     }
 
                                 }
@@ -1272,8 +1302,8 @@ namespace VidFileTag
 
             foreach (TagFileInfo tagfi in FileList)
             {
-                    filebuf += $"{tagfi.FilePath}" + " \r\n";
-                    cnt++;
+                filebuf += $"{tagfi.FilePath}" + " \r\n";
+                cnt++;
             }
 
             if (cnt == 0)
@@ -1302,7 +1332,7 @@ namespace VidFileTag
             }
 
         }
-        private void PlayListAllButton_Click(object sender, RoutedEventArgs e)
+        private void PlayListAllDirectoryButton_Click(object sender, RoutedEventArgs e)
         {
             Random rand = new Random();
             List<TagFileInfo> FileList = new List<TagFileInfo>();
@@ -1432,27 +1462,33 @@ namespace VidFileTag
             string filebuf = string.Empty;
             if (ff.Any())
             {
+                // list of selected tags
                 TagList = ff.ToList();
 
+                // select tag relations for the selectred tags to files
                 var hh = from TagFileInfoTagInfo hhh in Context.TagFileInfoTagInfos
                          where TagList.Contains(hhh.TagInfo)
                          select hhh;
 
                 if (hh.Any())
                 {
+                    // Get a list of the x cross bindings
                     List<TagFileInfoTagInfo> iinn = hh.ToList();
 
                     var fi = from TagFileInfoTagInfo uh in iinn
                              select uh.TagFileInfo;
 
+                    // get the TagFileInfos for the files involved
+
                     foreach (TagFileInfo rtr in fi)
                     {
-                        if(rtr == null)
+                        if (rtr == null)
                         {
                             continue;
                         }
                         int cnt = 0;
 
+                        // find how may times the files are referewnced
                         foreach (TagFileInfoTagInfo uh in iinn)
                         {
                             if (rtr.Id == uh.TagFileInfoId)
@@ -1461,15 +1497,20 @@ namespace VidFileTag
                             }
                         }
 
+                        // if referenced only once and not in output list 
                         if (cnt == 1 && !FileList.Contains(rtr))
                         {
                             FileInfo ainf = new FileInfo(rtr.FilePath);
                             DirectoryInfo? dir = ainf.Directory;
-                            if (dir != null)
+                            if (dir != null && dir.Exists == true )
                             {
-                                if (dir.FullName != path)
+                                if (_playListSource == false)
                                 {
-                                    continue;
+                                    if (dir.FullName != path)
+                                    {
+                                        // if not in curent directory
+                                        continue;
+                                    }
                                 }
 
 
@@ -1484,7 +1525,7 @@ namespace VidFileTag
                 if (FileList.Count == 0)
                 {
                     Cursor = System.Windows.Input.Cursors.Arrow;
-                    System.Windows.MessageBox.Show("No files had just one selected tags");
+                    System.Windows.MessageBox.Show("No files had just one of the selected tags");
                     return;
                 }
                 Cursor = System.Windows.Input.Cursors.Arrow;
@@ -1787,7 +1828,7 @@ namespace VidFileTag
 
 
 
-                           
+
                         }
                     }
 
@@ -2089,7 +2130,7 @@ namespace VidFileTag
                                 }
 
 
-                                if(itf.Directory.FullName != path)
+                                if (itf.Directory.FullName != path)
                                 {
                                     continue;
                                 }
@@ -3545,7 +3586,7 @@ namespace VidFileTag
 
         public void DoSearch_Click(object sender, RoutedEventArgs e)
         {
-            if(string.IsNullOrEmpty(SearchText.Text) == true)
+            if (string.IsNullOrEmpty(SearchText.Text) == true)
             {
                 return;
             }
@@ -3603,12 +3644,69 @@ namespace VidFileTag
 
         private void HelpButton_Click(object sender, RoutedEventArgs e)
         {
-            HelpPopup.IsOpen = true;
+            if (HelpPopup.IsOpen == false)
+            {
+                HelpPopup.IsOpen = true;
+            }
+            else
+            {
+                HelpPopup.IsOpen=false;
+            }
         }
 
         private void HelpClose_Click(object sender, RoutedEventArgs e)
         {
             HelpPopup.IsOpen = false;
+        }
+
+        bool _playListSource = true;
+
+        private void PlayListSourceCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            _playListSource = true;
+            PlayListSourceCheckBox.Content = "All tagged files";
+            if (PlayListSourceCheckBox.IsChecked == false)
+            {
+                PlayListSourceCheckBox.IsChecked = true;
+            }
+            this.InvalidateArrange();
+        }
+
+        private void PlayListSourceCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _playListSource = false;
+            PlayListSourceCheckBox.Content = "All tagged files  in the current directory";
+            if (PlayListSourceCheckBox.IsChecked == true)
+            {
+                PlayListSourceCheckBox.IsChecked = false;
+               
+               
+            }
+            this.InvalidateArrange();
+        }
+
+        bool _fileCopyMoveSource = true;
+
+        private void FileCopyMoveSourceCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            _fileCopyMoveSource = true;
+            FileCopyMoveSourceCheckBox.Content = "All Tagged Files";
+            if (FileCopyMoveSourceCheckBox.IsChecked == false)
+            {
+                FileCopyMoveSourceCheckBox.IsChecked = true;
+            }
+            this.InvalidateArrange();
+        }
+
+        private void FileCopyMoveSourceCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _fileCopyMoveSource = false;
+            FileCopyMoveSourceCheckBox.Content = "All Tagged Files in the current directory";
+            if (FileCopyMoveSourceCheckBox.IsChecked == true)
+            {
+                FileCopyMoveSourceCheckBox.IsChecked = false;
+            }
+            this.InvalidateArrange();
         }
     }
 }
