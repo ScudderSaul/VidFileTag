@@ -20,6 +20,7 @@
     <None Remove="DirectoryToll.png" />
     <None Remove="mediaListOne.png" />
     <None Remove="TagSearcgFiles1.png" />
+    <None Remove="vidieoshed.png" />
     <None Remove="WildCardfILES7.png" />
   </ItemGroup>
 
@@ -42,6 +43,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TagSearcgFiles1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vidieoshed.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WildCardfILES7.png">

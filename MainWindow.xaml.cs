@@ -696,7 +696,7 @@ namespace VidFileTag
                 PlayListAllButton.IsEnabled = true;
                 PlayListOneButton.IsEnabled = true;
                 CopyTaggedButton.IsEnabled = true;
-                CopyCurrentTaggedButton.IsEnabled=true;
+                MoveTaggedButton.IsEnabled = true;
                 FilesWithASelectedTagInPath.IsEnabled = true;
             }
             else
@@ -706,7 +706,7 @@ namespace VidFileTag
                 PlayListAllButton.IsEnabled = false;
                 PlayListOneButton.IsEnabled = false;
                 CopyTaggedButton.IsEnabled = false;
-                CopyCurrentTaggedButton.IsEnabled=false;
+                MoveTaggedButton.IsEnabled = false;
                 TagRemoveButton.IsEnabled = false;
                 FilesWithASelectedTagInPath.IsEnabled = false;
             }
@@ -1637,8 +1637,6 @@ namespace VidFileTag
                 }
                 return cntrlWindow;
             }
-
-
         }
 
         private void Cntrl_Closing(object sender, CancelEventArgs e)
@@ -1647,7 +1645,26 @@ namespace VidFileTag
             e.Cancel = true;
         }
 
+        private HelpWindow helpWindow;
 
+        private HelpWindow IsHelpWindow
+        {
+            get
+            {
+                if (helpWindow == null)
+                {
+                    helpWindow = new HelpWindow();
+                    helpWindow.Closing += Help_Closing;
+                }
+                return helpWindow;
+            }
+        }
+
+        private void Help_Closing(object sender, CancelEventArgs e)
+        {
+            helpWindow = null;
+            e.Cancel = true;
+        }
 
         #endregion
 
@@ -1735,6 +1752,108 @@ namespace VidFileTag
             GetFileDetails();
         }
 
+        ///// <summary>
+        ///// copies all files with the selected tags to a new location
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void CopyFilesWithSelectedTags(object sender, RoutedEventArgs e)
+        //{
+        //    var ff = from TagInfo su in TagsListView.SelectedItems
+        //             select su;
+
+
+        //    // if there are  selected tags
+        //    if (ff.Any())
+        //    {
+        //        // get a folder path
+
+        //        FolderBrowserDialog dlg = new System.Windows.Forms.FolderBrowserDialog();
+
+        //        string folderName = string.Empty;
+        //        dlg.RootFolder = Environment.SpecialFolder.Personal;
+
+        //        System.Windows.Forms.DialogResult result = dlg.ShowDialog();
+        //        if (result == System.Windows.Forms.DialogResult.OK)
+        //        {
+        //            folderName = dlg.SelectedPath;
+        //        }
+        //        else
+        //        {
+        //            return;
+        //        }
+
+        //        // a list forcopied files
+
+        //        List<TagFileInfo> done = new List<TagFileInfo>();
+
+        //        foreach (TagInfo tif in ff)
+        //        {
+        //            var rel = from rrt in Context.TagFileInfoTagInfos
+        //                      where rrt.TagInfoId == tif.Id
+        //                      select rrt;
+
+        //            if (rel.Any())
+        //            {
+        //                foreach (TagFileInfoTagInfo aa in rel)
+        //                {
+
+        //                    try
+        //                    {
+        //                        if (done.Contains(aa.TagFileInfo) == true)
+        //                        {
+        //                            continue;
+
+        //                        }
+        //                        string npath = System.IO.Path.Combine(folderName, aa.TagFileInfo.FileName);
+        //                        if (File.Exists(npath) == true)
+        //                        {
+        //                            continue;
+        //                        }
+
+
+        //                        File.Copy(aa.TagFileInfo.FilePath, npath);
+        //                        done.Add(aa.TagFileInfo);
+        //                        TagFileInfo tfin = new TagFileInfo
+        //                        {
+        //                            FileSize = aa.TagFileInfo.FileSize,
+        //                            FileExtension = aa.TagFileInfo.FileExtension,
+        //                            FilePath = npath,
+        //                            FileName = aa.TagFileInfo.FileName,
+        //                            Crc32 = aa.TagFileInfo.Crc32,
+        //                            FrameHeight = aa.TagFileInfo.FrameHeight,
+        //                            FrameWidth = aa.TagFileInfo.FrameWidth,
+        //                        };
+
+        //                        Context.TagFileInfos.Add(tfin);
+        //                        Context.SaveChanges();
+
+        //                        TagFileInfoTagInfo ninf = new TagFileInfoTagInfo
+        //                        {
+        //                            TagFileInfo = tfin,
+        //                            TagInfo = tif,
+        //                        };
+
+        //                        Context.TagFileInfoTagInfos.Add(ninf);
+        //                        Context.SaveChanges();
+
+        //                    }
+        //                    catch (Exception ee)
+        //                    {
+        //                        string nope = ee.Message;
+        //                    }
+
+
+
+
+        //                }
+        //            }
+
+        //        }
+        //    }
+        //}
+
+
         /// <summary>
         /// copies all files with the selected tags to a new location
         /// </summary>
@@ -1783,126 +1902,27 @@ namespace VidFileTag
 
                             try
                             {
-                                if (done.Contains(aa.TagFileInfo) == true)
+                                if (_fileCopyMoveSource == false)
                                 {
-                                    continue;
+                                    FileInfo itf = new FileInfo(aa.TagFileInfo.FilePath);
 
-                                }
-                                string npath = System.IO.Path.Combine(folderName, aa.TagFileInfo.FileName);
-                                if (File.Exists(npath) == true)
-                                {
-                                    continue;
-                                }
+                                    if (itf.Directory == null)
+                                    {
+                                        continue;
+                                    }
 
-
-                                File.Copy(aa.TagFileInfo.FilePath, npath);
-                                done.Add(aa.TagFileInfo);
-                                TagFileInfo tfin = new TagFileInfo
-                                {
-                                    FileSize = aa.TagFileInfo.FileSize,
-                                    FileExtension = aa.TagFileInfo.FileExtension,
-                                    FilePath = npath,
-                                    FileName = aa.TagFileInfo.FileName,
-                                    Crc32 = aa.TagFileInfo.Crc32,
-                                    FrameHeight = aa.TagFileInfo.FrameHeight,
-                                    FrameWidth = aa.TagFileInfo.FrameWidth,
-                                };
-
-                                Context.TagFileInfos.Add(tfin);
-                                Context.SaveChanges();
-
-                                TagFileInfoTagInfo ninf = new TagFileInfoTagInfo
-                                {
-                                    TagFileInfo = tfin,
-                                    TagInfo = tif,
-                                };
-
-                                Context.TagFileInfoTagInfos.Add(ninf);
-                                Context.SaveChanges();
-
-                            }
-                            catch (Exception ee)
-                            {
-                                string nope = ee.Message;
-                            }
+                                    if (itf.Directory.Exists == false)
+                                    {
+                                        continue;
+                                    }
 
 
-
-
-                        }
-                    }
-
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// copies all files with the selected tags to a new location
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CopyCurentFilesWithSelectedTags(object sender, RoutedEventArgs e)
-        {
-            var ff = from TagInfo su in TagsListView.SelectedItems
-                     select su;
-
-
-            // if there are  selected tags
-            if (ff.Any())
-            {
-                // get a folder path
-
-                FolderBrowserDialog dlg = new System.Windows.Forms.FolderBrowserDialog();
-
-                string folderName = string.Empty;
-                dlg.RootFolder = Environment.SpecialFolder.Personal;
-
-                System.Windows.Forms.DialogResult result = dlg.ShowDialog();
-                if (result == System.Windows.Forms.DialogResult.OK)
-                {
-                    folderName = dlg.SelectedPath;
-                }
-                else
-                {
-                    return;
-                }
-
-                // a list forcopied files
-
-                List<TagFileInfo> done = new List<TagFileInfo>();
-
-                foreach (TagInfo tif in ff)
-                {
-                    var rel = from rrt in Context.TagFileInfoTagInfos
-                              where rrt.TagInfoId == tif.Id
-                              select rrt;
-
-                    if (rel.Any())
-                    {
-                        foreach (TagFileInfoTagInfo aa in rel)
-                        {
-
-                            try
-                            {
-
-                                FileInfo itf = new FileInfo(aa.TagFileInfo.FilePath);
-
-                                if (itf.Directory == null)
-                                {
-                                    continue;
+                                    if (itf.Directory.FullName != path)
+                                    {
+                                        continue;
+                                    }
                                 }
 
-                                if (itf.Directory.Exists == false)
-                                {
-                                    continue;
-                                }
-
-
-                                if (itf.Directory.FullName != path)
-                                {
-                                    continue;
-                                }
 
                                 if (done.Contains(aa.TagFileInfo) == true)
                                 {
@@ -2014,131 +2034,25 @@ namespace VidFileTag
                                     continue;
                                 }
 
-
-                                File.Copy(aa.TagFileInfo.FilePath, npath);
-                                done.Add(aa.TagFileInfo);
-                                TagFileInfo tfin = new TagFileInfo
+                                if (_fileCopyMoveSource == false)
                                 {
-                                    FileSize = aa.TagFileInfo.FileSize,
-                                    FileExtension = aa.TagFileInfo.FileExtension,
-                                    FilePath = npath,
-                                    FileName = aa.TagFileInfo.FileName,
-                                    Crc32 = aa.TagFileInfo.Crc32,
-                                    FrameHeight = aa.TagFileInfo.FrameHeight,
-                                    FrameWidth = aa.TagFileInfo.FrameWidth,
-                                };
+                                    FileInfo itf = new FileInfo(aa.TagFileInfo.FilePath);
 
-                                Context.TagFileInfos.Add(tfin);
-                                Context.SaveChanges();
+                                    if (itf.Directory == null)
+                                    {
+                                        continue;
+                                    }
 
-                                TagFileInfoTagInfo ninf = new TagFileInfoTagInfo
-                                {
-                                    TagFileInfo = tfin,
-                                    TagInfo = tif,
-                                };
-
-                                Context.TagFileInfoTagInfos.Add(ninf);
-                                Context.SaveChanges();
-
-                            }
-                            catch (Exception ee)
-                            {
-                                System.Windows.MessageBox.Show("Copy before move error -- The system message was " + ee.Message);
-                            }
-                        }
-                    }
-                }
-
-                foreach (TagFileInfo bye in done)
-                {
-                    try
-                    {
-                        DeleteFile(bye);
-                    }
-                    catch (Exception ee)
-                    {
-                        System.Windows.MessageBox.Show("delete error -- The system message was " + ee.Message);
-                    }
-
-                }
-            }
-            PathCalks(path);
-        }
-
-        /// <summary>
-        /// Move the current files with any selected tag to a new location
-        /// </summary>
-        private void MoveCurrentFilesWithSelectedTags(object sender, RoutedEventArgs e)
-        {
-            var ff = from TagInfo su in TagsListView.SelectedItems
-                     select su;
+                                    if (itf.Directory.Exists == false)
+                                    {
+                                        continue;
+                                    }
 
 
-            // if there are  selected tags
-            if (ff.Any())
-            {
-                // get a folder path
-
-                System.Windows.Forms.FolderBrowserDialog dlg = new System.Windows.Forms.FolderBrowserDialog();
-
-                string folderName = string.Empty;
-                dlg.RootFolder = Environment.SpecialFolder.Personal;
-
-                System.Windows.Forms.DialogResult result = dlg.ShowDialog();
-                if (result == System.Windows.Forms.DialogResult.OK)
-                {
-                    folderName = dlg.SelectedPath;
-                }
-                else
-                {
-                    return;
-                }
-
-                // a list for moved files
-
-                List<TagFileInfo> done = new List<TagFileInfo>();
-
-                foreach (TagInfo tif in ff)
-                {
-                    var rel = from rrt in Context.TagFileInfoTagInfos
-                              where rrt.TagInfoId == tif.Id
-                              select rrt;
-
-                    if (rel.Any())
-                    {
-                        foreach (TagFileInfoTagInfo aa in rel)
-                        {
-
-                            try
-                            {
-                                if (done.Contains(aa.TagFileInfo) == true)
-                                {
-                                    continue;
-
-                                }
-
-                                FileInfo itf = new FileInfo(aa.TagFileInfo.FilePath);
-
-                                if (itf.Directory == null)
-                                {
-                                    continue;
-                                }
-
-                                if (itf.Directory.Exists == false)
-                                {
-                                    continue;
-                                }
-
-
-                                if (itf.Directory.FullName != path)
-                                {
-                                    continue;
-                                }
-
-                                string npath = System.IO.Path.Combine(folderName, aa.TagFileInfo.FileName);
-                                if (File.Exists(npath) == true)
-                                {
-                                    continue;
+                                    if (itf.Directory.FullName != path)
+                                    {
+                                        continue;
+                                    }
                                 }
 
 
@@ -2191,6 +2105,133 @@ namespace VidFileTag
             }
             PathCalks(path);
         }
+
+        ///// <summary>
+        ///// Move the current files with any selected tag to a new location
+        ///// </summary>
+        //private void MoveCurrentFilesWithSelectedTags(object sender, RoutedEventArgs e)
+        //{
+        //    var ff = from TagInfo su in TagsListView.SelectedItems
+        //             select su;
+
+
+        //    // if there are  selected tags
+        //    if (ff.Any())
+        //    {
+        //        // get a folder path
+
+        //        System.Windows.Forms.FolderBrowserDialog dlg = new System.Windows.Forms.FolderBrowserDialog();
+
+        //        string folderName = string.Empty;
+        //        dlg.RootFolder = Environment.SpecialFolder.Personal;
+
+        //        System.Windows.Forms.DialogResult result = dlg.ShowDialog();
+        //        if (result == System.Windows.Forms.DialogResult.OK)
+        //        {
+        //            folderName = dlg.SelectedPath;
+        //        }
+        //        else
+        //        {
+        //            return;
+        //        }
+
+        //        // a list for moved files
+
+        //        List<TagFileInfo> done = new List<TagFileInfo>();
+
+        //        foreach (TagInfo tif in ff)
+        //        {
+        //            var rel = from rrt in Context.TagFileInfoTagInfos
+        //                      where rrt.TagInfoId == tif.Id
+        //                      select rrt;
+
+        //            if (rel.Any())
+        //            {
+        //                foreach (TagFileInfoTagInfo aa in rel)
+        //                {
+
+        //                    try
+        //                    {
+        //                        if (done.Contains(aa.TagFileInfo) == true)
+        //                        {
+        //                            continue;
+
+        //                        }
+
+        //                        FileInfo itf = new FileInfo(aa.TagFileInfo.FilePath);
+
+        //                        if (itf.Directory == null)
+        //                        {
+        //                            continue;
+        //                        }
+
+        //                        if (itf.Directory.Exists == false)
+        //                        {
+        //                            continue;
+        //                        }
+
+
+        //                        if (itf.Directory.FullName != path)
+        //                        {
+        //                            continue;
+        //                        }
+
+        //                        string npath = System.IO.Path.Combine(folderName, aa.TagFileInfo.FileName);
+        //                        if (File.Exists(npath) == true)
+        //                        {
+        //                            continue;
+        //                        }
+
+
+        //                        File.Copy(aa.TagFileInfo.FilePath, npath);
+        //                        done.Add(aa.TagFileInfo);
+        //                        TagFileInfo tfin = new TagFileInfo
+        //                        {
+        //                            FileSize = aa.TagFileInfo.FileSize,
+        //                            FileExtension = aa.TagFileInfo.FileExtension,
+        //                            FilePath = npath,
+        //                            FileName = aa.TagFileInfo.FileName,
+        //                            Crc32 = aa.TagFileInfo.Crc32,
+        //                            FrameHeight = aa.TagFileInfo.FrameHeight,
+        //                            FrameWidth = aa.TagFileInfo.FrameWidth,
+        //                        };
+
+        //                        Context.TagFileInfos.Add(tfin);
+        //                        Context.SaveChanges();
+
+        //                        TagFileInfoTagInfo ninf = new TagFileInfoTagInfo
+        //                        {
+        //                            TagFileInfo = tfin,
+        //                            TagInfo = tif,
+        //                        };
+
+        //                        Context.TagFileInfoTagInfos.Add(ninf);
+        //                        Context.SaveChanges();
+
+        //                    }
+        //                    catch (Exception ee)
+        //                    {
+        //                        System.Windows.MessageBox.Show("Copy before move error -- The system message was " + ee.Message);
+        //                    }
+        //                }
+        //            }
+        //        }
+
+        //        foreach (TagFileInfo bye in done)
+        //        {
+        //            try
+        //            {
+        //                DeleteFile(bye);
+        //            }
+        //            catch (Exception ee)
+        //            {
+        //                System.Windows.MessageBox.Show("delete error -- The system message was " + ee.Message);
+        //            }
+
+        //        }
+        //    }
+        //    PathCalks(path);
+        //}
 
 
         /// <summary>
@@ -3644,19 +3685,20 @@ namespace VidFileTag
 
         private void HelpButton_Click(object sender, RoutedEventArgs e)
         {
-            if (HelpPopup.IsOpen == false)
+            if (IsHelpWindow.Visibility == Visibility.Collapsed)
             {
-                HelpPopup.IsOpen = true;
+                IsHelpWindow.Visibility = Visibility.Visible;
             }
             else
             {
-                HelpPopup.IsOpen=false;
+                IsHelpWindow.Visibility = Visibility.Collapsed; ;
             }
         }
 
         private void HelpClose_Click(object sender, RoutedEventArgs e)
         {
-            HelpPopup.IsOpen = false;
+            IsHelpWindow.Visibility=Visibility.Collapsed;
+            IsHelpWindow.Close(); 
         }
 
         bool _playListSource = true;
