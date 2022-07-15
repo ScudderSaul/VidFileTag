@@ -6,24 +6,33 @@
         xmlns:local="clr-namespace:VidFileTag"
         mc:Ignorable="d"
         Title="HelpWindow"  Width="804">
-    
-        <FlowDocumentReader Background="#FFF1F3F7" BorderBrush="Purple" BorderThickness="3" >
-            <FlowDocument    Background="#FFF1F3F7"
+
+    <FlowDocumentScrollViewer Background="#FFF1F3F7" BorderBrush="Purple" BorderThickness="3" >
+            <FlowDocument    Background="#FFF1F3F7" ColumnWidth="400" 
                                    IsOptimalParagraphEnabled="True"  >
+           
                 <BlockUIContainer >
                     <Button Content="Close Help" 
                                 Margin="2" HorizontalAlignment="Right" Foreground="Purple"
                                VerticalAlignment="Top" x:Name="HelpClose" Click="HelpClose_Click" />
                 </BlockUIContainer>
+            <Paragraph >
+                <Bold>VidFileTag Help</Bold>
+                <LineBreak/>
+            </Paragraph>
+            <Paragraph>
+                VidFileTag is a program that is used to add tags to media files of many kinds, images, music, and vidieo. 
+                    It maintains all tag information in a local own database and never modifies media files.
+                    Operations like copying all files tagged with a particualar tag to a location, or 
+                    saving a playlist of files with a selected set of tags are available. 
+                    Tagging copies of files tagged in another location is another job the VidFileTag cam perform.
+                    VidFileTag has a media player to allow viewing or listining to media file to help chose tags.
+                    The VideoLan.LibVLC.Windows media library is used.
 
-                <Paragraph>
-                    <Bold>VidFileTag Help</Bold>
-                </Paragraph>
-                <Paragraph>
-                    <Figure 
-                             
-                               TextAlignment="Left" 
-                                 HorizontalAnchor="ContentLeft">
+             </Paragraph>
+           
+            <Paragraph>
+                    <Figure  TextAlignment="Left"  HorizontalAnchor="ContentLeft">
                         <Paragraph Margin="1">
 
                             Tag and other operations use the files in the current directory.
@@ -51,7 +60,8 @@
                             </Run>
                             <LineBreak/>
                             <Run>
-                                The current directory path is shown above the Up arrow.
+                                The current directory path is shown above the
+                            "Up" arrow.
 
                             </Run>
                         </Paragraph>
@@ -190,16 +200,42 @@
                             When a file is selected in the file list The file names is displayed in the Selected file box and any 
                             tags in the database for that file instance are shown also. If the file is a media file media 
                             information is displayed in the File information area.
-                            <LineBreak />
-                            Also If the file is a media file a popup media player appears and 
-                            the media may be played  by the user.
+                          
                         </Paragraph>
                     </Figure>
 
 
                 </Paragraph>
 
-            </FlowDocument>
-        </FlowDocumentReader>
+            <Paragraph>
+
+                <Figure   
+                               TextAlignment="Left" 
+                                 HorizontalAnchor="ContentLeft">
+                    <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                        <StackPanel>
+                            <Border BorderBrush="Purple" BorderThickness="2">
+                                <StackPanel>
+                                    <Label Target="{Binding ElementName=MediaPlayerImage}" BorderBrush="Purple" BorderThickness="1">
+                                        <TextBlock Text="Media player window" />
+                                    </Label>
+                                    <Image x:Name="MediaPlayerImage"  Margin="3" 
+                                             Visibility="Visible"  Source="vidieoshed.png" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </BlockUIContainer>
+                    <Paragraph  Margin="1">
+                       
+                        If the file is a media file and "Play" in the media control is pressed a media player window appears and 
+                            the media plays. 
+                    </Paragraph>
+                </Figure>
+
+
+            </Paragraph>
+
+        </FlowDocument>
+        </FlowDocumentScrollViewer>
    
 </Window>

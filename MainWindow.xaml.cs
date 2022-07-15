@@ -326,7 +326,9 @@ namespace VidFileTag
                 FilesListView.Items.Clear();
                 foreach (string st in filenames)
                 {
-                    string finame = System.IO.Path.GetFileName(st);
+                   
+
+                     string finame = System.IO.Path.GetFileName(st);
 
                     if (string.IsNullOrWhiteSpace(finame))
                     {
@@ -345,15 +347,19 @@ namespace VidFileTag
                     }
                     else  // when it is not in the database create an info class
                     {
+                        FileInfo vv = new FileInfo(st);
 
                         fti = new TagFileInfo
                         {
                             FilePath = st,
-                            FileName = finame
+                            FileName = finame,
+                            FileSize = vv.Length,
+                            FileExtension = vv.Extension
                         };
-                        //    fti.FileSize = fff.Length;
-                        //   fti.FileExtension = fff.Extension;
-                        FilesListView.Items.Add(fti);
+                        if (_VLCfileformats.Keys.Contains<string>(fti.FileExtension.ToUpper()) == true)
+                        {
+                            FilesListView.Items.Add(fti);
+                        }
                     }
                 }
             }
@@ -3194,6 +3200,124 @@ namespace VidFileTag
             //    }
 
             //}
+        }
+
+        void FindIdenticalFilesAndTagInTree(object sender, RoutedEventArgs e)
+        {
+            var ft = FilesListView.SelectedItem;
+            if(ft != null)
+            {
+                TagFileInfo tfi = ft as TagFileInfo;
+                AddChosenFile(tfi);
+                var hfi = from ere in Context.TagFileInfos
+                          where ere.FilePath == tfi.FilePath
+                          select ere;
+                if (hfi.Any() == false)
+                {
+                    return;
+                }
+                Cursor = System.Windows.Input.Cursors.Wait;
+                TagFileInfo findme = hfi.First() as TagFileInfo;
+
+                string dname = string.Empty;
+                // get a folder path
+
+                FolderBrowserDialog dlg = new System.Windows.Forms.FolderBrowserDialog();
+
+                string folderName = string.Empty;
+                dlg.RootFolder = Environment.SpecialFolder.Personal;
+
+                System.Windows.Forms.DialogResult result = dlg.ShowDialog();
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    dname = dlg.SelectedPath;
+                    if (Directory.Exists(dname))
+                    {
+                        FindIdenticalFilesAndTagInTree(dname, findme);
+                    }
+                }
+                else
+                {
+                    Cursor = System.Windows.Input.Cursors.Arrow;
+                    return;
+                }
+            }
+            Cursor = System.Windows.Input.Cursors.Arrow;
+        }
+
+        void FindIdenticalFilesAndTagInTree(string infname, TagFileInfo findme)
+        {
+            var dirlist = Directory.EnumerateDirectories(infname);
+
+            foreach(var dir in dirlist)
+            {
+               if(Directory.Exists(dir))
+                {
+                    FindIdenticalFilesAndTagInTree(dir, findme);
+                    DirectoryInfo dirinfo = new DirectoryInfo(dir);
+                    FindIdenticalFilesAndTag(dirinfo, findme);
+                }
+            }
+        }
+
+        void FindIdenticalFilesAndTag(DirectoryInfo inf, TagFileInfo findme)
+        {
+            var allfiles = Directory.EnumerateFiles(inf.FullName);
+
+            foreach(string vv in allfiles)
+            {
+                FileInfo ff = new FileInfo(vv);
+                if(ff.Name == findme.FileName && ff.Length == findme.FileSize)
+                {
+                    TagFileInfo foundfile = new TagFileInfo
+                    {
+                        FileName = ff.Name,
+                        FileSize = ff.Length,
+                        FileExtension = ff.Extension,
+                        FilePath = ff.FullName,
+                    };
+                    AddChosenFile(foundfile);
+                    var ifi = from su in Context.TagFileInfos
+                             where su.FilePath == foundfile.FilePath
+                             select su;
+                    if(ifi.Count() > 0)
+                    {
+                       TagFileInfo tt = ifi.First();
+                        if (tt.Crc32 == findme.Crc32)
+                        {
+                            foundfile = tt;
+
+                            // find all tag links for findme
+                            var qq = from atftf in Context.TagFileInfoTagInfos
+                                     where atftf.TagFileInfoId == findme.Id
+                                     select atftf;
+
+                            if (qq.Any())
+                            {
+                                foreach (TagFileInfoTagInfo otfitf in qq)
+                                {
+                                    // look for any foundfile tag links with the same tag the same as findme tag links
+                                    var chk = from rr in Context.TagFileInfoTagInfos
+                                              where rr.TagFileInfoId == foundfile.Id && rr.TagInfoId == otfitf.TagInfo.Id
+                                              select rr;
+
+                                    if (chk.Any() == false)  // if none add one
+                                    {
+                                        var rr = new TagFileInfoTagInfo
+                                        {
+                                            TagFileInfoId = foundfile.Id,
+                                            TagInfoId = otfitf.TagInfo.Id,
+                                        };
+
+                                        Context.TagFileInfoTagInfos.Add(rr);
+                                        Context.SaveChanges();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         void WhenFileWithSameNameandCRCExists(object sender, RoutedEventArgs e)

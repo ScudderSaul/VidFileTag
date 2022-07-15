@@ -643,7 +643,7 @@
                             <Button 
                                    BorderThickness="2" BorderBrush="Purple" 
                                      Click="WhenFileWithSameNameandCRCExists"  Margin="3" Background="Linen" FontSize="13">
-                                <TextBlock Text="Update identical files in the directory with tags on copy" FontSize="13" Foreground="Purple">
+                                <TextBlock Text="Tag any files in the current directory identical to files already tagged with those tags" FontSize="13" Foreground="Purple">
                                 </TextBlock>
                                 <Button.Resources>
                                     <Style TargetType="Border">
@@ -654,6 +654,30 @@
                                     <TextBlock 
                                         Text="If a file in the list's name, size and crc are the same as another in the database update the files tags."
                                         Foreground="Purple"  FontSize="12" />
+                                </Button.ToolTip>
+
+                            </Button>
+
+                            <Button 
+                                   BorderThickness="2" BorderBrush="Purple" 
+                                     Click="FindIdenticalFilesAndTagInTree"  Margin="3" 
+                                Background="Linen"
+                                FontSize="13">
+                                <TextBlock Text="Find files identical to the selected file and give them the same tags" 
+                                           FontSize="13" 
+                                           Foreground="Purple">
+                                </TextBlock>
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </Button.Resources>
+                                <Button.ToolTip>
+                                    <TextBlock 
+                                        Text="If a file's name, size and crc are the same as the selectewd file 
+                                        update the files tags to match"
+                                        Foreground="Purple"  
+                                        FontSize="12" />
                                 </Button.ToolTip>
 
                             </Button>
