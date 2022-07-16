@@ -12,7 +12,7 @@
         <vlc1:VideoView x:Name="VideoView" Visibility="Collapsed">
           
         </vlc1:VideoView>
-        <Border Background="Linen"  BorderThickness="3" BorderBrush="Black" CornerRadius="6" >
+        <Border Background="#FFF1F3F7"  BorderThickness="3" BorderBrush="Purple"  CornerRadius="6" >
             <StackPanel Orientation="Vertical" Margin="0,0,0,0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Content="Show" x:Name="ShowFileButton"  Width="91" FontSize="14" FontWeight="ExtraBlack"

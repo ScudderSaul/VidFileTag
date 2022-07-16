@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:VidFileTag"
+        xmlns:local="clr-namespace:VidFileTag" 
         mc:Ignorable="d"
         
         Title="VidFileTag" 
-        Height="950"
+       
         Width="1100" Background="#FFF1F3F7" 
+        BorderBrush="Purple" BorderThickness="3"
         Foreground="#FF0C1854">
 
     <Window.Resources>
@@ -22,11 +23,11 @@
 
         <Grid x:Name="DirectoryGrid" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="7*" ></ColumnDefinition>
-                <ColumnDefinition Width="12*" ></ColumnDefinition>
+                <ColumnDefinition Width="45*" ></ColumnDefinition>
+                <ColumnDefinition Width="50*" ></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0">
-
+                
                 <Grid x:Name="TagGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="20*"></ColumnDefinition>
@@ -39,7 +40,7 @@
 
                         <!-- TagsListView is All tags -->
                         <ListBox  x:Name="TagsListView" DisplayMemberPath="Tag" Margin="2" 
-                                  HorizontalAlignment="Left" FontSize="10" 
+                                  HorizontalAlignment="Left" FontSize="12" FontWeight="Medium"
                                   SelectionMode="Multiple" 
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                   SelectionChanged="TagsListView_SelectionChanged" >
@@ -247,10 +248,10 @@
                 <TextBlock x:Name="FileNameTextBlock"   FontSize="12" />
 
 
-                <GroupBox Grid.Row="0"  BorderThickness="3" Margin="2" BorderBrush="MidnightBlue"  x:Name="FileInfoGroupBox">
-                    <GroupBox.Header>
+                <Expander Grid.Row="0"  BorderThickness="3" Margin="2" BorderBrush="MidnightBlue"  x:Name="FileInfoGroupBox">
+                    <Expander.Header>
                         <TextBlock Text="File Information"  FontWeight="DemiBold"  />
-                    </GroupBox.Header>
+                    </Expander.Header>
                     <ListView x:Name="FileInfoList"  MaxHeight="160"
                           ScrollViewer.VerticalScrollBarVisibility="Visible" >
                         <ListView.ToolTip>
@@ -262,20 +263,20 @@
 
 
 
-                </GroupBox>
+                </Expander>
 
             </StackPanel>
             <Grid Grid.Column="1" x:Name="PathGrid">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="130" />
+                    <RowDefinition  />
                     <RowDefinition Height="1*"  />
                     <RowDefinition Height="90"  />
                     <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
-                <GroupBox Grid.Row="0"  BorderThickness="3" Margin="2" BorderBrush="BlueViolet" x:Name="PathGroupBox">
-                    <GroupBox.Header>
+                <Expander Grid.Row="0"  BorderThickness="3" Margin="2" BorderBrush="BlueViolet" x:Name="PathGroupBox">
+                    <Expander.Header>
                         <TextBlock Text="Path"  FontWeight="DemiBold"  />
-                    </GroupBox.Header>
+                    </Expander.Header>
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
                             <GroupBox BorderThickness="1" Margin="2" BorderBrush="BlueViolet">
@@ -313,12 +314,12 @@
                             </Button.ToolTip>
                         </Button>
                     </StackPanel>
-                </GroupBox>
+                </Expander>
 
-                <GroupBox Grid.Row="1"  BorderThickness="3" BorderBrush="BlueViolet" x:Name="DirectoryGroupBox">
-                    <GroupBox.Header>
+                <Expander Grid.Row="1"  BorderThickness="3" BorderBrush="BlueViolet" x:Name="DirectoryGroupBox">
+                    <Expander.Header>
                         <TextBlock Text="Directories under path"  FontWeight="DemiBold" ></TextBlock>
-                    </GroupBox.Header>
+                    </Expander.Header>
                     <!--Current directory list-->
                     <ListView x:Name="DirsListView" MaxHeight="300" MinHeight="50"
                           ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="DirsListView_SelectionChanged" Background="#FFF6F8FD">
@@ -327,7 +328,7 @@
                             <TextBlock Text="A list of all directories under the current location. Select a directory to move to it" Foreground="DarkGreen" FontSize="12" />
                         </ListView.ToolTip>
                     </ListView>
-                </GroupBox>
+                </Expander>
 
                 <GroupBox Grid.Row="2"  BorderThickness="3" BorderBrush="BlueViolet" x:Name="WildCardGroupBox">
                     <GroupBox.Header>
@@ -416,7 +417,11 @@
                     <StackPanel Orientation="Vertical" VerticalAlignment="Top">
 
                         <!--current File list-->
-                        <ListView x:Name="FilesListView" Grid.Row="1" DisplayMemberPath="FileName" MaxHeight="400"
+                        <ListView x:Name="FilesListView" 
+                                  Grid.Row="1"
+                                  DisplayMemberPath="FileName"
+                                  MaxHeight="400"
+                                  FontWeight="Medium"
                           ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="FilesListView_SelectionChanged">
                             <ListView.ToolTip>
                                 <TextBlock Text="The media files found searching in the current directory. Select a file to add tags to it or view it." Foreground="DarkGreen" FontSize="12" />
@@ -446,10 +451,10 @@
             </Grid.RowDefinitions>
             <GroupBox Grid.Column="0" Grid.Row="0">
                 <StackPanel>
-                    <GroupBox BorderThickness="3" Margin="1,2,2,1" BorderBrush="BlueViolet">
-                        <GroupBox.Header>
+                    <Expander BorderThickness="3" Margin="1,2,2,1" BorderBrush="BlueViolet">
+                        <Expander.Header>
                             <TextBlock Text="Playlist Operations"  FontWeight="DemiBold"  />
-                        </GroupBox.Header>
+                        </Expander.Header>
                         <WrapPanel Margin="2" >
                             <CheckBox IsChecked="True" Margin="2" 
                                       Content="All Tagged Files" ForceCursor="False"
@@ -503,12 +508,12 @@
                                 </Button.ToolTip>
                             </Button>
                         </WrapPanel>
-                    </GroupBox>
+                    </Expander>
 
-                    <GroupBox BorderThickness="3" Margin="1,2,2,1" BorderBrush="BlueViolet">
-                        <GroupBox.Header>
+                    <Expander BorderThickness="3" Margin="1,2,2,1" BorderBrush="BlueViolet">
+                        <Expander.Header>
                             <TextBlock Text="File Move/Copy Operations"  FontWeight="DemiBold"  />
-                        </GroupBox.Header>
+                        </Expander.Header>
                         <WrapPanel Margin="2" >
 
                            
@@ -545,13 +550,13 @@
 
 
                         </WrapPanel>
-                    </GroupBox>
+                    </Expander>
                     
 
-                    <GroupBox BorderThickness="3" Margin="1,2,2,1" BorderBrush="BlueViolet">
-                        <GroupBox.Header>
+                    <Expander BorderThickness="3" Margin="1,2,2,1" BorderBrush="BlueViolet">
+                        <Expander.Header>
                             <TextBlock Text="Other Operations"  FontWeight="DemiBold"  />
-                        </GroupBox.Header>
+                        </Expander.Header>
                         <WrapPanel Margin="2" >
 
                          
@@ -711,7 +716,7 @@
 
 
                         </WrapPanel>
-                    </GroupBox>
+                    </Expander>
 
 
                 </StackPanel>
@@ -869,7 +874,7 @@
 
 
         <Popup IsOpen="False" x:Name="TagSearchPopup" PlacementTarget="{Binding ElementName=TagInFilenameButton}" Width="400" Placement="Top" Margin="3">
-            <Grid Background="Cornsilk">
+            <Grid Background="#FFF1F3F7" >
                 <Grid.RowDefinitions >
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
@@ -880,7 +885,9 @@
                     <ColumnDefinition Width="5*"></ColumnDefinition>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="DoSearch" Grid.Column="2" Grid.Row="1" Content="Ok" Height="25" Width="80" Click="DoSearch_Click">
+                <Button x:Name="DoSearch" Grid.Column="2" Grid.Row="1" Foreground="Purple"
+                        Content="Ok" Height="25" Width="80" 
+                        Click="DoSearch_Click">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="5"/>
@@ -888,7 +895,8 @@
                     </Button.Resources>
                 </Button>
                 <Button 
-                    x:Name="NoSearch" Grid.Column="2" Grid.Row="2" Content="Cancel"  
+                    x:Name="NoSearch" Grid.Column="2" Grid.Row="2" Foreground="Purple"
+                    Content="Cancel"  
                     Height="25" Width="80" Click="NoSearch_Click">
                     <Button.Resources>
                         <Style TargetType="Border">
@@ -897,9 +905,18 @@
                     </Button.Resources>
                 </Button>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Select Text part used in Search" VerticalAlignment="Center"
-                   HorizontalAlignment="Center" FontSize="14" Margin="2,1,1,2" x:Name="TitleShown" ></TextBlock>
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="" x:Name="TagString" FontSize="12"  Background="LightSkyBlue"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="0" Foreground="Purple"
+                           Text="Select Text part used in Search" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" FontSize="14" 
+                           Margin="2,1,1,2" x:Name="TitleShown" >
+                    
+                </TextBlock>
+                <TextBlock Grid.Row="1" Foreground="Purple"
+                           Grid.Column="0" Text="" 
+                           x:Name="TagString" FontSize="12"  
+                           Background="LightSkyBlue">
+                    
+                </TextBlock>
                 <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="2">
                     <CheckBox x:Name="FirstOneCheck" IsChecked="True" FontSize="11" Content="First Word" Checked="FirstOneCheck_Checked" />
                     <CheckBox x:Name="LastOneCheck" IsChecked="False" FontSize="11"  Content="Last Word" Checked="LastOneCheck_Checked" />
@@ -908,9 +925,12 @@
                 </StackPanel>
                 <GroupBox x:Name="FindItStringGroupBox" Grid.Column="0" Grid.Row="3" Height="50">
                     <GroupBox.Header>
-                        <TextBlock Text="Search For" HorizontalAlignment="Left" FontSize="12" />
+                        <TextBlock Text="Search For" HorizontalAlignment="Left" FontSize="12" Foreground="Purple" />
                     </GroupBox.Header>
-                    <TextBox x:Name="SearchText" Margin="3" Text="" FontSize="13" IsReadOnly="True"></TextBox>
+                    <TextBox x:Name="SearchText" Foreground="Purple" IsEnabled="True" IsReadOnly="False"
+                             Margin="3" Text="" FontSize="13">
+                        
+                    </TextBox>
                 </GroupBox>
             </Grid>
 

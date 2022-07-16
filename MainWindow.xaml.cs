@@ -74,6 +74,14 @@ namespace VidFileTag
             LoadMachineData();  // restore last drive path
             ReadTags();         // read tags from database
 
+            Closing +=MainWindow_Closing;
+
+        }
+
+        private void MainWindow_Closing(object? sender, CancelEventArgs e)
+        {
+            cntrlWindow.Close();
+            helpWindow.Close();
         }
 
 
@@ -3723,7 +3731,8 @@ namespace VidFileTag
                         FirstOneCheck.IsChecked = false;
                         PhraseCheck.IsChecked = false;
                         CustomCheck.IsChecked = true;
-                        //  SearchText.Text =  ;
+                        
+                        
                     }
                 }
             }
