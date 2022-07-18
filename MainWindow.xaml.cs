@@ -84,8 +84,8 @@ namespace VidFileTag
             {
                 cntrlWindow.Close();
             }
-            if(helpWindow != null)
-            { 
+            if (helpWindow != null)
+            {
                 helpWindow.Close();
             }
             if (_aboutWindow != null)
@@ -344,9 +344,9 @@ namespace VidFileTag
                 FilesListView.Items.Clear();
                 foreach (string st in filenames)
                 {
-                   
 
-                     string finame = System.IO.Path.GetFileName(st);
+
+                    string finame = System.IO.Path.GetFileName(st);
 
                     if (string.IsNullOrWhiteSpace(finame))
                     {
@@ -1526,7 +1526,7 @@ namespace VidFileTag
                         {
                             FileInfo ainf = new FileInfo(rtr.FilePath);
                             DirectoryInfo? dir = ainf.Directory;
-                            if (dir != null && dir.Exists == true )
+                            if (dir != null && dir.Exists == true)
                             {
                                 if (_playListSource == false)
                                 {
@@ -1696,7 +1696,7 @@ namespace VidFileTag
         {
             get
             {
-                if(_aboutWindow == null)
+                if (_aboutWindow == null)
                 {
                     _aboutWindow = new AboutWindow();
                     _aboutWindow.Closing += AboutWindow_Closing;
@@ -2620,7 +2620,7 @@ namespace VidFileTag
         /// <param name="e"></param>
         private void PopupClose_Click(object sender, RoutedEventArgs e)
         {
-           
+
         }
 
 
@@ -3253,7 +3253,7 @@ namespace VidFileTag
         void FindIdenticalFilesAndTagInTree(object sender, RoutedEventArgs e)
         {
             var ft = FilesListView.SelectedItem;
-            if(ft != null)
+            if (ft != null)
             {
                 TagFileInfo tfi = ft as TagFileInfo;
                 AddChosenFile(tfi);
@@ -3297,9 +3297,9 @@ namespace VidFileTag
         {
             var dirlist = Directory.EnumerateDirectories(infname);
 
-            foreach(var dir in dirlist)
+            foreach (var dir in dirlist)
             {
-               if(Directory.Exists(dir))
+                if (Directory.Exists(dir))
                 {
                     FindIdenticalFilesAndTagInTree(dir, findme);
                     DirectoryInfo dirinfo = new DirectoryInfo(dir);
@@ -3312,10 +3312,10 @@ namespace VidFileTag
         {
             var allfiles = Directory.EnumerateFiles(inf.FullName);
 
-            foreach(string vv in allfiles)
+            foreach (string vv in allfiles)
             {
                 FileInfo ff = new FileInfo(vv);
-                if(ff.Name == findme.FileName && ff.Length == findme.FileSize)
+                if (ff.Name == findme.FileName && ff.Length == findme.FileSize)
                 {
                     TagFileInfo foundfile = new TagFileInfo
                     {
@@ -3326,11 +3326,11 @@ namespace VidFileTag
                     };
                     AddChosenFile(foundfile);
                     var ifi = from su in Context.TagFileInfos
-                             where su.FilePath == foundfile.FilePath
-                             select su;
-                    if(ifi.Count() > 0)
+                              where su.FilePath == foundfile.FilePath
+                              select su;
+                    if (ifi.Count() > 0)
                     {
-                       TagFileInfo tt = ifi.First();
+                        TagFileInfo tt = ifi.First();
                         if (tt.Crc32 == findme.Crc32)
                         {
                             foundfile = tt;
@@ -3771,8 +3771,8 @@ namespace VidFileTag
                         FirstOneCheck.IsChecked = false;
                         PhraseCheck.IsChecked = false;
                         CustomCheck.IsChecked = true;
-                        
-                        
+
+
                     }
                 }
             }
@@ -3871,7 +3871,7 @@ namespace VidFileTag
         private void HelpClose_Click(object sender, RoutedEventArgs e)
         {
             IsHelpWindow.Visibility=Visibility.Collapsed;
-            IsHelpWindow.Close(); 
+            IsHelpWindow.Close();
         }
 
         bool _playListSource = true;
@@ -3894,8 +3894,8 @@ namespace VidFileTag
             if (PlayListSourceCheckBox.IsChecked == true)
             {
                 PlayListSourceCheckBox.IsChecked = false;
-               
-               
+
+
             }
             this.InvalidateArrange();
         }
