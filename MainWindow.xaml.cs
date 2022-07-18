@@ -80,8 +80,18 @@ namespace VidFileTag
 
         private void MainWindow_Closing(object? sender, CancelEventArgs e)
         {
-            cntrlWindow.Close();
-            helpWindow.Close();
+            if (cntrlWindow != null)
+            {
+                cntrlWindow.Close();
+            }
+            if(helpWindow != null)
+            { 
+                helpWindow.Close();
+            }
+            if (_aboutWindow != null)
+            {
+                _aboutWindow.Close();
+            }
         }
 
 
@@ -1656,7 +1666,7 @@ namespace VidFileTag
         private void Cntrl_Closing(object sender, CancelEventArgs e)
         {
             cntrlWindow = null;
-            e.Cancel = true;
+            e.Cancel = false;
         }
 
         private HelpWindow helpWindow;
@@ -1677,7 +1687,28 @@ namespace VidFileTag
         private void Help_Closing(object sender, CancelEventArgs e)
         {
             helpWindow = null;
-            e.Cancel = true;
+            e.Cancel = false;
+        }
+
+        private AboutWindow _aboutWindow;
+
+        private AboutWindow IsAboutWindow
+        {
+            get
+            {
+                if(_aboutWindow == null)
+                {
+                    _aboutWindow = new AboutWindow();
+                    _aboutWindow.Closing += AboutWindow_Closing;
+                }
+                return _aboutWindow;
+            }
+        }
+
+        private void AboutWindow_Closing(object sender, CancelEventArgs e)
+        {
+            _aboutWindow = null;
+            e.Cancel = false;
         }
 
         #endregion
@@ -2537,41 +2568,50 @@ namespace VidFileTag
 
         #region About Box
 
-        /// <summary>
-        /// About popup
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AboutFileTag_Click(object sender, RoutedEventArgs e)
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
         {
-            AboutPopup.IsOpen = true;
+            if (IsAboutWindow.Visibility == Visibility.Collapsed)
+            {
+                IsAboutWindow.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                IsAboutWindow.Visibility = Visibility.Collapsed; ;
+            }
         }
 
-        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        private void AboutClose_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                //   Process.Start(((Hyperlink)sender).NavigateUri.ToString());
-            }
-            catch (Exception ee)
-            {
-                string not = ee.Message;
-            }
-
+            IsAboutWindow.Visibility=Visibility.Collapsed;
+            IsAboutWindow.Close();
         }
 
-        private void Hyperlink1_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                //   Process.Start(((Hyperlink)sender).NavigateUri.ToString());
-            }
-            catch (Exception ee)
-            {
-                string not = ee.Message;
-            }
 
-        }
+        //private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        //   Process.Start(((Hyperlink)sender).NavigateUri.ToString());
+        //    }
+        //    catch (Exception ee)
+        //    {
+        //        string not = ee.Message;
+        //    }
+
+        //}
+
+        //private void Hyperlink1_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        //   Process.Start(((Hyperlink)sender).NavigateUri.ToString());
+        //    }
+        //    catch (Exception ee)
+        //    {
+        //        string not = ee.Message;
+        //    }
+
+        //}
 
         /// <summary>
         /// close about popup
@@ -2580,7 +2620,7 @@ namespace VidFileTag
         /// <param name="e"></param>
         private void PopupClose_Click(object sender, RoutedEventArgs e)
         {
-            AboutPopup.IsOpen = false;
+           
         }
 
 

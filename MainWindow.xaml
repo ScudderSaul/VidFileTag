@@ -631,6 +631,18 @@
                                 </Button.Resources>
                             </Button>
 
+                            <Button  BorderThickness="2" x:Name="AboutButton"
+                                  Click="AboutButton_Click" 
+                                 Margin="3" Background="Linen" FontSize="13">
+                                <TextBlock Text="About VidFileTag" FontSize="13" Foreground="Purple">
+                                </TextBlock>
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+
                             <Button x:Name="TagInFilenameButton"   BorderThickness="2"
                                      Click="AddTagFromFileName"  Margin="3" Background="Linen" FontSize="13">
                                 <TextBlock Text="Tag files in the directory if the seleted tag is in the file's name" FontSize="13" Foreground="Purple">
@@ -772,59 +784,7 @@
 
 
 
-        <Popup IsOpen="False" x:Name="AboutPopup" PlacementTarget="{Binding ElementName=TagsListView}" 
-               Width="600" Placement="Top" Margin="5" Opacity="90" VerticalOffset="40"
-               HorizontalOffset="70">
-            <Grid  Margin="2"  Background="#FFF1F3F7" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="9*" />
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
-
-                <FlowDocumentReader Grid.Column="0">
-                    <FlowDocument  ColumnWidth="400"  
-                                   IsOptimalParagraphEnabled="True" 
-                                   IsHyphenationEnabled="True">
-                        <Section FontSize="13" Foreground="Purple">
-                            <Paragraph>
-                                <Bold>VidFileTag</Bold> is a tool to maintain tags describing media file in a sqlite database. 
-                                 The media files themselves are not modified. 
-                                 It's helpful in organizing collections of media 
-                                 and in creating media playlists by actor, location, etc.  VidFileTag uses 
-                                 VideoLAN's LibVLC to provide a media viewer allowing quick viewing of media.
-
-                            </Paragraph>
-                            <Paragraph FontSize="13" Foreground="Purple">
-                                <Bold>VidFileTag</Bold>
-                                <Italic>was writen by Saul Scudder</Italic> "  />
-                            </Paragraph>
-                            <Paragraph FontSize="12" FontStyle="Italic">
-                                VideoLAN's LibVLC Library is found at
-                                <Hyperlink 
-                                     NavigateUri="https://code.videolan.org/videolan/libvlc-nuget" 
-                                    Click="Hyperlink_Click" >https://code.videolan.org/videolan/libvlc-nuget
-                                </Hyperlink>
-
-                            </Paragraph>
-                            <Paragraph>
-
-                                for a media player. Also see"
-                                <Hyperlink 
-                                    NavigateUri="https://www.videolan.org/vlc/"
-                                    Click="Hyperlink1_Click">
-                                    https://www.videolan.org/vlc/
-                                </Hyperlink>
-                            </Paragraph>
-                        </Section>
-                    </FlowDocument>
-                </FlowDocumentReader>
-                <Button Content="Close" 
-                        Grid.Column="1" Margin="2" HorizontalAlignment="Right" Foreground="Purple"
-                        VerticalAlignment="Top" x:Name="PopupClose" Click="PopupClose_Click" />
-            </Grid>
-
-        </Popup>
-
+       
         <Popup IsOpen="False" x:Name="LocationChangePopup" PlacementTarget="{Binding ElementName=Back}" Width="600" Placement="Top" Margin="5" 
                Opacity="90" HorizontalOffset="50">
             <Grid  Margin="2"  Background="Azure" >

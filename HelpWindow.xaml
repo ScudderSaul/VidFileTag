@@ -8,14 +8,14 @@
         Title="HelpWindow"  Width="804">
 
     <FlowDocumentScrollViewer Background="#FFF1F3F7" BorderBrush="Purple" BorderThickness="3" >
-            <FlowDocument    Background="#FFF1F3F7" ColumnWidth="400" 
+        <FlowDocument    Background="#FFF1F3F7" ColumnWidth="400" 
                                    IsOptimalParagraphEnabled="True"  >
-           
-                <BlockUIContainer >
-                    <Button Content="Close Help" 
+
+            <BlockUIContainer >
+                <Button Content="Close Help" 
                                 Margin="2" HorizontalAlignment="Right" Foreground="Purple"
                                VerticalAlignment="Top" x:Name="HelpClose" Click="HelpClose_Click" />
-                </BlockUIContainer>
+            </BlockUIContainer>
             <Paragraph >
                 <Bold>VidFileTag Help</Bold>
                 <LineBreak/>
@@ -29,183 +29,179 @@
                     VidFileTag has a media player to allow viewing or listining to media file to help chose tags.
                     The VideoLan.LibVLC.Windows media library is used.
 
-             </Paragraph>
-           
+            </Paragraph>
+
             <Paragraph>
-                    <Figure  TextAlignment="Left"  HorizontalAnchor="ContentLeft">
-                        <Paragraph Margin="1">
+                <Figure  TextAlignment="Left"  HorizontalAnchor="ContentLeft">
+                    <Paragraph Margin="1">
 
-                            Tag and other operations use the files in the current directory.
+                        Tag and other operations use the files in the current directory.
 
-                        </Paragraph>
-                        <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
-                            <StackPanel>
-                                <Border BorderBrush="Purple" BorderThickness="2">
-                                    <StackPanel>
-                                        <Label Target="{Binding ElementName=PathChoiceImage}" BorderBrush="Purple" BorderThickness="1">
-                                            <TextBlock Text="Set Target Directory" />
-                                        </Label>
-                                        <Image x:Name="PathChoiceImage" 
+                    </Paragraph>
+                    <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                        <StackPanel>
+                            <Border BorderBrush="Purple" BorderThickness="2">
+                                <StackPanel>
+                                    <Label Target="{Binding ElementName=PathChoiceImage}" BorderBrush="Purple" BorderThickness="1">
+                                        <TextBlock Text="Set Target Directory" />
+                                    </Label>
+                                    <Image x:Name="PathChoiceImage" 
                                         Visibility="Visible"  Source="DirectoryToll.png" />
-                                    </StackPanel>
-                                </Border>
-                            </StackPanel>
-                        </BlockUIContainer>
-                        <Paragraph  Margin="1">
-                            <Run>
-                                To Set the current directory location use three controls, 
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </BlockUIContainer>
+                    <Paragraph  Margin="1">
+                        <Run>
+                            To Set the current directory location use three controls, 
                                         the "disk drive selector" to choose a disk drive,
                                         , a mouse "click on a child directory" in the list of child directorys to move to that child. 
                                         and the "up arrow" to move to the parent of the current directory.
-                            </Run>
-                            <LineBreak/>
-                            <Run>
-                                The current directory path is shown above the
+                        </Run>
+                        <LineBreak/>
+                        <Run>
+                            The current directory path is shown above the
                             "Up" arrow.
 
-                            </Run>
-                        </Paragraph>
-                    </Figure>
-                </Paragraph>
+                        </Run>
+                    </Paragraph>
+                </Figure>
+            </Paragraph>
 
-                <Paragraph>
-                    <Figure 
+            <Paragraph>
+                <Figure 
                              
                                TextAlignment="Left" 
                                  HorizontalAnchor="ContentLeft">
-                        <Paragraph Margin="1" >
+                    <Paragraph Margin="1" >
 
-                            Tags selected in the 'Tag Selection" area may be associated in the database with 
+                        Tags selected in the 'Tag Selection" area may be associated in the database with 
                                 the currently selected file using "Add Tags" or the association may be removed with "Remove Tags"
-                            <LineBreak/>
-                            Pressing the 'List Files with Tag' button will list all file 
+                        <LineBreak/>
+                        Pressing the 'List Files with Tag' button will list all file 
                                 associated with a selected tag.
 
-                        </Paragraph>
-                        <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
-                            <StackPanel>
-                                <Border BorderBrush="Purple" BorderThickness="2">
-                                    <StackPanel>
-                                        <Label Target="{Binding ElementName=PathChoiceImage}" BorderBrush="Purple" BorderThickness="1">
-                                            <TextBlock Text="The tags list and basic operations" />
-                                        </Label>
-                                        <Image x:Name="BasicTagImage" MaxWidth="450"
+                    </Paragraph>
+                    <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                        <StackPanel>
+                            <Border BorderBrush="Purple" BorderThickness="2">
+                                <StackPanel>
+                                    <Label Target="{Binding ElementName=PathChoiceImage}" BorderBrush="Purple" BorderThickness="1">
+                                        <TextBlock Text="The tags list and basic operations" />
+                                    </Label>
+                                    <Image x:Name="BasicTagImage" MaxWidth="450"
                                         Visibility="Visible"  Source="BasicTagOperations.png" />
-                                    </StackPanel>
-                                </Border>
-                            </StackPanel>
-                        </BlockUIContainer>
-                        <Paragraph  Margin="1">
-                            Type in tag creation and press "Create Tag" to create a tag and add it to the database.
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </BlockUIContainer>
+                    <Paragraph  Margin="1">
+                        Type in tag creation and press "Create Tag" to create a tag and add it to the database.
                                 
                                 Select a tag in the 'Tag Selection' list when it is the only selected tag it will show in the 
                                 Tag Operations area and may be deleted using "Delete Tag" or if differing text is input may be 
                                 modified using the "Update Tag" button.
 
-                        </Paragraph>
-                    </Figure>
-                </Paragraph>
+                    </Paragraph>
+                </Figure>
+            </Paragraph>
 
-                <Paragraph>
-                    <Figure 
+            <Paragraph>
+                <Figure 
                               
                                TextAlignment="Left" 
                                  HorizontalAnchor="ContentLeft">
-                        <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                    <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
 
-                            <Border BorderBrush="Purple" BorderThickness="2">
-                                <StackPanel>
-                                    <Label Target="{Binding ElementName=FileListImage}" BorderBrush="Purple" BorderThickness="1">
-                                        <TextBlock Text="All Media Shown" />
-                                    </Label>
-                                    <Image x:Name="FileListImage"  Margin="3" 
+                        <Border BorderBrush="Purple" BorderThickness="2">
+                            <StackPanel>
+                                <Label Target="{Binding ElementName=FileListImage}" BorderBrush="Purple" BorderThickness="1">
+                                    <TextBlock Text="All Media Shown" />
+                                </Label>
+                                <Image x:Name="FileListImage"  Margin="3" 
                                              Visibility="Visible"  Source="mediaListOne.png" />
-                                </StackPanel>
-                            </Border>
+                            </StackPanel>
+                        </Border>
 
-                        </BlockUIContainer>
-                        <Paragraph  Margin="1">
+                    </BlockUIContainer>
+                    <Paragraph  Margin="1">
 
-                            Files in the current directory are listed in the media file list. 
+                        Files in the current directory are listed in the media file list. 
                                         Pressing the "Show all Media files" button will show all file.
 
-                        </Paragraph>
-                    </Figure>
-                </Paragraph>
+                    </Paragraph>
+                </Figure>
+            </Paragraph>
 
-
-                <Paragraph>
-                    <Figure>
-                        <BlockUIContainer  BorderBrush="Purple" BorderThickness="1">
-                            <Border  BorderBrush="Purple" BorderThickness="2">
-                                <StackPanel>
-                                    <Label Target="{Binding ElementName=FileWildImage}" BorderBrush="Purple" BorderThickness="1">
-                                        <TextBlock Text="Show media with 'bach' " />
-                                    </Label>
-                                    <Image x:Name="FileWildImage"  Margin="3"
+            <Paragraph>
+                <Figure>
+                    <BlockUIContainer  BorderBrush="Purple" BorderThickness="1">
+                        <Border  BorderBrush="Purple" BorderThickness="2">
+                            <StackPanel>
+                                <Label Target="{Binding ElementName=FileWildImage}" BorderBrush="Purple" BorderThickness="1">
+                                    <TextBlock Text="Show media with 'bach' " />
+                                </Label>
+                                <Image x:Name="FileWildImage"  Margin="3"
                                         Visibility="Visible"  Source="WildCardfILES7.png" Width="380"/>
-                                </StackPanel>
-                            </Border>
-                        </BlockUIContainer>
-                        <Paragraph  Margin="1">
-                            The list can also filtered using a simple pattern like
-                            <Italic>*text*</Italic>
+                            </StackPanel>
+                        </Border>
+                    </BlockUIContainer>
+                    <Paragraph  Margin="1">
+                        The list can also filtered using a simple pattern like
+                        <Italic>*text*</Italic>
 
-                        </Paragraph>
-                    </Figure>
-                </Paragraph>
+                    </Paragraph>
+                </Figure>
+            </Paragraph>
 
-
-                <Paragraph>
-                    <Figure>
-                        <BlockUIContainer  BorderBrush="Purple" BorderThickness="1">
-                            <Border BorderBrush="Purple" BorderThickness="2">
-                                <StackPanel>
-                                    <Label Target="{Binding ElementName=FileTagImage}" BorderBrush="Purple" BorderThickness="1">
-                                        <TextBlock Text="Tag in file media shown" />
-                                    </Label>
-                                    <Image x:Name="FileTagImage" Margin="3"
+            <Paragraph>
+                <Figure>
+                    <BlockUIContainer  BorderBrush="Purple" BorderThickness="1">
+                        <Border BorderBrush="Purple" BorderThickness="2">
+                            <StackPanel>
+                                <Label Target="{Binding ElementName=FileTagImage}" BorderBrush="Purple" BorderThickness="1">
+                                    <TextBlock Text="Tag in file media shown" />
+                                </Label>
+                                <Image x:Name="FileTagImage" Margin="3"
                                                 Visibility="Visible"  Source="TagSearcgFiles1.png" />
-                                </StackPanel>
-                            </Border>
-                        </BlockUIContainer>
-                        <Paragraph  Margin="1">
-                            The list can also show only files that have selected tags in their filename.
+                            </StackPanel>
+                        </Border>
+                    </BlockUIContainer>
+                    <Paragraph  Margin="1">
+                        The list can also show only files that have selected tags in their filename.
 
-                        </Paragraph>
-                    </Figure>
-                </Paragraph>
+                    </Paragraph>
+                </Figure>
+            </Paragraph>
 
+            <Paragraph>
 
-
-                <Paragraph>
-
-                    <Figure   
+                <Figure   
                                TextAlignment="Left" 
                                  HorizontalAnchor="ContentLeft">
-                        <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
-                            <StackPanel>
-                                <Border BorderBrush="Purple" BorderThickness="2">
-                                    <StackPanel>
-                                        <Label Target="{Binding ElementName=AfterFileSelect}" BorderBrush="Purple" BorderThickness="1">
-                                            <TextBlock Text="When Media Selected" />
-                                        </Label>
-                                        <Image x:Name="AfterFileSelect"  Margin="3" 
+                    <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                        <StackPanel>
+                            <Border BorderBrush="Purple" BorderThickness="2">
+                                <StackPanel>
+                                    <Label Target="{Binding ElementName=AfterFileSelect}" BorderBrush="Purple" BorderThickness="1">
+                                        <TextBlock Text="When Media Selected" />
+                                    </Label>
+                                    <Image x:Name="AfterFileSelect"  Margin="3" 
                                              Visibility="Visible"  Source="AfterMediaSelected.png" />
-                                    </StackPanel>
-                                </Border>
-                            </StackPanel>
-                        </BlockUIContainer>
-                        <Paragraph  Margin="1">
-                            When a file is selected in the file list The file names is displayed in the Selected file box and any 
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </BlockUIContainer>
+                    <Paragraph  Margin="1">
+                        When a file is selected in the file list The file names is displayed in the Selected file box and any 
                             tags in the database for that file instance are shown also. If the file is a media file media 
                             information is displayed in the File information area.
-                          
-                        </Paragraph>
-                    </Figure>
+
+                    </Paragraph>
+                </Figure>
 
 
-                </Paragraph>
+            </Paragraph>
 
             <Paragraph>
 
@@ -226,9 +222,233 @@
                         </StackPanel>
                     </BlockUIContainer>
                     <Paragraph  Margin="1">
-                       
+
                         If the file is a media file and "Play" in the media control is pressed a media player window appears and 
-                            the media plays. 
+                            the media plays.
+                    </Paragraph>
+                </Figure>
+
+
+            </Paragraph>
+
+            <Paragraph>
+
+                <Figure   
+                               TextAlignment="Left" 
+                                 HorizontalAnchor="ContentLeft">
+                    <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                        <StackPanel>
+                            <Border BorderBrush="Purple" BorderThickness="2">
+                                <StackPanel>
+                                    <Label Target="{Binding ElementName=PlayListOperationsImage}" BorderBrush="Purple" BorderThickness="1">
+                                        <TextBlock Text="Playlist Operations" />
+                                    </Label>
+                                    <Image x:Name="PlayListOperationsImage"  Margin="3" 
+                                             Visibility="Visible"  Source="PlayListoperations.png" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </BlockUIContainer>
+                    <Paragraph  Margin="1">
+                       The source for the media listed in a playlist is either the curent selected 
+                        directory or the entire database. The current selected tags determine the media 
+                        that is chosen for the playlist, media tagged with any of the selected tags, 
+                        media tagged with all of the selected tags, and media tagged with only a single 
+                        one of the selected tags
+                       
+                    </Paragraph>
+                </Figure>
+
+
+            </Paragraph>
+
+            <Paragraph>
+
+                <Figure   
+                               TextAlignment="Left" 
+                                 HorizontalAnchor="ContentLeft">
+                    <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                        <StackPanel>
+                            <Border BorderBrush="Purple" BorderThickness="2">
+                                <StackPanel>
+                                    <Label Target="{Binding ElementName=FileMoveCopyOperationsImage}" BorderBrush="Purple" BorderThickness="1">
+                                        <TextBlock Text="Copy/Move Operations" />
+                                    </Label>
+                                    <Image x:Name="FileMoveCopyOperationsImage"  Margin="3" 
+                                             Visibility="Visible"  Source="FileMoveCopyOperations.png" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </BlockUIContainer>
+                    <Paragraph  Margin="1">
+                        The source for the media copy or move oOperations is either the curent selected 
+                        directory or else the any media location in the database. The media tagged with selected  tags are the media 
+                        that is copied or moved. 
+
+                    </Paragraph>
+                </Figure>
+
+
+            </Paragraph>
+
+            <Paragraph>
+
+                <Figure   
+                               TextAlignment="Left" 
+                                 HorizontalAnchor="ContentLeft">
+                    <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                        <StackPanel>
+                            <Border BorderBrush="Purple" BorderThickness="2">
+                                <StackPanel>
+                                    <Label Target="{Binding ElementName=OtherOperationsImage}" BorderBrush="Purple" BorderThickness="1">
+                                        <TextBlock Text="Other Operations" />
+                                    </Label>
+                                    <Image x:Name="OtherOperationsImage"  Margin="3" 
+                                             Visibility="Visible"  Source="OtherOperations.png" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </BlockUIContainer>
+                    <Paragraph  Margin="1">
+                        Other Operations:
+                        <LineBreak/>
+                      
+                        <Figure>
+                            <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                                <Button HorizontalAlignment="Left"
+                                   BorderThickness="2" BorderBrush="Purple" 
+                                      Margin="3" Background="Linen" FontSize="13">
+                                    <TextBlock Text="ReadTags:" FontSize="13" Foreground="Purple">
+                                    </TextBlock>
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="5"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+                            </BlockUIContainer>
+                        </Figure>
+                        Reads a comma deliomited list of tags names from a 
+                        text file and inserts them into the existing tags.
+                        Existing tags are unchanged.
+                        <LineBreak/>
+                        <Italic>example:</Italic>
+                        <LineBreak/>
+                        AfterMidnight,
+                        <LineBreak/>
+                        Air Defense Princess,
+                        <LineBreak/>
+                        Aircraft Carrier Princess,
+                        <LineBreak/>
+                        Atria Pendragon,
+                        <LineBreak/>
+                       
+                        <Figure>
+                            <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                                <Button HorizontalAlignment="Left"
+                                   BorderThickness="2" BorderBrush="Purple" 
+                                      Margin="3" Background="Linen" FontSize="13">
+                                    <TextBlock Text="WriteTags:" FontSize="13" Foreground="Purple">
+                                    </TextBlock>
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="5"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+                            </BlockUIContainer>
+                        </Figure>
+                        
+                        Writes a comma deliomited list of tags names to a text file.
+                       
+                        <Figure>
+                            <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                                <Button HorizontalAlignment="Left"
+                                   BorderThickness="2" BorderBrush="Purple" 
+                                      Margin="3" Background="Linen" FontSize="13">
+                                    <TextBlock Text="Show/Close help" FontSize="13" Foreground="Purple">
+                                    </TextBlock>
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="5"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+                            </BlockUIContainer>
+                        </Figure>
+                        <LineBreak/>
+                        Opens or closes this help window.
+                        <LineBreak/>
+                        <Figure>
+                            <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                                <Button HorizontalAlignment="Left"
+                                   BorderThickness="2" BorderBrush="Purple" 
+                                      Margin="3" Background="Linen" FontSize="13">
+                                    <TextBlock Text="Tag files in the currenty directory if the selected tag is in their filename" FontSize="13" Foreground="Purple">
+                                    </TextBlock>
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="5"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+                            </BlockUIContainer>
+                        </Figure>
+                        Opens a popup so parts of the tag name or a custom string can be used to search.
+                         Tags media with the part of tag name in the filename. it searches in the current directory
+                        <LineBreak/>
+                        <Figure>
+                            <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                                <StackPanel Width="250" HorizontalAlignment="Left">
+                                    <Border BorderBrush="Purple" BorderThickness="2">
+                                        <StackPanel>
+                                            <Label Target="{Binding ElementName=PopUpParts}" BorderBrush="Purple" BorderThickness="1">
+                                                <TextBlock Text="Chose tag name parts" />
+                                            </Label>
+                                            <Image x:Name="PopUpParts"  Margin="3" 
+                                             Visibility="Visible"  Source="PopUpParts.png" />
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </BlockUIContainer>
+                        </Figure>
+                        <LineBreak/>
+                       
+                        <Figure>
+                            <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                                <Button HorizontalAlignment="Left"
+                                   BorderThickness="2" BorderBrush="Purple" 
+                                      Margin="3" Background="Linen" FontSize="13">
+                                    <TextBlock Text="Tag any files in the current directory identical to files already tagged with those tags" FontSize="13" Foreground="Purple">
+                                    </TextBlock>
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="5"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+                            </BlockUIContainer>
+                        </Figure>
+                       
+                        Tags any files located in the current directory if identical copies of the files were tagged elsewhere.
+                        <LineBreak/>
+                        <Figure>
+                            <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                                <Button HorizontalAlignment="Left"
+                                   BorderThickness="2" BorderBrush="Purple" 
+                                      Margin="3" Background="Linen" FontSize="13">
+                                    <TextBlock Text="Find files identical to the selected file and give them the same tags" FontSize="13" Foreground="Purple">
+                                    </TextBlock>
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="5"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+                            </BlockUIContainer>
+                        </Figure>
+                        
+                        Any files identical to the current selected file below a chosen directory are tagged with the same tags
                     </Paragraph>
                 </Figure>
 
@@ -236,6 +456,6 @@
             </Paragraph>
 
         </FlowDocument>
-        </FlowDocumentScrollViewer>
-   
+    </FlowDocumentScrollViewer>
+
 </Window>

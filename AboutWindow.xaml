@@ -1,0 +1,50 @@
+﻿<Window x:Class="VidFileTag.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VidFileTag"
+        mc:Ignorable="d"
+        Title="AboutWindow"  Width="800">
+    <FlowDocumentScrollViewer Background="#FFF1F3F7" BorderBrush="Purple" BorderThickness="3" >
+        <FlowDocument    Background="#FFF1F3F7" ColumnWidth="400" 
+                                   IsOptimalParagraphEnabled="True"  >
+            <BlockUIContainer >
+                <Button Content="Close About" 
+                                Margin="2" HorizontalAlignment="Right" Foreground="Purple"
+                               VerticalAlignment="Top" x:Name="HelpClose" Click="AboutClose_Click" />
+            </BlockUIContainer>
+            <Paragraph>
+                <Bold>VidFileTag</Bold> is a tool to help maintain media colections using tags describing media files 
+                that are kept in a sqlite database. The media files themselves are never modified. 
+                It's helpful in organizing collections of media and in creating media playlists by actor, 
+                location, or reminder  
+                
+                VidFileTag provide a media player using VideoLAN's LibVLC to play media to make adding tags simple.
+
+            </Paragraph>
+            <Paragraph FontSize="13" Foreground="Purple">
+                <Bold>VidFileTag</Bold>
+                <Italic>was writen by Saul Scudder</Italic> and is freeware.
+            </Paragraph>
+            <Paragraph FontSize="12" FontStyle="Italic">
+                VideoLAN's LibVLC Library is found at
+                <Hyperlink 
+                                     NavigateUri="https://code.videolan.org/videolan/libvlc-nuget" 
+                                    Click="Hyperlink_Click" >https://code.videolan.org/videolan/libvlc-nuget
+                </Hyperlink>
+
+            </Paragraph>
+            <Paragraph>
+
+                for a media player. Also see"
+                <Hyperlink 
+                                    NavigateUri="https://www.videolan.org/vlc/"
+                                    Click="Hyperlink1_Click">
+                    https://www.videolan.org/vlc/
+                </Hyperlink>
+            </Paragraph>
+
+        </FlowDocument>
+    </FlowDocumentScrollViewer>
+</Window>

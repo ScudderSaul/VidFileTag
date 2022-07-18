@@ -18,7 +18,11 @@
     <None Remove="AfterMediaSelected.png" />
     <None Remove="BasicTagOperations.png" />
     <None Remove="DirectoryToll.png" />
+    <None Remove="FileMoveCopyOperations.png" />
     <None Remove="mediaListOne.png" />
+    <None Remove="OtherOperations.png" />
+    <None Remove="PlayListoperations.png" />
+    <None Remove="PopUpParts.png" />
     <None Remove="TagSearcgFiles1.png" />
     <None Remove="vidieoshed.png" />
     <None Remove="WildCardfILES7.png" />
@@ -39,7 +43,19 @@
     <Content Include="DirectoryToll.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="FileMoveCopyOperations.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="mediaListOne.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OtherOperations.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PlayListoperations.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PopUpParts.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TagSearcgFiles1.png">
