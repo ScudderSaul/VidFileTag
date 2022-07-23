@@ -2958,58 +2958,68 @@ namespace VidFileTag
 
         #region nexttagged
 
-        /// <summary>
-        ///  finds next in view with a tag
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //private void FindNextTaggedButton_Click(object sender, RoutedEventArgs e)
-        //{
+        // <summary>
+        //  finds next in view with a tag
+        // </summary>
+        // <param name = "sender"></param>
+        // <param name="e"></param>
+        private void FindNextTaggedButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selt = from TagInfo su in TagsListView.SelectedItems
+                     select su;
 
-        //    int fnd;
-        //    int start = 0;
-        //    int cnt = FilesListView.Items.Count;
-        //    if (cnt == 0)
-        //    {
-        //        return;
-        //    }
-        //    if (FilesListView.SelectedItem == null)
-        //    {
-        //        start = 0;
-        //    }
-        //    else
-        //    {
-        //        start = FilesListView.Items.IndexOf(FilesListView.SelectedItem);
-        //    }
+            List<TagFileInfo> inflist = new List<TagFileInfo>();
 
-        //    for (int ii = 0; ii < cnt; ii++)
-        //    {
-        //        int kk = (ii + 1 + start) % cnt;
-        //        TagFileInfo tt = FilesListView.Items[kk] as TagFileInfo;
+            if (selt.Any())
+            {
 
-        //        if (tt != null)
-        //        {
+                foreach (var qq in FilesListView.Items)
+                {
+                    if (qq != null)
+                    {
+                        TagFileInfo inf = qq as TagFileInfo;
+                        var tt = from bb in Context.TagFileInfos
+                                 where bb.FilePath == inf.FilePath
+                                 select bb;
+                        if (tt.Any())
+                        {
+                            inf = tt.First();
 
-        //            var uu = from ww in Context.TagFileInfos
-        //                     where ww.FilePath == tt.FilePath
-        //                     select ww;
+                            foreach (var istag in selt)
+                            {
+                                var isin = from cc in Context.TagFileInfoTagInfos
+                                           where cc.TagFileInfoId == inf.Id
+                                           && cc.TagInfoId == istag.Id
+                                           select cc;
 
-        //            if (uu.Any())
-        //            {
+                                if (isin.Any())
+                                {
+                                    if (inflist.Contains(inf) == false)
+                                    {
+                                        inflist.Add(inf);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
-        //                TagFileInfo ss = uu.First();
+            if(FilesListView.SelectedItem != null)
+            {
+               
+            }
+            else
+            {
 
-        //                if (ss.TagInfos.Count > 0)
-        //                {
-        //                    //   tt = ss;
-        //                    fnd = FilesListView.Items.IndexOf(tt);
-        //                    FilesListView.SelectedIndex = fnd;
-        //                    break;
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
+            }
+
+            if(inflist.Count > 0)
+            {
+
+            }
+        }
 
 
 

@@ -16,30 +16,98 @@
 
 
     </Window.Resources>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
+        <StackPanel>
 
-    <StackPanel>
 
 
+            <Grid x:Name="DirectoryGrid" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="45*" ></ColumnDefinition>
+                    <ColumnDefinition Width="50*" ></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" MaxWidth="520">
+                    <StackPanel Orientation="Horizontal" >
+                        <GroupBox x:Name="TagCreationGroupBox" BorderThickness="3" BorderBrush="Purple" Margin="2"
+                              HorizontalAlignment="Left"  MaxWidth="240">
+                            <GroupBox.Header>
+                                <TextBlock Text="Tag Creation"  FontWeight="DemiBold"  FontSize="12" Margin="1"></TextBlock>
+                            </GroupBox.Header>
 
-        <Grid x:Name="DirectoryGrid" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="45*" ></ColumnDefinition>
-                <ColumnDefinition Width="50*" ></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0">
-                
-                <Grid x:Name="TagGrid">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="20*"></ColumnDefinition>
-                        <ColumnDefinition Width="5*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <GroupBox  BorderBrush="Purple" BorderThickness="3" Margin="2" Grid.Column="0" x:Name="TagsGroupBox">
+                            <StackPanel Orientation="Vertical" >
+                                <TextBox x:Name="CreatedTagTextBox" Width="220" Margin="2" 
+                                 TextChanged="CreatedTagTextBox_TextChanged"
+                                 HorizontalAlignment="Left" 
+                                 SpellCheck.IsEnabled="True"></TextBox>
+                                <WrapPanel>
+                                    <Button x:Name="CreateTagButton" Width="90" IsEnabled="False" Background="#FFE5E084"
+                                    Content="Create Tag" Click="CreateTagButton_Click" 
+                                    Margin="2" HorizontalAlignment="Left" Foreground="Purple">
+                                        <Button.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </Button.Resources>
+                                        <Button.ToolTip>
+                                            <TextBlock Text="Create Tags in the database to label files" Foreground="Purple" FontSize="13" />
+                                        </Button.ToolTip>
+                                    </Button>
+                                </WrapPanel>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox x:Name="TagChangeRemoveGroupBox"  BorderThickness="3" BorderBrush="Purple"
+                               MaxWidth="240" HorizontalAlignment="Left"  Margin="2"
+                                  >
+                            <GroupBox.Header>
+                                <TextBlock Text="Tag Operations"  FontWeight="DemiBold"  FontSize="12" Margin="1"></TextBlock>
+                            </GroupBox.Header>
+                            <StackPanel Orientation="Vertical" >
+                                <TextBox x:Name="OperationTagTextBox" Width="220" Margin="2" HorizontalAlignment="Left" SpellCheck.IsEnabled="True"></TextBox>
+                                <WrapPanel>
+                                    <Button x:Name="DeleteTagButton" Width="90"
+                                    Background="#FFE5E084"
+                                     Click="DeleteTagButton_Click"  
+                                    Margin="2" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5">
+                                        <TextBlock Text="Delete Tag"
+                                              Foreground="Purple"  FontSize="13" Background="#FFE5E084" FontWeight="Bold" />
+                                        <Button.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </Button.Resources>
+
+                                        <Button.ToolTip>
+                                            <TextBlock Text="Delete a tag from the database." Foreground="DarkGreen" FontSize="12" />
+                                        </Button.ToolTip>
+                                    </Button>
+                                    <Button x:Name="UpdateTagButton" Width="90" Background="#FFE5E084"
+                                    Click="UpdateTagButton_Click"  
+                                    Margin="2" HorizontalAlignment="Left">
+                                        <TextBlock Text="Update Tag"
+                                              Foreground="Purple"  FontSize="13" Background="#FFE5E084" FontWeight="Bold" />
+                                        <Button.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </Button.Resources>
+                                        <Button.ToolTip>
+                                            <TextBlock Text="Update a tag's text in the database." Foreground="DarkGreen" FontSize="12" />
+                                        </Button.ToolTip>
+                                    </Button>
+                                </WrapPanel>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+
+                    <GroupBox  x:Name="TagsGroupBox" BorderBrush="Purple" MaxWidth="500" MaxHeight="400"
+                               BorderThickness="3" Margin="2" >
                         <GroupBox.Header>
                             <TextBlock Text="Tags Selection" FontSize="13" FontWeight="DemiBold" HorizontalAlignment="Left"/>
                         </GroupBox.Header>
 
                         <!-- TagsListView is All tags -->
-                        <ListBox  x:Name="TagsListView" DisplayMemberPath="Tag" Margin="2" 
+                        <ListBox  x:Name="TagsListView" DisplayMemberPath="Tag"  
                                   HorizontalAlignment="Left" FontSize="12" FontWeight="Medium"
                                   SelectionMode="Multiple" 
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" 
@@ -55,513 +123,243 @@
                         </ListBox>
 
                     </GroupBox>
-                    <GroupBox  BorderBrush="Purple" BorderThickness="3" Margin="2" Grid.Column="1" x:Name="TagButtonGoupBox">
+
+
+                    <WrapPanel Orientation="Horizontal" MaxWidth="500" >
+
+
+                        <GroupBox  BorderBrush="Purple" BorderThickness="3" Margin="2"  x:Name="TagButtonGoupBox">
+                            <GroupBox.Header>
+                                <TextBlock Text="+/- Tags" FontSize="13" FontWeight="DemiBold" HorizontalAlignment="Left"/>
+                            </GroupBox.Header>
+                            <WrapPanel Orientation="Horizontal">
+                                <Button x:Name="TagAddButton"  IsEnabled="False" Width="80"
+                                        Background="Linen" BorderBrush="Purple" BorderThickness="3"
+                                     HorizontalAlignment="Left" Margin="1" 
+                                    Click="TagAddButton_Click">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="5"/>
+                                        </Style>
+                                    </Button.Resources>
+                                    <Button.ToolTip>
+                                        <TextBlock Text="Apply any selected tags to the selected file by creating a database entry." Foreground="DarkGreen" FontSize="12" />
+                                    </Button.ToolTip>
+                                    <TextBlock Text="Tag selected file"  Foreground="Purple" FontSize="13"
+                                           TextWrapping="Wrap" HorizontalAlignment="Left" Margin="2"
+                                               FontWeight="Bold" Background="#FFE5E084"></TextBlock>
+                                </Button>
+                                <Button  x:Name="TagRemoveButton" IsEnabled="False" 
+                                         Background="#FFE5E084"  HorizontalAlignment="Left" Width="80"
+                                     BorderBrush="Purple" BorderThickness="3" 
+                                Click="TagRemoveButton_Click"                               
+                                Margin="2" >
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="5"/>
+                                        </Style>
+                                    </Button.Resources>
+                                    <Button.ToolTip>
+                                        <TextBlock Text="Remove any selected tags from the selected file." Foreground="DarkGreen" FontSize="12" />
+                                    </Button.ToolTip>
+                                    <TextBlock Text="Untag selected file" 
+                                           Foreground="Purple" FontSize="13" 
+                                           HorizontalAlignment="Left" TextWrapping="Wrap"
+                                               Background="#FFE5E084" FontWeight="Bold"  ></TextBlock>
+                                </Button>
+
+                                <Button x:Name="FilesWithASelectedTagInPath" Background="#FFE5E084" Width="80"
+                                   HorizontalAlignment="Left" 
+                                   Margin="1"
+                                   BorderBrush="Purple" BorderThickness="3"
+                                   Click="FilesWithASelectedTagInPath_Click" 
+                                   IsEnabled="False">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="5"/>
+                                        </Style>
+                                    </Button.Resources>
+                                    <Button.ToolTip>
+                                        <TextBlock Text="List any media files in the directory with one of the selected tags" Foreground="DarkGreen" FontSize="13" />
+                                    </Button.ToolTip>
+                                    <TextBlock Text="List files with Tag"  TextWrapping="Wrap"
+                                    Foreground="Purple" FontSize="13" Background="#FFE5E084" FontWeight="Bold"></TextBlock>
+                                </Button>
+                            </WrapPanel>
+                        </GroupBox>
+
+                    </WrapPanel>
+
+                    <GroupBox x:Name="SelectedFileGroupBox"  BorderThickness="3"
+                              Margin="2" BorderBrush="BlueViolet"
+                              MaxWidth="500" MinWidth="300" HorizontalAlignment="Left"
+                              >
                         <GroupBox.Header>
-                            <TextBlock Text="+/- Tags" FontSize="13" FontWeight="DemiBold" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Selected File"  FontWeight="DemiBold"  />
                         </GroupBox.Header>
                         <StackPanel Orientation="Vertical">
-                            <Button 
-                                    IsEnabled="False" Background="Linen" BorderBrush="Purple" BorderThickness="3"
-                                    x:Name="TagAddButton" HorizontalAlignment="Center" Margin="1"
-                                    Click="TagAddButton_Click">
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                                <Button.ToolTip>
-                                    <TextBlock Text="Apply any selected tags to the selected file by creating a database entry." Foreground="DarkGreen" FontSize="12" />
-                                </Button.ToolTip>
-                                <TextBlock Text="Add Tags"  Foreground="Purple" FontSize="13"
-                                           TextWrapping="Wrap" HorizontalAlignment="Center" FontWeight="Bold" Background="#FFE5E084"></TextBlock>
-                            </Button>
-                            <Button  IsEnabled="False" Background="#FFE5E084"  HorizontalAlignment="Center"
-                                    x:Name="TagRemoveButton"  BorderBrush="Purple" BorderThickness="3" 
-                                Click="TagRemoveButton_Click"                               
-                                Margin="1" >
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                                <Button.ToolTip>
-                                    <TextBlock Text="Remove any selected tags from the selected file." Foreground="DarkGreen" FontSize="12" />
-                                </Button.ToolTip>
-                                <TextBlock Text="Remove Tags" 
-                                           Foreground="Purple" FontSize="13" 
-                                           HorizontalAlignment="Center" TextWrapping="Wrap" Background="#FFE5E084" FontWeight="Bold" Width="59" ></TextBlock>
-                            </Button>
-                            <!--<Button x:Name="FindNextTaggedButton" Background="#FFAADDAA"
-                               HorizontalAlignment="Center"
-                                Margin="1"
-                                
-                                Click="FindNextTaggedButton_Click" >
-                                <Button.ToolTip>
-                                    <TextBlock Text="Find the next file in the list with a selected tag." Foreground="DarkGreen" FontSize="12" />
-                                </Button.ToolTip>
-                                <TextBlock Text="Find Next Tagged" TextWrapping="Wrap" FontSize="12"></TextBlock>
-                            </Button>-->
-                            <Button x:Name="FilesWithASelectedTagInPath" Background="#FFE5E084"
-                                HorizontalAlignment="Center" 
-                                Margin="1"
-                                  BorderBrush="Purple" BorderThickness="3"
-                                Click="FilesWithASelectedTagInPath_Click" 
-                                IsEnabled="False">
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                                <Button.ToolTip>
-                                    <TextBlock Text="List any media files in the directory with one of the selected tags" Foreground="DarkGreen" FontSize="13" />
-                                </Button.ToolTip>
-                                <TextBlock Text="List files with Tag"  TextWrapping="Wrap"
-                                    Foreground="Purple" FontSize="13" Background="#FFE5E084" FontWeight="Bold"></TextBlock>
-                            </Button>
-                        </StackPanel>
-                    </GroupBox>
-                </Grid>
-
-                <GroupBox BorderThickness="3" BorderBrush="Purple" x:Name="TagCreationGroupBox">
-                    <GroupBox.Header>
-                        <TextBlock Text="Tag Creation"  FontWeight="DemiBold"  FontSize="12" Margin="1"></TextBlock>
-                    </GroupBox.Header>
-
-                    <StackPanel Orientation="Vertical" >
-                        <TextBox x:Name="CreatedTagTextBox" Width="220" Margin="2" 
-                                 TextChanged="CreatedTagTextBox_TextChanged"
-                                 HorizontalAlignment="Left" 
-                                 SpellCheck.IsEnabled="True"></TextBox>
-                        <WrapPanel>
-                            <Button x:Name="CreateTagButton" Width="90" IsEnabled="False" Background="#FFE5E084"
-                                    Content="Create Tag" Click="CreateTagButton_Click" 
-                                    Margin="2" HorizontalAlignment="Left" Foreground="Purple">
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                                <Button.ToolTip>
-                                    <TextBlock Text="Create Tags in the database to label files" Foreground="Purple" FontSize="13" />
-                                </Button.ToolTip>
-                            </Button>
-                        </WrapPanel>
-                    </StackPanel>
-                </GroupBox>
-
-                <GroupBox BorderThickness="3" BorderBrush="Purple" x:Name="TagChangeRemoveGroupBox">
-                    <GroupBox.Header>
-                        <TextBlock Text="Tag Operations"  FontWeight="DemiBold"  FontSize="12" Margin="1"></TextBlock>
-                    </GroupBox.Header>
-                    <StackPanel Orientation="Vertical" >
-                        <TextBox x:Name="OperationTagTextBox" Width="220" Margin="2" HorizontalAlignment="Left" SpellCheck.IsEnabled="True"></TextBox>
-                        <WrapPanel>
-                            <Button x:Name="DeleteTagButton" Width="90"
-                                    Background="#FFE5E084"
-                                     Click="DeleteTagButton_Click"  
-                                    Margin="2" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5">
-                                <TextBlock Text="Delete Tag"
-                                              Foreground="Purple"  FontSize="13" Background="#FFE5E084" FontWeight="Bold" />
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-
-                                <Button.ToolTip>
-                                    <TextBlock Text="Delete a tag from the database." Foreground="DarkGreen" FontSize="12" />
-                                </Button.ToolTip>
-                            </Button>
-                            <Button x:Name="UpdateTagButton" Width="90" Background="#FFE5E084"
-                                    Click="UpdateTagButton_Click"  
-                                    Margin="2" HorizontalAlignment="Left">
-                                <TextBlock Text="Update Tag"
-                                              Foreground="Purple"  FontSize="13" Background="#FFE5E084" FontWeight="Bold" />
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                                <Button.ToolTip>
-                                    <TextBlock Text="Update a tag's text in the database." Foreground="DarkGreen" FontSize="12" />
-                                </Button.ToolTip>
-                            </Button>
-                        </WrapPanel>
-                    </StackPanel>
-                </GroupBox>
-
-                <GroupBox BorderThickness="3" Margin="2" BorderBrush="BlueViolet" x:Name="SelectedFileGroupBox">
-                    <GroupBox.Header>
-                        <TextBlock Text="Selected File"  FontWeight="DemiBold"  />
-                    </GroupBox.Header>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock x:Name="SelectedFile" 
+                            <TextBlock x:Name="SelectedFile" 
                                         FontSize="14" Margin="2" FontWeight="DemiBold" TextWrapping="Wrap">
-                            <TextBlock.ToolTip>
-                                <TextBlock Text="The currently selected file if one is selected." Foreground="DarkGreen" FontSize="12" />
-                            </TextBlock.ToolTip>
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="The currently selected file if one is selected." Foreground="DarkGreen" FontSize="12" />
+                                </TextBlock.ToolTip>
                             </TextBlock>
-                        <GroupBox   BorderThickness="3" Margin="2" BorderBrush="DarkViolet"  x:Name="TagsOnFileGroupBox">
-                            <GroupBox.Header>
+                            <GroupBox   BorderThickness="3" Margin="2" BorderBrush="DarkViolet"  x:Name="TagsOnFileGroupBox">
+                                <GroupBox.Header>
 
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Tags on the selected File" FontSize="14" FontWeight="DemiBold" HorizontalAlignment="Left" Margin="1" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Tags on the selected File" FontSize="14" FontWeight="DemiBold" HorizontalAlignment="Left" Margin="1" />
 
-                                </StackPanel>
+                                    </StackPanel>
 
 
-                            </GroupBox.Header>
-                            <StackPanel Orientation="Vertical">
+                                </GroupBox.Header>
 
-                                <!--Tags on current select file as many to many class -->
-                                <ListView  x:Name="TagsExistView" 
+                                <StackPanel Orientation="Vertical">
+
+                                    <!--Tags on current select file as many to many class -->
+                                    <ListView  x:Name="TagsExistView" 
                                       DisplayMemberPath="Tag" 
                                       Margin="2" HorizontalAlignment="Left" 
                                       FontSize="10" 
                                       SelectionMode="Multiple"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                   SelectionChanged="TagsExistView_SelectionChanged">
-                                    <ListView.ToolTip>
-                                        <TextBlock Text="A list of all tags already added to on the current selected file." Foreground="DarkGreen" FontSize="12" />
-                                    </ListView.ToolTip>
-                                    <ListView.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel Orientation="Horizontal"
+                                        <ListView.ToolTip>
+                                            <TextBlock Text="A list of all tags already added to on the current selected file." Foreground="DarkGreen" FontSize="12" />
+                                        </ListView.ToolTip>
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal"
                                                    Background="Linen"  
                                                    ItemWidth="80" 
                                                    ItemHeight="30" 
                                                    Margin="3" 
                                                    Visibility="Visible"  />
-                                        </ItemsPanelTemplate>
-                                    </ListView.ItemsPanel>
-                                </ListView>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                    </ListView>
 
-                                <!--<ListView x:Name="TagsExistView" DisplayMemberPath="TagInfo.Tag" Margin="2" HorizontalAlignment="Left" FontSize="10" 
+                                    <!--<ListView x:Name="TagsExistView" DisplayMemberPath="TagInfo.Tag" Margin="2" HorizontalAlignment="Left" FontSize="10" 
                           ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="TagsExistView_SelectionChanged"></ListView>-->
-                            </StackPanel>
-                        </GroupBox>
-                    </StackPanel>
-                </GroupBox>
-
-
-
-                <TextBlock x:Name="FileNameTextBlock"   FontSize="12" />
-
-
-                <Expander Grid.Row="0"  BorderThickness="3" Margin="2" BorderBrush="MidnightBlue"  x:Name="FileInfoGroupBox">
-                    <Expander.Header>
-                        <TextBlock Text="File Information"  FontWeight="DemiBold"  />
-                    </Expander.Header>
-                    <ListView x:Name="FileInfoList"  MaxHeight="160"
-                          ScrollViewer.VerticalScrollBarVisibility="Visible" >
-                        <ListView.ToolTip>
-                            <TextBlock Text="The media files found searching in the current directory. Select a file to add tags to it or view it." Foreground="DarkGreen" FontSize="12" />
-                        </ListView.ToolTip>
-
-                    </ListView>
-
-
-
-
-                </Expander>
-
-            </StackPanel>
-            <Grid Grid.Column="1" x:Name="PathGrid">
-                <Grid.RowDefinitions>
-                    <RowDefinition  />
-                    <RowDefinition Height="1*"  />
-                    <RowDefinition Height="90"  />
-                    <RowDefinition Height="3*" />
-                </Grid.RowDefinitions>
-                <Expander Grid.Row="0"  BorderThickness="3" Margin="2" BorderBrush="BlueViolet" x:Name="PathGroupBox">
-                    <Expander.Header>
-                        <TextBlock Text="Path"  FontWeight="DemiBold"  />
-                    </Expander.Header>
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <GroupBox BorderThickness="1" Margin="2" BorderBrush="BlueViolet">
-                                <GroupBox.Header>
-                                    <TextBlock Text="Computer Name"  FontWeight="DemiBold"  FontSize="12"   />
-                                </GroupBox.Header>
-                                <TextBlock x:Name="MachineTextBlock"  FontSize="13" Width="200" HorizontalAlignment="Left" />
+                                </StackPanel>
                             </GroupBox>
 
-                            <GroupBox  BorderThickness="1" Margin="2" BorderBrush="BlueViolet">
-                                <GroupBox.Header>
-                                    <TextBlock Text="Disk Drive"  FontWeight="DemiBold"  FontSize="12"  />
-                                </GroupBox.Header>
-                                <ComboBox x:Name="DriveBox" SelectionChanged="DriveBox_SelectionChanged" IsReadOnly="true" Width="60" HorizontalAlignment="Left" SelectedValuePath="Name" />
-                            </GroupBox>
-
-                        </StackPanel>
-                        <GroupBox  BorderThickness="1" Margin="2" BorderBrush="BlueViolet">
-                            <TextBlock x:Name="PathTextBlock" TextWrapping="Wrap" FontSize="14"  FontWeight="DemiBold"  >
-                                <TextBlock.ToolTip>
-                                    <TextBlock Text="The 'path' directory that is current location." Foreground="DarkGreen" FontSize="12" />
-                                </TextBlock.ToolTip>
-                            </TextBlock>
-                        </GroupBox>
-                        <Button x:Name="Back" Content="Up" Click="GoToParent" Background="#FFE5E084"
-                                Width="30" FontSize="14" 
-                                FontWeight="Heavy" HorizontalAlignment="Left" Margin="2" >
-                            <Button.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="3"/>
-                                </Style>
-                            </Button.Resources>
-                            <Button.ToolTip>
-                                <TextBlock Text="Move to the directory that is the parent of the current path." Foreground="DarkGreen" FontSize="12" />
-                            </Button.ToolTip>
-                        </Button>
-                    </StackPanel>
-                </Expander>
-
-                <Expander Grid.Row="1"  BorderThickness="3" BorderBrush="BlueViolet" x:Name="DirectoryGroupBox">
-                    <Expander.Header>
-                        <TextBlock Text="Directories under path"  FontWeight="DemiBold" ></TextBlock>
-                    </Expander.Header>
-                    <!--Current directory list-->
-                    <ListView x:Name="DirsListView" MaxHeight="300" MinHeight="50"
-                          ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="DirsListView_SelectionChanged" Background="#FFF6F8FD">
-
-                        <ListView.ToolTip>
-                            <TextBlock Text="A list of all directories under the current location. Select a directory to move to it" Foreground="DarkGreen" FontSize="12" />
-                        </ListView.ToolTip>
-                    </ListView>
-                </Expander>
-
-                <GroupBox Grid.Row="2"  BorderThickness="3" BorderBrush="BlueViolet" x:Name="WildCardGroupBox">
-                    <GroupBox.Header>
-                        <TextBlock Text="File List Wildcard"  FontWeight="DemiBold" ></TextBlock>
-                    </GroupBox.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*">
-                            </ColumnDefinition>
-                            <ColumnDefinition Width="2*">
-                            </ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30" />
-                            <RowDefinition Height="30" />
-                            <RowDefinition Height="30" />
-                        </Grid.RowDefinitions>
-                        <TextBox x:Name="WildFileTextBox"   Grid.Row="0" Grid.Column="0" Background="Linen" FontSize="13"
-                                 Height="25" 
-                                 Margin="2" >
-                            <TextBox.ToolTip>
-                                <TextBlock Text="Directory wildcard. *Alice* will find all files with the word Alice in the filename."
-                                              Foreground="Purple"  FontSize="13">
-
-                                </TextBlock>
-                            </TextBox.ToolTip>
-                        </TextBox>
-
-                        <Button x:Name="WildFileButton"  Grid.Row="0" Grid.Column="1"  Height="25" 
-                                Content="Search with wildcard" Width="160" HorizontalAlignment="Center"
-                                    Margin="0,2,0,0" Background="#FFE5E084" FontSize="13"
-                                    Click="WildFileButton_Click" FontWeight="Bold" VerticalAlignment="Top">
-                            <Button.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="5"/>
-                                </Style>
-                            </Button.Resources>
-                            <Button.ToolTip>
-                                <TextBlock Text="Using a wildcard. *Alice* will find all files with the word Alice in the filename."
-                                               Foreground="Purple"  FontSize="13">
-
-                                </TextBlock>
-                            </Button.ToolTip>
-                        </Button>
-                        <Button x:Name="AllFileButton"  Grid.Row="1" Grid.Column="1"
-                                    Content="Show all media files"  Height="25" 
-                                    Width="180" Margin="2" HorizontalAlignment="Center"
-                                    Background="#FFE5E084" FontSize="13"
-                                    Click="AllFileButton_Click" FontWeight="Bold" >
-                            <Button.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="5"/>
-                                </Style>
-                            </Button.Resources>
-                            <Button.ToolTip>
-                                <TextBlock Text="Show all media files in the current directory"
-                                              Foreground="Purple"  FontSize="13" FontWeight="Bold">
-                                </TextBlock>
-                            </Button.ToolTip>
-                        </Button>
-                        <Button x:Name="TagsToWildcard"  Grid.Row="1" Grid.Column="0"  Height="25" 
-                                    Content="List files with any Selected Tag(s) in filenames" Width="299" Margin="0,2,0,2" HorizontalAlignment="Center"
-                                    Background="#FFE5E084" FontSize="13"
-                                    Click="TagsToWildcard_Click" Foreground="Purple" FontWeight="Bold">
-                            <Button.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="5"/>
-                                </Style>
-                            </Button.Resources>
-                            <Button.ToolTip>
-                                <TextBlock Text="Find Files with Selected Tag(s} in filenames"
-                                              Foreground="Purple" FontSize="13">
-                                </TextBlock>
-                            </Button.ToolTip>
-                        </Button>
-
-
-                    </Grid>
-
-                </GroupBox>
-
-                <GroupBox Grid.Row="3"  BorderThickness="3" BorderBrush="BlueViolet" x:Name="FileGroupBox">
-                    <GroupBox.Header>
-                        <TextBlock Text="Media File List"  FontWeight="DemiBold" ></TextBlock>
-                    </GroupBox.Header>
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Top">
-
-                        <!--current File list-->
-                        <ListView x:Name="FilesListView" 
-                                  Grid.Row="1"
-                                  DisplayMemberPath="FileName"
-                                  MaxHeight="400"
-                                  FontWeight="Medium"
-                          ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="FilesListView_SelectionChanged">
-                            <ListView.ToolTip>
-                                <TextBlock Text="The media files found searching in the current directory. Select a file to add tags to it or view it." Foreground="DarkGreen" FontSize="12" />
-                            </ListView.ToolTip>
-
-                        </ListView>
-                        <StackPanel Orientation="Horizontal">
-
-                            <!--<Button x:Name="ShowTaggedButton" Content="Show tagged" Height="29" Width="140" Background="Azure" 
-                                    Click="ShowTaggedButton_Click" ></Button>-->
-                        </StackPanel>
-                    </StackPanel>
-                </GroupBox>
-
-
-            </Grid>
-        </Grid>
-
-
-        <Grid x:Name="OperationGrid" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*" ></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="6*" ></RowDefinition>
-                <RowDefinition Height="6*" ></RowDefinition>
-            </Grid.RowDefinitions>
-            <GroupBox Grid.Column="0" Grid.Row="0">
-                <StackPanel>
-                    <Expander BorderThickness="3" Margin="1,2,2,1" BorderBrush="BlueViolet">
-                        <Expander.Header>
-                            <TextBlock Text="Playlist Operations"  FontWeight="DemiBold"  />
-                        </Expander.Header>
-                        <WrapPanel Margin="2" >
-                            <CheckBox IsChecked="True" Margin="2" 
+                            <StackPanel>
+                                <Expander x:Name="PlaylistOperationsExpander" BorderThickness="3" Margin="1,2,2,1"  HorizontalAlignment="Left"
+                                  BorderBrush="BlueViolet" MaxWidth="800">
+                                    <Expander.Header>
+                                        <TextBlock Text="Playlist Operations"  FontWeight="DemiBold"  />
+                                    </Expander.Header>
+                                    <WrapPanel Margin="2" >
+                                        <CheckBox IsChecked="True" Margin="2" 
                                       Content="All Tagged Files" ForceCursor="False"
                                       x:Name="PlayListSourceCheckBox"
                                       Checked="PlayListSourceCheckBox_Checked"
                                       Unchecked="PlayListSourceCheckBox_Unchecked"></CheckBox>
-                             
 
-                            <Button FontSize="13" BorderThickness="2"
+
+                                        <Button FontSize="13" BorderThickness="2"
                                      Click="PlayListButton_Click" Margin="3"  Background="Linen"  
                                     x:Name="PlayListButton">
-                                <TextBlock Text="Add files with any selected tags to a playlist" FontSize="13" Foreground="Purple">
-                                </TextBlock>
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                                <Button.ToolTip>
-                                    <TextBlock Text="Add source files that are marked in the database with any of the selected tags in the tags list to playlist." Foreground="DarkGreen" FontSize="12" />
-                                </Button.ToolTip>
-                            </Button>
+                                            <TextBlock Text="Add files with any selected tags to a playlist" FontSize="13" Foreground="Purple">
+                                            </TextBlock>
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                            <Button.ToolTip>
+                                                <TextBlock Text="Add source files that are marked in the database with any of the selected tags in the tags list to playlist." Foreground="DarkGreen" FontSize="12" />
+                                            </Button.ToolTip>
+                                        </Button>
 
-                            <Button  BorderThickness="2"
+                                        <Button  BorderThickness="2"
                                     Click="PlayListAllButton_Click"  Margin="3"  Background="Linen" FontSize="13" 
                                      x:Name="PlayListAllButton">
-                                <TextBlock Text="Add files with all of the selected tags to a playlist" FontSize="13" Foreground="Purple">
-                                </TextBlock>
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                                <Button.ToolTip>
-                                    <TextBlock Text="Add source files that are marked in the database with all of the selected tags in the tags list to a playlist." Foreground="DarkGreen" FontSize="12" />
-                                </Button.ToolTip>
-                            </Button>
+                                            <TextBlock Text="Add files with all of the selected tags to a playlist" FontSize="13" Foreground="Purple">
+                                            </TextBlock>
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                            <Button.ToolTip>
+                                                <TextBlock Text="Add source files that are marked in the database with all of the selected tags in the tags list to a playlist." Foreground="DarkGreen" FontSize="12" />
+                                            </Button.ToolTip>
+                                        </Button>
 
-                            <Button  BorderThickness="2"
+                                        <Button  BorderThickness="2"
                                     Click="PlayListOneButton_Click"  Margin="3" Background="Linen" FontSize="13" 
                                      x:Name="PlayListOneButton">
-                                <TextBlock Text="Add any files with only one of the Selected Tags to a playlist" FontSize="13" Foreground="Purple">
-                                </TextBlock>
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                                <Button.ToolTip>
-                                    <TextBlock Text="Add any files that are marked in the database with only one of the tags selected in the tags list to a playlist." Foreground="DarkGreen" FontSize="12" />
-                                </Button.ToolTip>
-                            </Button>
-                        </WrapPanel>
-                    </Expander>
+                                            <TextBlock Text="Add any files with only one of the Selected Tags to a playlist" FontSize="13" Foreground="Purple">
+                                            </TextBlock>
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                            <Button.ToolTip>
+                                                <TextBlock Text="Add any files that are marked in the database with only one of the tags selected in the tags list to a playlist." Foreground="DarkGreen" FontSize="12" />
+                                            </Button.ToolTip>
+                                        </Button>
+                                    </WrapPanel>
+                                </Expander>
 
-                    <Expander BorderThickness="3" Margin="1,2,2,1" BorderBrush="BlueViolet">
-                        <Expander.Header>
-                            <TextBlock Text="File Move/Copy Operations"  FontWeight="DemiBold"  />
-                        </Expander.Header>
-                        <WrapPanel Margin="2" >
+                                <Expander x:Name="MoveCopyOperationsExpander" BorderThickness="3" Margin="1,2,2,1"  HorizontalAlignment="Left"
+                                  BorderBrush="BlueViolet" MaxWidth="800">
+                                    <Expander.Header>
+                                        <TextBlock Text="File Move/Copy Operations"  FontWeight="DemiBold"  />
+                                    </Expander.Header>
+                                    <WrapPanel Margin="2" >
 
-                           
-                                <CheckBox IsChecked="True" Margin="2" 
+
+                                        <CheckBox IsChecked="True" Margin="2" 
                                       Content="All Tagged Files" ForceCursor="False"
                                       x:Name="FileCopyMoveSourceCheckBox"
                                       Checked="FileCopyMoveSourceCheckBox_Checked"
                                       Unchecked="FileCopyMoveSourceCheckBox_Unchecked"></CheckBox>
 
-                            <Button  BorderThickness="2" x:Name="CopyTaggedButton"
+                                        <Button  BorderThickness="2" x:Name="CopyTaggedButton"
                                   Click="CopyFilesWithSelectedTags"  
                                  Margin="3" Background="Linen" FontSize="13">
-                                <TextBlock Text="Copy any files with the selected tags to a location" 
+                                            <TextBlock Text="Copy any files with the selected tags to a location" 
                                            FontSize="13" Foreground="Purple">
-                                </TextBlock>
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                            </Button>
+                                            </TextBlock>
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                        </Button>
 
-                            <Button  BorderThickness="2" x:Name="MoveTaggedButton"
+                                        <Button  BorderThickness="2" x:Name="MoveTaggedButton"
                                   Click="MoveFilesWithSelectedTags"  
                                  Margin="3" Background="Linen" FontSize="13">
-                                <TextBlock Text="Move any files with the selected tags to a location" FontSize="13" Foreground="Purple">
-                                </TextBlock>
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                            </Button>
+                                            <TextBlock Text="Move any files with the selected tags to a location" FontSize="13" Foreground="Purple">
+                                            </TextBlock>
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                        </Button>
 
 
-                        </WrapPanel>
-                    </Expander>
-                    
+                                    </WrapPanel>
+                                </Expander>
 
-                    <Expander BorderThickness="3" Margin="1,2,2,1" BorderBrush="BlueViolet">
-                        <Expander.Header>
-                            <TextBlock Text="Other Operations"  FontWeight="DemiBold"  />
-                        </Expander.Header>
-                        <WrapPanel Margin="2" >
 
-                         
+                                <Expander x:Name="OtherOperationsExpander"  BorderThickness="3" Margin="1,2,2,1" HorizontalAlignment="Left"
+                                  BorderBrush="BlueViolet" MaxWidth="800">
+                                    <Expander.Header>
+                                        <TextBlock Text="Other Operations"  FontWeight="DemiBold"  />
+                                    </Expander.Header>
+                                    <WrapPanel Margin="2" >
 
-                            <!--<Button FontSize="13" BorderThickness="2"
+
+
+                                        <!--<Button FontSize="13" BorderThickness="2"
                                      Click="PlayListDirectoryButton_Click"  Margin="3"  Background="Linen"  x:Name="PlayListButton">
                                 <TextBlock Text="Add all current directory files with the selected Tags to a playlist" FontSize="13" Foreground="Purple">
                                 </TextBlock>
@@ -575,7 +373,7 @@
                                 </Button.ToolTip>
                             </Button>-->
 
-                            <!--<Button  BorderThickness="2"
+                                        <!--<Button  BorderThickness="2"
                                     Click="PlayListAllDirectoryButton_Click"  Margin="3"  Background="Linen" FontSize="13" x:Name="PlayListAllButton">
                                 <TextBlock Text="Add current directory files with all of the Selected Tags to a playlist" FontSize="13" Foreground="Purple">
                                 </TextBlock>
@@ -588,118 +386,118 @@
                                     <TextBlock Text="Add current directory files that are marked in the database with all of the tags selected in the tags list to a LVC playlist." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
                             </Button>-->
-                            
-                            
 
-                            <Button   BorderThickness="2" Background="Linen" FontSize="13" 
+
+
+                                        <Button   BorderThickness="2" Background="Linen" FontSize="13" 
                                     Click="ReadTagsTextFile_Click"  Margin="3">
-                                <TextBlock Text="Read Tags" FontSize="13" Foreground="Purple">
-                                </TextBlock>
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                                <Button.ToolTip>
-                                    <TextBlock Text="Read a list of tags in a file, if any do not existr create them." Foreground="DarkGreen" FontSize="12" />
-                                </Button.ToolTip>
-                            </Button>
+                                            <TextBlock Text="Read Tags" FontSize="13" Foreground="Purple">
+                                            </TextBlock>
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                            <Button.ToolTip>
+                                                <TextBlock Text="Read a list of tags in a file, if any do not existr create them." Foreground="DarkGreen" FontSize="12" />
+                                            </Button.ToolTip>
+                                        </Button>
 
-                            <Button  BorderThickness="2"
+                                        <Button  BorderThickness="2"
                                      Click="WriteTagsTextFile_Click"  Margin="3" Background="Linen" FontSize="13">
-                                <TextBlock Text="Write Tags" FontSize="13" Foreground="Purple">
-                                </TextBlock>
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                                <Button.ToolTip>
-                                    <TextBlock Text="Write all tags to a text file" Foreground="DarkGreen" FontSize="12" />
-                                </Button.ToolTip>
-                            </Button>
+                                            <TextBlock Text="Write Tags" FontSize="13" Foreground="Purple">
+                                            </TextBlock>
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                            <Button.ToolTip>
+                                                <TextBlock Text="Write all tags to a text file" Foreground="DarkGreen" FontSize="12" />
+                                            </Button.ToolTip>
+                                        </Button>
 
-                            <Button  BorderThickness="2" x:Name="HelpButton"
+                                        <Button  BorderThickness="2" x:Name="HelpButton"
                                   Click="HelpButton_Click" 
                                  Margin="3" Background="Linen" FontSize="13">
-                                <TextBlock Text="Show/Close help" FontSize="13" Foreground="Purple">
-                                </TextBlock>
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                            </Button>
+                                            <TextBlock Text="Show/Close help" FontSize="13" Foreground="Purple">
+                                            </TextBlock>
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                        </Button>
 
-                            <Button  BorderThickness="2" x:Name="AboutButton"
+                                        <Button  BorderThickness="2" x:Name="AboutButton"
                                   Click="AboutButton_Click" 
                                  Margin="3" Background="Linen" FontSize="13">
-                                <TextBlock Text="About VidFileTag" FontSize="13" Foreground="Purple">
-                                </TextBlock>
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                            </Button>
+                                            <TextBlock Text="About VidFileTag" FontSize="13" Foreground="Purple">
+                                            </TextBlock>
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                        </Button>
 
-                            <Button x:Name="TagInFilenameButton"   BorderThickness="2"
+                                        <Button x:Name="TagInFilenameButton"   BorderThickness="2"
                                      Click="AddTagFromFileName"  Margin="3" Background="Linen" FontSize="13">
-                                <TextBlock Text="Tag files in the directory if the seleted tag is in the file's name" FontSize="13" Foreground="Purple">
-                                </TextBlock>
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                                <Button.ToolTip>
-                                    <TextBlock Text="Choose a part of the selected tag. if it is in media file in the current dirrectory add the tag." Foreground="DarkGreen" FontSize="12" />
-                                </Button.ToolTip>
-                            </Button>
+                                            <TextBlock Text="Tag files in the directory if the seleted tag is in the file's name" FontSize="13" Foreground="Purple">
+                                            </TextBlock>
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                            <Button.ToolTip>
+                                                <TextBlock Text="Choose a part of the selected tag. if it is in media file in the current dirrectory add the tag." Foreground="DarkGreen" FontSize="12" />
+                                            </Button.ToolTip>
+                                        </Button>
 
-                            <Button 
+                                        <Button 
                                    BorderThickness="2" BorderBrush="Purple" 
                                      Click="WhenFileWithSameNameandCRCExists"  Margin="3" Background="Linen" FontSize="13">
-                                <TextBlock Text="Tag any files in the current directory identical to files already tagged with those tags" FontSize="13" Foreground="Purple">
-                                </TextBlock>
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                                <Button.ToolTip>
-                                    <TextBlock 
+                                            <TextBlock Text="Tag any files in the current directory identical to files already tagged with those tags" FontSize="13" Foreground="Purple">
+                                            </TextBlock>
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                            <Button.ToolTip>
+                                                <TextBlock 
                                         Text="If a file in the list's name, size and crc are the same as another in the database update the files tags."
                                         Foreground="Purple"  FontSize="12" />
-                                </Button.ToolTip>
+                                            </Button.ToolTip>
 
-                            </Button>
+                                        </Button>
 
-                            <Button 
+                                        <Button 
                                    BorderThickness="2" BorderBrush="Purple" 
                                      Click="FindIdenticalFilesAndTagInTree"  Margin="3" 
                                 Background="Linen"
                                 FontSize="13">
-                                <TextBlock Text="Find files identical to the selected file and give them the same tags" 
+                                            <TextBlock Text="Find files identical to the selected file and give them the same tags" 
                                            FontSize="13" 
                                            Foreground="Purple">
-                                </TextBlock>
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </Button.Resources>
-                                <Button.ToolTip>
-                                    <TextBlock 
+                                            </TextBlock>
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                            <Button.ToolTip>
+                                                <TextBlock 
                                         Text="If a file's name, size and crc are the same as the selectewd file 
                                         update the files tags to match"
                                         Foreground="Purple"  
                                         FontSize="12" />
-                                </Button.ToolTip>
+                                            </Button.ToolTip>
 
-                            </Button>
+                                        </Button>
 
-                            <!--<Button  BorderThickness="2" x:Name="CopyTaggedButton"
+                                        <!--<Button  BorderThickness="2" x:Name="CopyTaggedButton"
                                   Click="CopyFilesWithSelectedTags"  
                                  Margin="3" Background="Linen" FontSize="13">
                                 <TextBlock Text="Copy any files with the selected tags to a location" FontSize="13" Foreground="Purple">
@@ -712,7 +510,7 @@
                             </Button>-->
 
 
-                            <!--<Button  BorderThickness="2" x:Name="MoveCurrentTaggedButton"
+                                        <!--<Button  BorderThickness="2" x:Name="MoveCurrentTaggedButton"
                                   Click="MoveCurrentFilesWithSelectedTags"  
                                  Margin="3" Background="Linen" FontSize="13">
                                 <TextBlock Text="Move current directory files with the selected tags to a location" FontSize="13" Foreground="Purple">
@@ -724,48 +522,261 @@
                                 </Button.Resources>
                             </Button>-->
 
-                          
 
 
-                        </WrapPanel>
-                    </Expander>
+
+                                    </WrapPanel>
+                                </Expander>
 
 
-                </StackPanel>
-            </GroupBox>
-            <Grid Grid.Column="0" Grid.Row="1" Visibility="Hidden">
-                <StackPanel Orientation="Vertical">
-
-                    <GroupBox   BorderThickness="3" Margin="2" BorderBrush="MediumPurple">
-                        <GroupBox.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Destinations for file " FontSize="14" FontWeight="DemiBold" HorizontalAlignment="Left" Margin="1" />
-                                <CheckBox x:Name="MoveCopyCheckBox" Content="Move" IsChecked="True" Margin="4" IsThreeState="True"
-                                          Checked="MoveCopyCheckBox_Checked" 
-                                          Indeterminate="MoveCopyCheckBox_Indeterminate"
-                                          Unchecked="MoveCopyCheckBox_Unchecked"></CheckBox>
                             </StackPanel>
-                        </GroupBox.Header>
 
-                        <StackPanel Orientation="Vertical">
-                            <Border BorderThickness="2" BorderBrush="MediumPurple" Margin="2">
-                                <ListBox  x:Name="DestinationstView"  Margin="2" HorizontalAlignment="Left" FontSize="10" SelectionMode="Single" 
-                            ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                                  SelectionChanged="DestinationstView_SelectionChanged">
-                                    <ListBox.ToolTip>
-                                        <TextBlock Text="A list of destinations." Foreground="DarkGreen" FontSize="12" />
-                                    </ListBox.ToolTip>
-                                    <ListBox.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel Orientation="Vertical"/>
-                                        </ItemsPanelTemplate>
-                                    </ListBox.ItemsPanel>
-                                </ListBox>
-                            </Border>
+
+                            <Expander Grid.Row="0"  BorderThickness="3" Margin="2" BorderBrush="MidnightBlue"
+                              MaxWidth="500" MinWidth="300" HorizontalAlignment="Left"
+                              x:Name="FileInfoGroupBox">
+                                <Expander.Header>
+                                    <TextBlock Text="File Information"  FontWeight="DemiBold"  />
+                                </Expander.Header>
+                                <ListView x:Name="FileInfoList"  MaxHeight="160"
+                          ScrollViewer.VerticalScrollBarVisibility="Visible" >
+                                    <ListView.ToolTip>
+                                        <TextBlock Text="The media files found searching in the current directory. Select a file to add tags to it or view it." Foreground="DarkGreen" FontSize="12" />
+                                    </ListView.ToolTip>
+
+                                </ListView>
+
+
+
+
+                            </Expander>
                         </StackPanel>
                     </GroupBox>
 
-                    <!--<GroupBox   BorderThickness="3" Margin="2" BorderBrush="ForestGreen" MaxHeight="120">
+
+
+                    <TextBlock x:Name="FileNameTextBlock"   FontSize="12" />
+
+
+
+
+                </StackPanel>
+                <StackPanel Grid.Column="1"  x:Name="PathPanel">
+                   
+                    <Expander  IsExpanded="true" MaxWidth="500" MinWidth="300" HorizontalAlignment="Left"
+                              BorderThickness="3" Margin="2"
+                              BorderBrush="BlueViolet" x:Name="PathGroupBox">
+                        <Expander.Header>
+                            <TextBlock Text="Path"  FontWeight="DemiBold"  />
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <GroupBox BorderThickness="1" Margin="2" BorderBrush="BlueViolet">
+                                    <GroupBox.Header>
+                                        <TextBlock Text="Computer Name"  FontWeight="DemiBold"  FontSize="12"   />
+                                    </GroupBox.Header>
+                                    <TextBlock x:Name="MachineTextBlock"  FontSize="13" Width="200" HorizontalAlignment="Left" />
+                                </GroupBox>
+
+                                <GroupBox  BorderThickness="1" Margin="2" BorderBrush="BlueViolet">
+                                    <GroupBox.Header>
+                                        <TextBlock Text="Disk Drive"  FontWeight="DemiBold"  FontSize="12"  />
+                                    </GroupBox.Header>
+                                    <ComboBox x:Name="DriveBox" SelectionChanged="DriveBox_SelectionChanged" IsReadOnly="true" Width="60" HorizontalAlignment="Left" SelectedValuePath="Name" />
+                                </GroupBox>
+
+                            </StackPanel>
+                            <GroupBox  BorderThickness="1" Margin="2" BorderBrush="BlueViolet">
+                                <TextBlock x:Name="PathTextBlock" TextWrapping="Wrap" FontSize="14"  FontWeight="DemiBold"  >
+                                    <TextBlock.ToolTip>
+                                        <TextBlock Text="The 'path' directory that is current location." Foreground="DarkGreen" FontSize="12" />
+                                    </TextBlock.ToolTip>
+                            </TextBlock>
+                            </GroupBox>
+                            <Button x:Name="Back" Content="Up" Click="GoToParent" Background="#FFE5E084"
+                                Width="30" FontSize="14" 
+                                FontWeight="Heavy" HorizontalAlignment="Left" Margin="2" >
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="3"/>
+                                    </Style>
+                                </Button.Resources>
+                                <Button.ToolTip>
+                                    <TextBlock Text="Move to the directory that is the parent of the current path." Foreground="DarkGreen" FontSize="12" />
+                                </Button.ToolTip>
+                            </Button>
+                            <Expander Grid.Row="1"  BorderThickness="3" IsExpanded="true" MaxWidth="500"
+                                      HorizontalAlignment="Left" MinWidth="300"
+                              BorderBrush="BlueViolet" x:Name="DirectoryGroupBox">
+                                <Expander.Header>
+                                    <TextBlock Text="Directories under path"  FontWeight="DemiBold" ></TextBlock>
+                                </Expander.Header>
+                                <!--Current directory list-->
+                                <ListView x:Name="DirsListView" MaxHeight="300" MinHeight="50"
+                          ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                                  SelectionChanged="DirsListView_SelectionChanged" 
+                                  Background="#FFF6F8FD">
+
+                                    <ListView.ToolTip>
+                                        <TextBlock Text="A list of all directories under the current location. Select a directory to move to it" Foreground="DarkGreen" FontSize="12" />
+                                    </ListView.ToolTip>
+                                </ListView>
+                            </Expander>
+
+
+                        </StackPanel>
+                    </Expander>
+
+                   
+
+                    <GroupBox   x:Name="FileGroupBox"   BorderThickness="3" 
+                              MaxWidth="500" HorizontalAlignment="Left" MinWidth="300"
+                          BorderBrush="BlueViolet" >
+                        <GroupBox.Header>
+                            <TextBlock Text="Media File List"  FontWeight="DemiBold" ></TextBlock>
+                        </GroupBox.Header>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Top">
+
+                            <!--current File list-->
+                            <ListView x:Name="FilesListView" 
+                                  Grid.Row="1"
+                                  DisplayMemberPath="FileName"
+                                  MaxHeight="400"
+                                  FontWeight="Medium"
+                          ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="FilesListView_SelectionChanged">
+                                <ListView.ToolTip>
+                                    <TextBlock Text="The media files found searching in the current directory. Select a file to add tags to it or view it." Foreground="DarkGreen" FontSize="12" />
+                                </ListView.ToolTip>
+
+                            </ListView>
+                            <StackPanel Orientation="Horizontal">
+
+                                <!--<Button x:Name="ShowTaggedButton" Content="Show tagged" Height="29" Width="140" Background="Azure" 
+                                    Click="ShowTaggedButton_Click" ></Button>-->
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox  x:Name="WildCardGroupBox"   
+                              BorderThickness="3" BorderBrush="BlueViolet" MinWidth="340"
+                                   MaxWidth="500" HorizontalAlignment="Left"
+                                               >
+                        <GroupBox.Header>
+                            <TextBlock Text="File List Actions"  FontWeight="DemiBold" ></TextBlock>
+                        </GroupBox.Header>
+                        <WrapPanel>
+
+                            <TextBox x:Name="WildFileTextBox" Background="#FFF1F3F7" FontSize="13" MinWidth="300" 
+                                 Height="25" 
+                                 Margin="2" >
+                                <TextBox.ToolTip>
+                                    <TextBlock Text="Directory wildcard. *Alice* will find all files with the word Alice in the filename."
+                                              Foreground="Purple"  FontSize="13">
+
+                                    </TextBlock>
+                                </TextBox.ToolTip>
+                            </TextBox>
+
+                            <Button x:Name="WildFileButton"    Height="25" 
+                                Content="Search with wildcard" Width="160" HorizontalAlignment="Center"
+                                    Margin="0,2,0,0" Background="#FFE5E084" FontSize="13"
+                                    Click="WildFileButton_Click" FontWeight="Bold" VerticalAlignment="Top">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </Button.Resources>
+                                <Button.ToolTip>
+                                    <TextBlock Text="Using a wildcard. *Alice* will find all files with the word Alice in the filename."
+                                               Foreground="Purple"  FontSize="13">
+
+                                    </TextBlock>
+                                </Button.ToolTip>
+                            </Button>
+                            <Button x:Name="AllFileButton" 
+                                    Content="Show all media files"  Height="25" 
+                                    Width="180" Margin="2" HorizontalAlignment="Center"
+                                    Background="#FFE5E084" FontSize="13"
+                                    Click="AllFileButton_Click" FontWeight="Bold" >
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </Button.Resources>
+                                <Button.ToolTip>
+                                    <TextBlock Text="Show all media files in the current directory"
+                                              Foreground="Purple"  FontSize="13" FontWeight="Bold">
+                                    </TextBlock>
+                                </Button.ToolTip>
+                            </Button>
+                            <Button x:Name="TagsToWildcard"    Height="25" 
+                                    Content="List files with any Selected Tag(s) in filenames" Width="299" Margin="0,2,0,2" HorizontalAlignment="Center"
+                                    Background="#FFE5E084" FontSize="13"
+                                    Click="TagsToWildcard_Click" Foreground="Purple" FontWeight="Bold">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </Button.Resources>
+                                <Button.ToolTip>
+                                    <TextBlock Text="Find Files with Selected Tag(s} in filenames"
+                                              Foreground="Purple" FontSize="13">
+                                    </TextBlock>
+                                </Button.ToolTip>
+                            </Button>
+
+
+                        </WrapPanel>
+
+                    </GroupBox>
+                </StackPanel>
+            </Grid>
+
+
+            <Grid x:Name="OperationGrid" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*" ></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="6*" ></RowDefinition>
+                    <RowDefinition Height="6*" ></RowDefinition>
+                </Grid.RowDefinitions>
+                <GroupBox Grid.Column="0" Grid.Row="0"  HorizontalContentAlignment="Left">
+
+                </GroupBox>
+                <Grid Grid.Column="0" Grid.Row="1" Visibility="Hidden">
+                    <StackPanel Orientation="Vertical">
+
+                        <GroupBox   BorderThickness="3" Margin="2" BorderBrush="MediumPurple">
+                            <GroupBox.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Destinations for file " FontSize="14" FontWeight="DemiBold" HorizontalAlignment="Left" Margin="1" />
+                                    <CheckBox x:Name="MoveCopyCheckBox" Content="Move" IsChecked="True" Margin="4" IsThreeState="True"
+                                          Checked="MoveCopyCheckBox_Checked" 
+                                          Indeterminate="MoveCopyCheckBox_Indeterminate"
+                                          Unchecked="MoveCopyCheckBox_Unchecked"></CheckBox>
+                                </StackPanel>
+                            </GroupBox.Header>
+
+                            <StackPanel Orientation="Vertical">
+                                <Border BorderThickness="2" BorderBrush="MediumPurple" Margin="2">
+                                    <ListBox  x:Name="DestinationstView"  Margin="2" HorizontalAlignment="Left" FontSize="10" SelectionMode="Single" 
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                  SelectionChanged="DestinationstView_SelectionChanged">
+                                        <ListBox.ToolTip>
+                                            <TextBlock Text="A list of destinations." Foreground="DarkGreen" FontSize="12" />
+                                        </ListBox.ToolTip>
+                                        <ListBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Vertical"/>
+                                            </ItemsPanelTemplate>
+                                        </ListBox.ItemsPanel>
+                                    </ListBox>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <!--<GroupBox   BorderThickness="3" Margin="2" BorderBrush="ForestGreen" MaxHeight="120">
                         <GroupBox.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Meta properties of the selected File" FontSize="12" FontWeight="DemiBold" HorizontalAlignment="Left" Margin="1" />
@@ -778,125 +789,126 @@
                         
                     </GroupBox>-->
 
-                </StackPanel>
+                    </StackPanel>
+                </Grid>
             </Grid>
-        </Grid>
 
 
 
-       
-        <Popup IsOpen="False" x:Name="LocationChangePopup" PlacementTarget="{Binding ElementName=Back}" Width="600" Placement="Top" Margin="5" 
+
+            <Popup IsOpen="False" x:Name="LocationChangePopup" PlacementTarget="{Binding ElementName=Back}" Width="600" Placement="Top" Margin="5" 
                Opacity="90" HorizontalOffset="50">
-            <Grid  Margin="2"  Background="Azure" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="7*" />
-                    <ColumnDefinition Width="3*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"></RowDefinition>
-                    <RowDefinition Height="30"></RowDefinition>
-                    <RowDefinition Height="60"></RowDefinition>
-                    <RowDefinition Height="60"></RowDefinition>
-                </Grid.RowDefinitions>
-                <GroupBox Grid.Column="0" Grid.Row="2" Height="50">
-                    <GroupBox.Header>
-                        <TextBlock Text="Source Path" HorizontalAlignment="Left" FontSize="16" />
-                    </GroupBox.Header>
-                    <TextBox x:Name="SourcePathTextBox" Margin="3"></TextBox>
+                <Grid  Margin="2"  Background="Azure" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="60"></RowDefinition>
+                        <RowDefinition Height="60"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <GroupBox Grid.Column="0" Grid.Row="2" Height="50">
+                        <GroupBox.Header>
+                            <TextBlock Text="Source Path" HorizontalAlignment="Left" FontSize="16" />
+                        </GroupBox.Header>
+                        <TextBox x:Name="SourcePathTextBox" Margin="3"></TextBox>
 
-                </GroupBox>
-                <GroupBox Grid.Column="0" Grid.Row="3" Height="50">
-                    <GroupBox.Header>
-                        <TextBlock Text="Destination Path" HorizontalAlignment="Left" FontSize="16" />
-                    </GroupBox.Header>
-                    <TextBox x:Name="DestinationPathTextBox" Margin="3"></TextBox>
+                    </GroupBox>
+                    <GroupBox Grid.Column="0" Grid.Row="3" Height="50">
+                        <GroupBox.Header>
+                            <TextBlock Text="Destination Path" HorizontalAlignment="Left" FontSize="16" />
+                        </GroupBox.Header>
+                        <TextBox x:Name="DestinationPathTextBox" Margin="3"></TextBox>
 
-                </GroupBox>
-                <Button Width="120" x:Name="ResetpathsButton" 
+                    </GroupBox>
+                    <Button Width="120" x:Name="ResetpathsButton" 
                         Content="Change" Grid.Row="0" Grid.Column="1" Click="ResetpathsButton_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button Width="120" Content="Cancel" x:Name="CancelResetButton" 
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button Width="120" Content="Cancel" x:Name="CancelResetButton" 
                         Grid.Row="1" Grid.Column="1" Click="CancelResetButton_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-            </Grid>
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
 
-        </Popup>
+            </Popup>
 
 
-        <Popup IsOpen="False" x:Name="TagSearchPopup" PlacementTarget="{Binding ElementName=TagInFilenameButton}" Width="400" Placement="Top" Margin="3">
-            <Grid Background="#FFF1F3F7" >
-                <Grid.RowDefinitions >
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="2*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"></ColumnDefinition>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="DoSearch" Grid.Column="2" Grid.Row="1" Foreground="Purple"
+            <Popup IsOpen="False" x:Name="TagSearchPopup" PlacementTarget="{Binding ElementName=TagInFilenameButton}" Width="400" Placement="Top" Margin="3">
+                <Grid Background="#FFF1F3F7" >
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="2*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="DoSearch" Grid.Column="2" Grid.Row="1" Foreground="Purple"
                         Content="Ok" Height="25" Width="80" 
                         Click="DoSearch_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button 
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button 
                     x:Name="NoSearch" Grid.Column="2" Grid.Row="2" Foreground="Purple"
                     Content="Cancel"  
                     Height="25" Width="80" Click="NoSearch_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Foreground="Purple"
+                    <TextBlock Grid.Row="0" Grid.Column="0" Foreground="Purple"
                            Text="Select Text part used in Search" VerticalAlignment="Center"
                    HorizontalAlignment="Center" FontSize="14" 
                            Margin="2,1,1,2" x:Name="TitleShown" >
-                    
-                </TextBlock>
-                <TextBlock Grid.Row="1" Foreground="Purple"
+
+                    </TextBlock>
+                    <TextBlock Grid.Row="1" Foreground="Purple"
                            Grid.Column="0" Text="" 
                            x:Name="TagString" FontSize="12"  
                            Background="LightSkyBlue">
-                    
-                </TextBlock>
-                <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="2">
-                    <CheckBox x:Name="FirstOneCheck" IsChecked="True" FontSize="11" Content="First Word" Checked="FirstOneCheck_Checked" />
-                    <CheckBox x:Name="LastOneCheck" IsChecked="False" FontSize="11"  Content="Last Word" Checked="LastOneCheck_Checked" />
-                    <CheckBox x:Name="PhraseCheck" IsChecked="False" FontSize="11"  Content="Entire Phrase" Checked="PhraseCheck_Checked" />
-                    <CheckBox x:Name="CustomCheck" IsChecked="False" FontSize="11"  Content="Custom String" Checked="CustomCheck_Checked" />
-                </StackPanel>
-                <GroupBox x:Name="FindItStringGroupBox" Grid.Column="0" Grid.Row="3" Height="50">
-                    <GroupBox.Header>
-                        <TextBlock Text="Search For" HorizontalAlignment="Left" FontSize="12" Foreground="Purple" />
-                    </GroupBox.Header>
-                    <TextBox x:Name="SearchText" Foreground="Purple" IsEnabled="True" IsReadOnly="False"
+
+                    </TextBlock>
+                    <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="2">
+                        <CheckBox x:Name="FirstOneCheck" IsChecked="True" FontSize="11" Content="First Word" Checked="FirstOneCheck_Checked" />
+                        <CheckBox x:Name="LastOneCheck" IsChecked="False" FontSize="11"  Content="Last Word" Checked="LastOneCheck_Checked" />
+                        <CheckBox x:Name="PhraseCheck" IsChecked="False" FontSize="11"  Content="Entire Phrase" Checked="PhraseCheck_Checked" />
+                        <CheckBox x:Name="CustomCheck" IsChecked="False" FontSize="11"  Content="Custom String" Checked="CustomCheck_Checked" />
+                    </StackPanel>
+                    <GroupBox x:Name="FindItStringGroupBox" Grid.Column="0" Grid.Row="3" Height="50">
+                        <GroupBox.Header>
+                            <TextBlock Text="Search For" HorizontalAlignment="Left" FontSize="12" Foreground="Purple" />
+                        </GroupBox.Header>
+                        <TextBox x:Name="SearchText" Foreground="Purple" IsEnabled="True" IsReadOnly="False"
                              Margin="3" Text="" FontSize="13">
-                        
-                    </TextBox>
-                </GroupBox>
-            </Grid>
 
-        </Popup>
+                        </TextBox>
+                    </GroupBox>
+                </Grid>
+
+            </Popup>
 
 
 
-    </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 </Window>
