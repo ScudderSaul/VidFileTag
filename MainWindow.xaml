@@ -130,7 +130,7 @@
 
                         <GroupBox  BorderBrush="Purple" BorderThickness="3" Margin="2"  x:Name="TagButtonGoupBox">
                             <GroupBox.Header>
-                                <TextBlock Text="+/- Tags" FontSize="13" FontWeight="DemiBold" HorizontalAlignment="Left"/>
+                                <TextBlock Text="+/-/= Tags" FontSize="13" FontWeight="DemiBold" HorizontalAlignment="Left"/>
                             </GroupBox.Header>
                             <WrapPanel Orientation="Horizontal">
                                 <Button x:Name="TagAddButton"  IsEnabled="False" Width="80"
@@ -605,7 +605,7 @@
                                     <TextBlock Text="Move to the directory that is the parent of the current path." Foreground="DarkGreen" FontSize="12" />
                                 </Button.ToolTip>
                             </Button>
-                            <Expander Grid.Row="1"  BorderThickness="3" IsExpanded="true" MaxWidth="500"
+                            <Expander Grid.Row="1"  BorderThickness="2" IsExpanded="true" MaxWidth="500"
                                       HorizontalAlignment="Left" MinWidth="300"
                               BorderBrush="BlueViolet" x:Name="DirectoryGroupBox">
                                 <Expander.Header>

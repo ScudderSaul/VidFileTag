@@ -42,9 +42,7 @@
                         <StackPanel>
                             <Border BorderBrush="Purple" BorderThickness="2">
                                 <StackPanel>
-                                    <Label Target="{Binding ElementName=PathChoiceImage}" BorderBrush="Purple" BorderThickness="1">
-                                        <TextBlock Text="Set Target Directory" />
-                                    </Label>
+                                   
                                     <Image x:Name="PathChoiceImage" 
                                         Visibility="Visible"  Source="DirectoryToll.png" />
                                 </StackPanel>
@@ -86,9 +84,7 @@
                         <StackPanel>
                             <Border BorderBrush="Purple" BorderThickness="2">
                                 <StackPanel>
-                                    <Label Target="{Binding ElementName=PathChoiceImage}" BorderBrush="Purple" BorderThickness="1">
-                                        <TextBlock Text="The tags list and basic operations" />
-                                    </Label>
+                                  
                                     <Image x:Name="BasicTagImage" MaxWidth="450"
                                         Visibility="Visible"  Source="BasicTagOperations.png" />
                                 </StackPanel>
@@ -115,9 +111,7 @@
 
                         <Border BorderBrush="Purple" BorderThickness="2">
                             <StackPanel>
-                                <Label Target="{Binding ElementName=FileListImage}" BorderBrush="Purple" BorderThickness="1">
-                                    <TextBlock Text="All Media Shown" />
-                                </Label>
+                              
                                 <Image x:Name="FileListImage"  Margin="3" 
                                              Visibility="Visible"  Source="mediaListOne.png" />
                             </StackPanel>
@@ -138,9 +132,7 @@
                     <BlockUIContainer  BorderBrush="Purple" BorderThickness="1">
                         <Border  BorderBrush="Purple" BorderThickness="2">
                             <StackPanel>
-                                <Label Target="{Binding ElementName=FileWildImage}" BorderBrush="Purple" BorderThickness="1">
-                                    <TextBlock Text="Show media with 'bach' " />
-                                </Label>
+                               
                                 <Image x:Name="FileWildImage"  Margin="3"
                                         Visibility="Visible"  Source="WildCardfILES7.png" Width="380"/>
                             </StackPanel>
@@ -159,9 +151,7 @@
                     <BlockUIContainer  BorderBrush="Purple" BorderThickness="1">
                         <Border BorderBrush="Purple" BorderThickness="2">
                             <StackPanel>
-                                <Label Target="{Binding ElementName=FileTagImage}" BorderBrush="Purple" BorderThickness="1">
-                                    <TextBlock Text="Tag in file media shown" />
-                                </Label>
+                               
                                 <Image x:Name="FileTagImage" Margin="3"
                                                 Visibility="Visible"  Source="TagSearcgFiles1.png" />
                             </StackPanel>
@@ -183,9 +173,7 @@
                         <StackPanel>
                             <Border BorderBrush="Purple" BorderThickness="2">
                                 <StackPanel>
-                                    <Label Target="{Binding ElementName=AfterFileSelect}" BorderBrush="Purple" BorderThickness="1">
-                                        <TextBlock Text="When Media Selected" />
-                                    </Label>
+                                    
                                     <Image x:Name="AfterFileSelect"  Margin="3" 
                                              Visibility="Visible"  Source="AfterMediaSelected.png" />
                                 </StackPanel>
@@ -212,9 +200,7 @@
                         <StackPanel>
                             <Border BorderBrush="Purple" BorderThickness="2">
                                 <StackPanel>
-                                    <Label Target="{Binding ElementName=MediaPlayerImage}" BorderBrush="Purple" BorderThickness="1">
-                                        <TextBlock Text="Media player window" />
-                                    </Label>
+                                  
                                     <Image x:Name="MediaPlayerImage"  Margin="3" 
                                              Visibility="Visible"  Source="vidieoshed.png" />
                                 </StackPanel>
@@ -271,9 +257,7 @@
                         <StackPanel>
                             <Border BorderBrush="Purple" BorderThickness="2">
                                 <StackPanel>
-                                    <Label Target="{Binding ElementName=FileMoveCopyOperationsImage}" BorderBrush="Purple" BorderThickness="1">
-                                        <TextBlock Text="Copy/Move Operations" />
-                                    </Label>
+                                 
                                     <Image x:Name="FileMoveCopyOperationsImage"  Margin="3" 
                                              Visibility="Visible"  Source="FileMoveCopyOperations.png" />
                                 </StackPanel>
@@ -300,9 +284,7 @@
                         <StackPanel>
                             <Border BorderBrush="Purple" BorderThickness="2">
                                 <StackPanel>
-                                    <Label Target="{Binding ElementName=OtherOperationsImage}" BorderBrush="Purple" BorderThickness="1">
-                                        <TextBlock Text="Other Operations" />
-                                    </Label>
+                                 
                                     <Image x:Name="OtherOperationsImage"  Margin="3" 
                                              Visibility="Visible"  Source="OtherOperations.png" />
                                 </StackPanel>

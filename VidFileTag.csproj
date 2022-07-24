@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>True</UseWindowsForms>
+	<ApplicationIcon>FileTag128.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +20,7 @@
     <None Remove="BasicTagOperations.png" />
     <None Remove="DirectoryToll.png" />
     <None Remove="FileMoveCopyOperations.png" />
+    <None Remove="FileTag128.ico" />
     <None Remove="mediaListOne.png" />
     <None Remove="OtherOperations.png" />
     <None Remove="PlayListoperations.png" />
@@ -44,6 +46,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="FileMoveCopyOperations.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileTag128.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="mediaListOne.png">
