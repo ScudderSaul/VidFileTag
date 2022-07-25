@@ -4,6 +4,7 @@ using System.Text;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 
 namespace VidFileTag.Model
@@ -36,9 +37,15 @@ namespace VidFileTag.Model
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Filename=dbFileTag.db");
+            if(Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + $"\\VidFileTag") == false)
+            {
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + $"\\VidFileTag");
+            }
+            string apath = "Filename=" + Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + $"\\VidFileTag\\dbFileTag.db";
+            optionsBuilder.UseSqlite(apath);
+         //   optionsBuilder.UseSqlite("Filename=dbFileTag.db");
 
-
+         //   string apath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData
 
         }
 
