@@ -10,8 +10,6 @@ namespace VidFileTag.Model
     [Table("TagInfo")]
     public partial class TagInfo
     {
-
-
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
@@ -24,5 +22,7 @@ namespace VidFileTag.Model
         public string TagDecription { get; set; } = string.Empty;
 
         public virtual ICollection<TagFileInfoTagInfo> TagFileInfos { get; set; } = new HashSet<TagFileInfoTagInfo>();
+
+        public virtual ICollection<TagInfoTagSetInfo> TagSetInfos { get; set; } = new HashSet<TagInfoTagSetInfo>();
     }
 }

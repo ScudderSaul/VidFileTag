@@ -23,7 +23,7 @@ namespace VidFileTag.Model
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<TagFileInfoTagInfo>().HasKey(i => new { i.TagFileInfoId, i.TagInfoId });
-
+            modelBuilder.Entity<TagInfoTagSetInfo>().HasKey(i => new { i.TagInfoId, i.TagSetInfoId });
         }
 
         public virtual DbSet<MiscInfo> MiscInfos { get; set; }
@@ -31,9 +31,12 @@ namespace VidFileTag.Model
         public virtual DbSet<MovePath> MovePaths { get; set; }
 
         public virtual DbSet<TagInfo> TagInfos { get; set; }
+        public virtual DbSet<TagSetInfo> TagSetInfos { get; set; }
         public virtual DbSet<TagFileInfo> TagFileInfos { get; set; }
 
         public virtual DbSet<TagFileInfoTagInfo> TagFileInfoTagInfos { get; set; }
+
+        public virtual DbSet<TagInfoTagSetInfo> TagInfoTagSetInfos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

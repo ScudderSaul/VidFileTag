@@ -26,79 +26,184 @@
                     <ColumnDefinition Width="45*" ></ColumnDefinition>
                     <ColumnDefinition Width="50*" ></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" MaxWidth="520">
-                    <StackPanel Orientation="Horizontal" >
-                        <GroupBox x:Name="TagCreationGroupBox" BorderThickness="3" BorderBrush="Purple" Margin="2"
-                              HorizontalAlignment="Left"  MaxWidth="240">
-                            <GroupBox.Header>
-                                <TextBlock Text="Tag Creation"  FontWeight="DemiBold"  FontSize="12" Margin="1"></TextBlock>
-                            </GroupBox.Header>
 
-                            <StackPanel Orientation="Vertical" >
-                                <TextBox x:Name="CreatedTagTextBox" Width="220" Margin="2" 
+                <StackPanel Grid.Column="0"  MaxWidth="520">
+                    <Expander x:Name="TagsAndTagSetsExpander">
+                        <Expander.Header>
+                            <TextBlock Text="Tags and TagSets"  FontWeight="DemiBold"  />
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal" >
+                                <GroupBox x:Name="TagSetCreationGroupBox" BorderThickness="3" BorderBrush="Purple" Margin="2"
+                              HorizontalAlignment="Left"  MaxWidth="240">
+                                    <GroupBox.Header>
+                                        <TextBlock Text="TagSet Creation"  FontWeight="DemiBold"  FontSize="12" Margin="1"></TextBlock>
+                                    </GroupBox.Header>
+
+                                    <StackPanel Orientation="Vertical" >
+                                        <TextBox x:Name="CreatedTagSetTextBox" Width="220" Margin="2" 
+                                 TextChanged="CreatedTagSetTextBox_TextChanged"
+                                 HorizontalAlignment="Left" 
+                                 SpellCheck.IsEnabled="True"></TextBox>
+                                        <WrapPanel>
+                                            <Button x:Name="CreateTagSetButton" Width="90" IsEnabled="False" Background="#FFE5E084"
+                                    Content="Create TagSet" Click="CreateTagSetButton_Click" 
+                                    Margin="2" HorizontalAlignment="Left" Foreground="Purple">
+                                                <Button.Resources>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="CornerRadius" Value="5"/>
+                                                    </Style>
+                                                </Button.Resources>
+                                                <Button.ToolTip>
+                                                    <TextBlock Text="Create TagSets in the database to group Tags" Foreground="Purple" FontSize="13" />
+                                                </Button.ToolTip>
+                                            </Button>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <GroupBox x:Name="TagSetChangeRemoveGroupBox"  BorderThickness="3" BorderBrush="Purple"
+                               MaxWidth="240" HorizontalAlignment="Left"  Margin="2"
+                                  >
+                                    <GroupBox.Header>
+                                        <TextBlock Text="TagSet Operations"  FontWeight="DemiBold"  FontSize="12" Margin="1"></TextBlock>
+                                    </GroupBox.Header>
+                                    <StackPanel Orientation="Vertical" >
+                                        <TextBox x:Name="OperationTagSetTextBox" Width="220" Margin="2" HorizontalAlignment="Left" SpellCheck.IsEnabled="True"></TextBox>
+                                        <WrapPanel>
+                                            <Button x:Name="DeleteTagSetButton" Width="90"
+                                    Background="#FFE5E084"
+                                     Click="DeleteTagSetButton_Click"  
+                                    Margin="2" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5">
+                                                <TextBlock Text="Delete TagSet"
+                                              Foreground="Purple"  FontSize="13" Background="#FFE5E084" FontWeight="Bold" />
+                                                <Button.Resources>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="CornerRadius" Value="5"/>
+                                                    </Style>
+                                                </Button.Resources>
+
+                                                <Button.ToolTip>
+                                                    <TextBlock Text="Delete a TagSet from the database." Foreground="DarkGreen" FontSize="12" />
+                                                </Button.ToolTip>
+                                            </Button>
+                                            <Button x:Name="UpdateTagSetButton" Width="90" Background="#FFE5E084"
+                                    Click="UpdateTagSetButton_Click" 
+                                    Margin="2" HorizontalAlignment="Left">
+                                                <TextBlock Text="Update TagSet"
+                                              Foreground="Purple"  FontSize="13" Background="#FFE5E084" FontWeight="Bold" />
+                                                <Button.Resources>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="CornerRadius" Value="5"/>
+                                                    </Style>
+                                                </Button.Resources>
+                                                <Button.ToolTip>
+                                                    <TextBlock Text="Update a TagSet's name in the database." Foreground="DarkGreen" FontSize="12" />
+                                                </Button.ToolTip>
+                                            </Button>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </GroupBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <GroupBox x:Name="TagCreationGroupBox" BorderThickness="3" BorderBrush="Purple" Margin="2"
+                              HorizontalAlignment="Left"  MaxWidth="240">
+                                    <GroupBox.Header>
+                                        <TextBlock Text="Tag Creation"  FontWeight="DemiBold"  FontSize="12" Margin="1"></TextBlock>
+                                    </GroupBox.Header>
+
+                                    <StackPanel Orientation="Vertical" >
+                                        <TextBox x:Name="CreatedTagTextBox" Width="220" Margin="2" 
                                  TextChanged="CreatedTagTextBox_TextChanged"
                                  HorizontalAlignment="Left" 
                                  SpellCheck.IsEnabled="True"></TextBox>
-                                <WrapPanel>
-                                    <Button x:Name="CreateTagButton" Width="90" IsEnabled="False" Background="#FFE5E084"
-                                    Content="Create Tag" Click="CreateTagButton_Click" 
+                                        <WrapPanel>
+                                            <Button x:Name="CreateTagButton" Width="120" IsEnabled="False" Background="#FFE5E084"
+                                    Content="Create Tag in Tagset" Click="CreateTagButton_Click" 
                                     Margin="2" HorizontalAlignment="Left" Foreground="Purple">
-                                        <Button.Resources>
-                                            <Style TargetType="Border">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </Button.Resources>
-                                        <Button.ToolTip>
-                                            <TextBlock Text="Create Tags in the database to label files" Foreground="Purple" FontSize="13" />
-                                        </Button.ToolTip>
-                                    </Button>
-                                </WrapPanel>
-                            </StackPanel>
-                        </GroupBox>
+                                                <Button.Resources>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="CornerRadius" Value="5"/>
+                                                    </Style>
+                                                </Button.Resources>
+                                                <Button.ToolTip>
+                                                    <TextBlock Text="Create Tags in the database to label files" Foreground="Purple" FontSize="13" />
+                                                </Button.ToolTip>
+                                            </Button>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </GroupBox>
 
-                        <GroupBox x:Name="TagChangeRemoveGroupBox"  BorderThickness="3" BorderBrush="Purple"
+                                <GroupBox x:Name="TagChangeRemoveGroupBox"  BorderThickness="3" BorderBrush="Purple"
                                MaxWidth="240" HorizontalAlignment="Left"  Margin="2"
                                   >
-                            <GroupBox.Header>
-                                <TextBlock Text="Tag Operations"  FontWeight="DemiBold"  FontSize="12" Margin="1"></TextBlock>
-                            </GroupBox.Header>
-                            <StackPanel Orientation="Vertical" >
-                                <TextBox x:Name="OperationTagTextBox" Width="220" Margin="2" HorizontalAlignment="Left" SpellCheck.IsEnabled="True"></TextBox>
-                                <WrapPanel>
-                                    <Button x:Name="DeleteTagButton" Width="90"
+                                    <GroupBox.Header>
+                                        <TextBlock Text="Tag Operations"  FontWeight="DemiBold"  FontSize="12" Margin="1"></TextBlock>
+                                    </GroupBox.Header>
+                                    <StackPanel Orientation="Vertical" >
+                                        <TextBox x:Name="OperationTagTextBox" Width="220" Margin="2" HorizontalAlignment="Left" SpellCheck.IsEnabled="True"></TextBox>
+                                        <WrapPanel>
+                                            <Button x:Name="DeleteTagButton" Width="90"
                                     Background="#FFE5E084"
                                      Click="DeleteTagButton_Click"  
                                     Margin="2" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5">
-                                        <TextBlock Text="Delete Tag"
+                                                <TextBlock Text="Delete Tag"
                                               Foreground="Purple"  FontSize="13" Background="#FFE5E084" FontWeight="Bold" />
-                                        <Button.Resources>
-                                            <Style TargetType="Border">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </Button.Resources>
+                                                <Button.Resources>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="CornerRadius" Value="5"/>
+                                                    </Style>
+                                                </Button.Resources>
 
-                                        <Button.ToolTip>
-                                            <TextBlock Text="Delete a tag from the database." Foreground="DarkGreen" FontSize="12" />
-                                        </Button.ToolTip>
-                                    </Button>
-                                    <Button x:Name="UpdateTagButton" Width="90" Background="#FFE5E084"
+                                                <Button.ToolTip>
+                                                    <TextBlock Text="Delete a tag from the database." Foreground="DarkGreen" FontSize="12" />
+                                                </Button.ToolTip>
+                                            </Button>
+                                            <Button x:Name="UpdateTagButton" Width="90" Background="#FFE5E084"
                                     Click="UpdateTagButton_Click"  
                                     Margin="2" HorizontalAlignment="Left">
-                                        <TextBlock Text="Update Tag"
+                                                <TextBlock Text="Update Tag"
                                               Foreground="Purple"  FontSize="13" Background="#FFE5E084" FontWeight="Bold" />
-                                        <Button.Resources>
-                                            <Style TargetType="Border">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </Button.Resources>
-                                        <Button.ToolTip>
-                                            <TextBlock Text="Update a tag's text in the database." Foreground="DarkGreen" FontSize="12" />
-                                        </Button.ToolTip>
-                                    </Button>
-                                </WrapPanel>
+                                                <Button.Resources>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="CornerRadius" Value="5"/>
+                                                    </Style>
+                                                </Button.Resources>
+                                                <Button.ToolTip>
+                                                    <TextBlock Text="Update a tag's text in the database." Foreground="DarkGreen" FontSize="12" />
+                                                </Button.ToolTip>
+                                            </Button>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </GroupBox>
                             </StackPanel>
-                        </GroupBox>
-                    </StackPanel>
+                        </StackPanel>
+                    </Expander>
+
+                    <Expander x:Name="TagSetsExpander" BorderBrush="Purple" MaxWidth="500" MaxHeight="60"
+                               BorderThickness="2" Margin="2" >
+                        <Expander.Header>
+                            <TextBlock Text="TagSet Selection" FontSize="13" FontWeight="DemiBold" HorizontalAlignment="Left"/>
+                        </Expander.Header>
+
+                       
+                        <ListBox  x:Name="TagSetsListView" DisplayMemberPath="TagSet"  
+                                  HorizontalAlignment="Left" FontSize="11" FontWeight="Medium"
+                                  SelectionMode="Single" 
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                  SelectionChanged="TagSetsListView_SelectionChanged" 
+                                  >
+                            <ListBox.ToolTip>
+                                <TextBlock Text="A list of The TagSets that have been created." Foreground="DarkGreen" FontSize="12" />
+                            </ListBox.ToolTip>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+
+                    </Expander>
 
                     <GroupBox  x:Name="TagsGroupBox" BorderBrush="Purple" MaxWidth="500" MaxHeight="400"
                                BorderThickness="3" Margin="2" >
@@ -112,6 +217,7 @@
                                   SelectionMode="Multiple" 
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                   SelectionChanged="TagsListView_SelectionChanged" >
+
                             <ListBox.ToolTip>
                                 <TextBlock Text="A list of all tags that have been created." Foreground="DarkGreen" FontSize="12" />
                             </ListBox.ToolTip>
@@ -562,7 +668,7 @@
 
                 </StackPanel>
                 <StackPanel Grid.Column="1"  x:Name="PathPanel">
-                   
+
                     <Expander  IsExpanded="true" MaxWidth="500" MinWidth="300" HorizontalAlignment="Left"
                               BorderThickness="3" Margin="2"
                               BorderBrush="BlueViolet" x:Name="PathGroupBox">
@@ -627,7 +733,7 @@
                         </StackPanel>
                     </Expander>
 
-                   
+
 
                     <GroupBox   x:Name="FileGroupBox"   BorderThickness="3" 
                               MaxWidth="500" HorizontalAlignment="Left" MinWidth="300"

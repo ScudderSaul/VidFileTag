@@ -16,6 +16,8 @@ namespace VidFileTag.Model
 
         public string LastDiskUsed { get; set; } = @"c:\";
 
+        public string LastTagSet { get; set; } = string.Empty;  
+
         public string LastPathUsed { get; set; } = string.Empty;
 
         public string PlayListPath { get; set; } = string.Empty;
