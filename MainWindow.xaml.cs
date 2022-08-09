@@ -267,6 +267,7 @@ namespace VidFileTag
             {
                 MiscInfo minf = mdat.First();
                 minf.LastPathUsed = path;
+                minf.LastTagSet = LastTagSet;
                 minf.LastDiskUsed = System.IO.Path.GetPathRoot(path);
                 Context.Update(minf);
                 Context.SaveChanges();
@@ -767,6 +768,14 @@ namespace VidFileTag
                      select su;
             if (ff.Any())
             {
+                string selt = "Change Tags = ( ";
+               foreach(var istaginfo in ff)
+                {
+                    selt += istaginfo.Tag + " ";
+                }
+                selt += ")";
+                SelectedTagsTextBlock.Text = selt;
+
                 TagInfo tt = ff.First();
                 OperationTagTextBox.Text = tt.Tag;
                 OperationTagTextBox.Tag = tt;
@@ -785,6 +794,7 @@ namespace VidFileTag
             }
             else
             {
+                SelectedTagsTextBlock.Text = "Change Tags";
                 TagAddButton.IsEnabled = false;
                 PlayListButton.IsEnabled = false;
                 PlayListAllButton.IsEnabled = false;
@@ -1199,6 +1209,9 @@ namespace VidFileTag
                 ReadTags();
             }
         }
+
+      
+
 
         #endregion
 
@@ -4092,6 +4105,7 @@ namespace VidFileTag
             this.InvalidateArrange();
         }
 
+        #region Tagset
         private void CreatedTagSetTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if(string.IsNullOrEmpty(CreatedTagSetTextBox.Text))
@@ -4128,6 +4142,32 @@ namespace VidFileTag
             LoadTagSets();
         }
 
+        private void TagOut(int tagid)
+        {
+            var tf = from vi in Context.TagInfos
+                     where vi.Id == tagid
+                     select vi;
+            if (tf.Any())
+            {
+                TagInfo inf = tf.First();
+
+                var yui = from oio in Context.TagFileInfoTagInfos
+                          where oio.TagInfoId == inf.Id
+                          select oio;
+                if (yui.Any())
+                {
+                    foreach (TagFileInfoTagInfo ity in yui)
+                    {
+                        Context.TagFileInfoTagInfos.Remove(ity);
+                    }
+                }
+                Context.SaveChanges();
+
+                Context.TagInfos.Remove(inf);
+                Context.SaveChanges();
+            }
+        }
+
         private void DeleteTagSetButton_Click(object sender, RoutedEventArgs e)
         {
             TagSetInfo inf = OperationTagSetTextBox.Tag as TagSetInfo;
@@ -4140,12 +4180,23 @@ namespace VidFileTag
                 {
                     foreach (TagInfoTagSetInfo ity in yui)
                     {
+                        // see if tag is in multiple tagsets
+                        var oset = from oin in Context.TagInfoTagSetInfos
+                                   where oin.TagSetInfoId != inf.Id &&
+                                         oin.TagInfoId == ity.TagInfoId
+                                   select oin;
+                        if (oset.Any() == false)
+                        {
+                            TagOut(ity.TagInfoId);
+                            // remove the tag ity.TagInfoId
+
+                        }
+
                         Context.TagInfoTagSetInfos.Remove(ity);
+                        Context.SaveChanges();
                     }
                 }
                 Context.SaveChanges();
-
-               
 
                 Context.TagSetInfos.Remove(inf);
                 Context.SaveChanges();
@@ -4188,6 +4239,7 @@ namespace VidFileTag
                 TagSetInfo ts = TagSetsListView.SelectedItem as TagSetInfo;
                 if(ts == null)
                 {
+                    SelectedTagsetTextBlock.Text = "Change TagSet";
                     TagSetsListView.SelectedIndex = 0;
                     TagSetInfo tsi = (TagSetsListView.Items[0] as TagSetInfo);
                     LastTagSet = tsi.TagSet;
@@ -4196,13 +4248,20 @@ namespace VidFileTag
                     ReadTags();
                     return;
                 }
+                else
+                {
+                    SelectedTagsetTextBlock.Text = "Change TagSet = (" + ts.TagSet + ")";
+                }
                 LastTagSet = ts.TagSet;
                 OperationTagSetTextBox.Text = ts.TagSet;
                 OperationTagSetTextBox.Tag = ts;
+                
                 ReadTags();
             }
+            UpdateMachineData();
         }
 
-      
+        #endregion
+
     }
 }
