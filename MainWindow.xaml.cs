@@ -394,6 +394,7 @@ namespace VidFileTag
                 filenames = new List<string>(Directory.EnumerateFiles(path, "*", SearchOption.TopDirectoryOnly));
 
                 PathTextBlock.Text = path;
+                PathNameTextBlock.Text = "Change Path = " + path;
 
                 DirsListView.Items.Clear();
                 foreach (string dt in dirs)
@@ -1075,7 +1076,6 @@ namespace VidFileTag
 
         private void TagsExistView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             this.InvalidateVisual();
         }
 
@@ -1099,6 +1099,7 @@ namespace VidFileTag
                      select su;
             if (ff.Any())
             {
+                // add tagset relation an not a new tag if relation does not exist
                 var uy = from df in Context.TagInfoTagSetInfos
                          where df.TagInfoId == ff.First().Id &&
                          df.TagSetInfoId == infts.Id
@@ -1118,6 +1119,7 @@ namespace VidFileTag
                 return;
             }
 
+            // add tag and tagset relation
             TagInfo ti = new TagInfo();
             ti.Tag = ts;
             MainWindow.Context.TagInfos.Add(ti);
@@ -1128,19 +1130,15 @@ namespace VidFileTag
                       select su;
             if (fnn.Any())
             {
-                var fjj = from uu in Context.TagSetInfos
-                          where uu.TagSet == LastTagSet
-                          select uu;
-                if (fjj.Any())
+                TagInfoTagSetInfo titsi = new()
                 {
-                    TagInfoTagSetInfo titsi = new()
-                    {
-                        TagInfoId = fnn.First().Id,
-                        TagSetInfoId = infts.Id,
-                    };
-                    Context.TagInfoTagSetInfos.Add(titsi);
-                    Context.SaveChanges();
-                }
+                    TagInfoId = fnn.First().Id,
+                    TagInfo = fnn.First(),
+                    TagSetInfoId = infts.Id, 
+                    TagSetInfo = infts,
+                };
+                Context.TagInfoTagSetInfos.Add(titsi);
+                Context.SaveChanges();
             }
 
             ReadTags();
@@ -1209,9 +1207,6 @@ namespace VidFileTag
                 ReadTags();
             }
         }
-
-      
-
 
         #endregion
 
@@ -4217,13 +4212,13 @@ namespace VidFileTag
                          select su;
                 if (ff.Any())
                 {
-                    System.Windows.MessageBox.Show("Modification already exists as Tag");
+                    System.Windows.MessageBox.Show("Modification already exists as TagSet");
                     return;
                 }
                 TagSetInfo inf = OperationTagSetTextBox.Tag as TagSetInfo;
                 if (inf != null)
                 {
-                    inf.TagSet = OperationTagTextBox.Text;
+                    inf.TagSet = OperationTagSetTextBox.Text;
                     Context.TagSetInfos.Update(inf);
                     Context.SaveChanges();
                     LoadTagSets();

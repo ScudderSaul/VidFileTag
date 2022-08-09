@@ -28,7 +28,7 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0"  MaxWidth="520">
-                   
+
 
                     <Expander x:Name="TagSetsExpander" BorderBrush="Purple" MaxWidth="500" MaxHeight="260"
                                BorderThickness="2" Margin="2" >
@@ -117,21 +117,21 @@
                                 <GroupBox.Header>
                                     <TextBlock Text="TagSet Selection" FontSize="11" FontWeight="DemiBold" HorizontalAlignment="Left"/>
                                 </GroupBox.Header>
-                                   <ListBox  x:Name="TagSetsListView" DisplayMemberPath="TagSet"  
+                                <ListBox  x:Name="TagSetsListView" DisplayMemberPath="TagSet"  
                                   HorizontalAlignment="Left" FontSize="11" FontWeight="Medium"
                                   SelectionMode="Single" 
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                   SelectionChanged="TagSetsListView_SelectionChanged" 
                                   >
-                            <ListBox.ToolTip>
-                                <TextBlock Text="A list of The TagSets that have been created." Foreground="DarkGreen" FontSize="12" />
-                            </ListBox.ToolTip>
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                        </ListBox>
+                                    <ListBox.ToolTip>
+                                        <TextBlock Text="A list of The TagSets that have been created." Foreground="DarkGreen" FontSize="12" />
+                                    </ListBox.ToolTip>
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                </ListBox>
                             </GroupBox>
                         </StackPanel>
                     </Expander>
@@ -245,70 +245,7 @@
                         </StackPanel>
                     </Expander>
 
-                    <WrapPanel Orientation="Horizontal" MaxWidth="500" >
 
-
-                        <GroupBox  BorderBrush="Purple" BorderThickness="3" Margin="2"  x:Name="TagButtonGoupBox">
-                            <GroupBox.Header>
-                                <TextBlock Text="+/-/= Tags" FontSize="13" FontWeight="DemiBold" HorizontalAlignment="Left"/>
-                            </GroupBox.Header>
-                            <WrapPanel Orientation="Horizontal">
-                                <Button x:Name="TagAddButton"  IsEnabled="False" Width="80"
-                                        Background="Linen" BorderBrush="Purple" BorderThickness="3"
-                                     HorizontalAlignment="Left" Margin="1" 
-                                    Click="TagAddButton_Click">
-                                    <Button.Resources>
-                                        <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="5"/>
-                                        </Style>
-                                    </Button.Resources>
-                                    <Button.ToolTip>
-                                        <TextBlock Text="Apply any selected tags to the selected file by creating a database entry." Foreground="DarkGreen" FontSize="12" />
-                                    </Button.ToolTip>
-                                    <TextBlock Text="Tag selected file"  Foreground="Purple" FontSize="13"
-                                           TextWrapping="Wrap" HorizontalAlignment="Left" Margin="2"
-                                               FontWeight="Bold" Background="#FFE5E084"></TextBlock>
-                                </Button>
-                                <Button  x:Name="TagRemoveButton" IsEnabled="False" 
-                                         Background="#FFE5E084"  HorizontalAlignment="Left" Width="80"
-                                     BorderBrush="Purple" BorderThickness="3" 
-                                Click="TagRemoveButton_Click"                               
-                                Margin="2" >
-                                    <Button.Resources>
-                                        <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="5"/>
-                                        </Style>
-                                    </Button.Resources>
-                                    <Button.ToolTip>
-                                        <TextBlock Text="Remove any selected tags from the selected file." Foreground="DarkGreen" FontSize="12" />
-                                    </Button.ToolTip>
-                                    <TextBlock Text="Untag selected file" 
-                                           Foreground="Purple" FontSize="13" 
-                                           HorizontalAlignment="Left" TextWrapping="Wrap"
-                                               Background="#FFE5E084" FontWeight="Bold"  ></TextBlock>
-                                </Button>
-
-                                <Button x:Name="FilesWithASelectedTagInPath" Background="#FFE5E084" Width="80"
-                                   HorizontalAlignment="Left" 
-                                   Margin="1"
-                                   BorderBrush="Purple" BorderThickness="3"
-                                   Click="FilesWithASelectedTagInPath_Click" 
-                                   IsEnabled="False">
-                                    <Button.Resources>
-                                        <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="5"/>
-                                        </Style>
-                                    </Button.Resources>
-                                    <Button.ToolTip>
-                                        <TextBlock Text="List any media files in the directory with one of the selected tags" Foreground="DarkGreen" FontSize="13" />
-                                    </Button.ToolTip>
-                                    <TextBlock Text="List files with Tag"  TextWrapping="Wrap"
-                                    Foreground="Purple" FontSize="13" Background="#FFE5E084" FontWeight="Bold"></TextBlock>
-                                </Button>
-                            </WrapPanel>
-                        </GroupBox>
-
-                    </WrapPanel>
 
                     <GroupBox x:Name="SelectedFileGroupBox"  BorderThickness="3"
                               Margin="2" BorderBrush="BlueViolet"
@@ -366,6 +303,148 @@
                             </GroupBox>
 
                             <StackPanel>
+
+                                <Expander  BorderBrush="Purple" BorderThickness="3" Margin="2"  x:Name="TagButtonGoupBox">
+                                    <Expander.Header>
+                                        <TextBlock Text="Tag Operations" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Left"/>
+                                    </Expander.Header>
+                                    <StackPanel >
+                                        <Button x:Name="TagAddButton"  IsEnabled="False" 
+                                           Background="Linen" 
+                                           BorderBrush="Purple" 
+                                           BorderThickness="3"
+                                           HorizontalAlignment="Left" 
+                                           Margin="1" 
+                                           Click="TagAddButton_Click">
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                            <Button.ToolTip>
+                                                <TextBlock Text="Apply any selected tags to the selected file by creating a database entry." Foreground="DarkGreen" FontSize="12" />
+                                            </Button.ToolTip>
+                                            <TextBlock Text="Tag the selected media file with the selected Tags" 
+                                                       Foreground="Purple" FontSize="13"
+                                                 TextWrapping="Wrap" HorizontalAlignment="Left" Margin="2"
+                                                FontWeight="SemiBold"  Background="Linen">
+                                            </TextBlock>
+                                        </Button>
+                                        
+                                        <Button  x:Name="TagRemoveButton" IsEnabled="False" 
+                                          Background="Linen"  
+                                         HorizontalAlignment="Left" 
+                                         BorderBrush="Purple" 
+                                         BorderThickness="3" 
+                                         Click="TagRemoveButton_Click"                               
+                                         Margin="1" >
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                            <Button.ToolTip>
+                                                <TextBlock Text="Remove any selected tags from the selected file." Foreground="DarkGreen" FontSize="12" />
+                                            </Button.ToolTip>
+                                            <TextBlock Text="Untag the selected media file using the selected Tags" 
+                                             Foreground="Purple" 
+                                             FontSize="13" 
+                                             HorizontalAlignment="Left" TextWrapping="Wrap"
+                                             Background="Linen" 
+                                                       FontWeight="SemiBold"  ></TextBlock>
+                                        </Button>
+
+                                        <Button x:Name="FilesWithASelectedTagInPath" Background="Linen" 
+                                            HorizontalAlignment="Left" 
+                                             Margin="1"
+                                                 
+                                             BorderBrush="Purple" BorderThickness="3"
+                                             Click="FilesWithASelectedTagInPath_Click" 
+                                             IsEnabled="False">
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                            <Button.ToolTip>
+                                                <TextBlock Text="List any media files in the directory with one of the selected tags" Foreground="DarkGreen" FontSize="13" />
+                                            </Button.ToolTip>
+                                            <TextBlock Text="List the media files with selected Tags in the current directory"  
+                                                       TextWrapping="Wrap"
+                                                 Foreground="Purple" FontSize="13" 
+                                                       Background="Linen" FontWeight="SemiBold"></TextBlock>
+                                        </Button>
+
+                                        <Button x:Name="TagInFilenameButton"   BorderThickness="2" HorizontalAlignment="Left" 
+                                     Click="AddTagFromFileName"  Margin="1" Background="Linen" FontSize="13">
+                                            <TextBlock Text="Tag media files in the directory if the seleted tag is in the file name" 
+                                                       FontSize="13" Foreground="Purple"  HorizontalAlignment="Left" 
+                                                       TextWrapping="Wrap" FontWeight="SemiBold">
+                                            </TextBlock>
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                            <Button.ToolTip>
+                                                <TextBlock Text="Choose a part of the selected tag. if it is in media file in the current dirrectory add the tag." Foreground="DarkGreen" FontSize="12" />
+                                            </Button.ToolTip>
+                                        </Button>
+
+                                        <Button x:Name="SameNameAndCRCButton"
+                                             BorderThickness="2" BorderBrush="Purple" 
+                                            Click="WhenFileWithSameNameandCRCExists"  Margin="3" 
+                                            Background="Linen" FontSize="13">
+                                            <TextBlock Text="Tag any media files in the current directory identical to media already tagged with those tags"
+                                                       FontSize="13" Foreground="Purple"
+                                                       TextWrapping="Wrap" FontWeight="SemiBold">
+                                            </TextBlock>
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                            <Button.ToolTip>
+                                                <TextBlock 
+                                              Text="If a file in the list's name, size and crc are the same as another in the database update the files tags."
+                                              Foreground="Purple"  FontSize="12" />
+                                            </Button.ToolTip>
+
+                                        </Button>
+
+                                        <Button x:Name="FindIdenticalFilesAndTagButton"
+                                             BorderThickness="2" 
+                                             BorderBrush="Purple" 
+                                             Click="FindIdenticalFilesAndTagInTree"   
+                                             Background="Linen"
+                                             HorizontalAlignment="Left" 
+                                             Margin="1" 
+                                             FontSize="13">
+                                           
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                            <Button.ToolTip>
+                                                <TextBlock 
+                                                 Text="If a media file's name, size and crc are the same as the selectewd file 
+                                                         update the file's tags to match"
+                                                 Foreground="Purple" 
+                                                 FontSize="12" />
+                                            </Button.ToolTip>
+                                            <TextBlock 
+                                                Text="Find media files identical to the selected file and give them the same tags" 
+                                                FontSize="13" 
+                                                Foreground="Purple" 
+                                                TextWrapping="Wrap"
+                                                FontWeight="SemiBold">
+                                            </TextBlock>
+                                        </Button>
+                                    </StackPanel>
+                                </Expander>
+
+
                                 <Expander x:Name="PlaylistOperationsExpander" BorderThickness="3" Margin="1,2,2,1"  HorizontalAlignment="Left"
                                   BorderBrush="BlueViolet" MaxWidth="800">
                                     <Expander.Header>
@@ -469,7 +548,6 @@
                                     </WrapPanel>
                                 </Expander>
 
-
                                 <Expander x:Name="OtherOperationsExpander"  BorderThickness="3" Margin="1,2,2,1" HorizontalAlignment="Left"
                                   BorderBrush="BlueViolet" MaxWidth="800">
                                     <Expander.Header>
@@ -561,61 +639,7 @@
                                             </Button.Resources>
                                         </Button>
 
-                                        <Button x:Name="TagInFilenameButton"   BorderThickness="2"
-                                     Click="AddTagFromFileName"  Margin="3" Background="Linen" FontSize="13">
-                                            <TextBlock Text="Tag files in the directory if the seleted tag is in the file's name" FontSize="13" Foreground="Purple">
-                                            </TextBlock>
-                                            <Button.Resources>
-                                                <Style TargetType="Border">
-                                                    <Setter Property="CornerRadius" Value="5"/>
-                                                </Style>
-                                            </Button.Resources>
-                                            <Button.ToolTip>
-                                                <TextBlock Text="Choose a part of the selected tag. if it is in media file in the current dirrectory add the tag." Foreground="DarkGreen" FontSize="12" />
-                                            </Button.ToolTip>
-                                        </Button>
-
-                                        <Button 
-                                   BorderThickness="2" BorderBrush="Purple" 
-                                     Click="WhenFileWithSameNameandCRCExists"  Margin="3" Background="Linen" FontSize="13">
-                                            <TextBlock Text="Tag any files in the current directory identical to files already tagged with those tags" FontSize="13" Foreground="Purple">
-                                            </TextBlock>
-                                            <Button.Resources>
-                                                <Style TargetType="Border">
-                                                    <Setter Property="CornerRadius" Value="5"/>
-                                                </Style>
-                                            </Button.Resources>
-                                            <Button.ToolTip>
-                                                <TextBlock 
-                                        Text="If a file in the list's name, size and crc are the same as another in the database update the files tags."
-                                        Foreground="Purple"  FontSize="12" />
-                                            </Button.ToolTip>
-
-                                        </Button>
-
-                                        <Button 
-                                   BorderThickness="2" BorderBrush="Purple" 
-                                     Click="FindIdenticalFilesAndTagInTree"  Margin="3" 
-                                Background="Linen"
-                                FontSize="13">
-                                            <TextBlock Text="Find files identical to the selected file and give them the same tags" 
-                                           FontSize="13" 
-                                           Foreground="Purple">
-                                            </TextBlock>
-                                            <Button.Resources>
-                                                <Style TargetType="Border">
-                                                    <Setter Property="CornerRadius" Value="5"/>
-                                                </Style>
-                                            </Button.Resources>
-                                            <Button.ToolTip>
-                                                <TextBlock 
-                                        Text="If a file's name, size and crc are the same as the selectewd file 
-                                        update the files tags to match"
-                                        Foreground="Purple"  
-                                        FontSize="12" />
-                                            </Button.ToolTip>
-
-                                        </Button>
+                                       
 
                                         <!--<Button  BorderThickness="2" x:Name="CopyTaggedButton"
                                   Click="CopyFilesWithSelectedTags"  
@@ -687,7 +711,7 @@
                               BorderThickness="3" Margin="2"
                               BorderBrush="BlueViolet" x:Name="PathGroupBox">
                         <Expander.Header>
-                            <TextBlock Text="Path"  FontWeight="DemiBold"  />
+                            <TextBlock x:Name="PathNameTextBlock" Text="Change Path" TextWrapping="Wrap"  FontWeight="DemiBold"  />
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
@@ -713,7 +737,7 @@
                                     </TextBlock.ToolTip>
                             </TextBlock>
                             </GroupBox>
-                            <Button x:Name="Back" Content="Up" Click="GoToParent" Background="#FFE5E084"
+                            <Button x:Name="Back" Content="Up" Click="GoToParent" Background="Linen"
                                 Width="30" FontSize="14" 
                                 FontWeight="Heavy" HorizontalAlignment="Left" Margin="2" >
                                 <Button.Resources>
@@ -799,7 +823,7 @@
 
                             <Button x:Name="WildFileButton"    Height="25" 
                                 Content="Search with wildcard" Width="160" HorizontalAlignment="Center"
-                                    Margin="0,2,0,0" Background="#FFE5E084" FontSize="13"
+                                    Margin="0,2,0,0" Background="Linen" FontSize="13"
                                     Click="WildFileButton_Click" FontWeight="Bold" VerticalAlignment="Top">
                                 <Button.Resources>
                                     <Style TargetType="Border">
@@ -816,7 +840,7 @@
                             <Button x:Name="AllFileButton" 
                                     Content="Show all media files"  Height="25" 
                                     Width="180" Margin="2" HorizontalAlignment="Center"
-                                    Background="#FFE5E084" FontSize="13"
+                                    Background="Linen" FontSize="13"
                                     Click="AllFileButton_Click" FontWeight="Bold" >
                                 <Button.Resources>
                                     <Style TargetType="Border">
@@ -831,7 +855,7 @@
                             </Button>
                             <Button x:Name="TagsToWildcard"    Height="25" 
                                     Content="List files with any Selected Tag(s) in filenames" Width="299" Margin="0,2,0,2" HorizontalAlignment="Center"
-                                    Background="#FFE5E084" FontSize="13"
+                                    Background="Linen" FontSize="13"
                                     Click="TagsToWildcard_Click" Foreground="Purple" FontWeight="Bold">
                                 <Button.Resources>
                                     <Style TargetType="Border">
