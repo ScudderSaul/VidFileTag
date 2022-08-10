@@ -75,6 +75,7 @@ namespace VidFileTag
 
             LoadMachineData();  // restore last drive path
             ReadTags();         // read tags from database
+            AddMediaInfoTagSet();
 
             Closing +=MainWindow_Closing;
 
@@ -141,6 +142,183 @@ namespace VidFileTag
             if (TagSetsListView.SelectedItem == null)
             {
                 TagSetsListView.SelectedIndex = 0;
+            }
+        }
+
+
+        public void AddMediaInfoTag(string tagname, TagSetInfo tsinf)
+        {
+            string atn = "[" + tagname + "]";
+
+            var ncc = from vv in Context.TagInfos
+                     where vv.Tag == atn
+                     select vv;
+
+            if (ncc.Any())
+            {
+                return;
+            }
+
+            TagInfo ss = new()
+            {
+                Tag = atn,
+            };
+            Context.TagInfos.Add(ss);
+            Context.SaveChanges();
+
+            var nc = from vv in Context.TagInfos
+                     where vv.Tag == atn
+                     select vv;
+
+            if(nc.Any())
+            {
+                TagInfo ti = nc.First();
+
+                TagInfoTagSetInfo ri = new()
+                {
+                    TagSetInfoId = tsinf.Id,
+                    TagSetInfo = tsinf,
+                    TagInfoId = ti.Id,
+                    TagInfo = ti,
+                };
+                Context.TagInfoTagSetInfos.Add(ri);
+                Context.SaveChanges();
+            }
+        }
+
+        public void AddMediaInfoTagSet()
+        {
+            var nc = from vv in Context.TagSetInfos
+                     where vv.TagSet == "MediaInfo"
+                     select vv;
+
+            if(nc.Any() == true)
+            {
+                return;
+            }
+            TagSetInfo ss = new()
+            {
+                TagSet = "MediaInfo",
+                TagSetDecription = "Physical media information",
+            };
+            Context.TagSetInfos.Add(ss);
+            Context.SaveChanges();
+
+            var uc = from vv in Context.TagSetInfos
+                     where vv.TagSet == "MediaInfo"
+                     select vv;
+            if (uc.Any() == true)
+            {
+                TagSetInfo tsinf = uc.First();
+                foreach(KeyValuePair<string, string> mote in _VLCfileformats)
+                {
+                    AddMediaInfoTag(mote.Value, tsinf);
+                }
+
+                AddMediaInfoTag("480p = 640×480", tsinf);
+                AddMediaInfoTag("720P = 1280 x 720", tsinf);
+                AddMediaInfoTag("1080p = 1920 x 1080", tsinf);
+                AddMediaInfoTag("1440p = 2560 x 1440", tsinf);
+                AddMediaInfoTag("4K = 3840 x 2160", tsinf);
+                AddMediaInfoTag("8K = 7680 x 4320", tsinf);
+
+                //480p = 640×480
+                //720p = 1280 x 720 - is usually known as HD or "HD Ready" resolution
+                //1080p = 1920 x 1080 - is usually known as FHD or "Full HD" resolution
+                //1440p = 2560 x 1440 - is commonly known as QHD or Quad HD resolution, and it is typically seen on gaming monitors and on high-end smartphones. ...
+                //4K or 2160p = 3840 x 2160 - is commonly known as 4K, UHD or Ultra HD resolution. ...
+                //8K or 4320p = 7680 x 4320 - is known as 8K and it offers 16 times more pixels than
+            }
+        }
+
+        TagInfo Tag8k
+        {
+            get
+            {
+                var istags = from gf in Context.TagInfos
+                             where gf.Tag == "[8K = 7680 x 4320]"
+                             select gf;
+                if (istags.Any() == true)
+                {
+                    return (istags.First());
+                }
+                return (null);
+            }
+        }
+
+        TagInfo Tag4k
+        {
+            get
+            {
+                var istags = from gf in Context.TagInfos
+                             where gf.Tag == "[4K = 3840 x 2160]"
+                             select gf;
+                if (istags.Any() == true)
+                {
+                    return (istags.First());
+                }
+                return (null);
+            }
+        }
+
+
+        TagInfo Tag1440p
+        {
+            get
+            {
+                var istags = from gf in Context.TagInfos
+                             where gf.Tag == "[1440p = 2560 x 1440]"
+                             select gf;
+                if (istags.Any() == true)
+                {
+                    return (istags.First());
+                }
+                return (null);
+            }
+        }
+
+        TagInfo Tag1080p
+        {
+            get
+            {
+                var istags = from gf in Context.TagInfos
+                             where gf.Tag == "[1080p = 1920 x 1080]"
+                             select gf;
+                if (istags.Any() == true)
+                {
+                    return (istags.First());
+                }
+                return (null);
+            }
+        }
+
+        TagInfo Tag720p
+        {
+            get
+            {
+                var istags = from gf in Context.TagInfos
+                             where gf.Tag == "[720P = 1280 x 720]"
+                             select gf;
+                if (istags.Any() == true)
+                {
+                    return (istags.First());
+                }
+                return (null);
+            }
+        }
+
+        TagInfo Tag480p
+        {
+            get
+            {
+                var istags = from gf in Context.TagInfos
+                             where gf.Tag == "[480p = 640×480]"
+                             select gf;
+                if(istags.Any() == true)
+                {
+                    return(istags.First());
+                }
+                return (null);
             }
         }
 
@@ -446,6 +624,227 @@ namespace VidFileTag
             catch (Exception ee)
             {
                 System.Windows.MessageBox.Show("Path error -- The system message was " + ee.Message);
+            }
+        }
+
+
+        private void AnalizeSelectedFile()
+        {
+            if (SelectedFileInfo == null)
+            {
+                return;
+            }
+
+            var infn = from vv in Context.TagFileInfos
+                               where vv.FilePath == SelectedFileInfo.FilePath
+                              select vv;
+
+            if (infn.Any())
+            {
+
+                if (_VLCfileformats.Keys.Contains<string>(SelectedFileInfo.FileExtension.ToUpper()) == true)
+                {
+                    string atagname = "[" + _VLCfileformats[SelectedFileInfo.FileExtension.ToUpper()] + "]";
+
+                    var im = from cc in Context.TagInfos
+                             where cc.Tag == atagname
+                             select cc;
+                    if (im.Any())
+                    {
+                        TagInfo it = im.First();
+
+                        var ui = from vv in Context.TagFileInfoTagInfos
+                                 where vv.TagFileInfoId == infn.First().Id &&
+                                 vv.TagInfoId == it.Id
+                                 select vv;
+                        if (ui.Any())
+                        {
+                            return;
+                        }
+
+                        TagFileInfoTagInfo foo = new()
+                        {
+                            TagFileInfoId = infn.First().Id,
+                            TagInfoId = it.Id,
+                        };
+                        Context.TagFileInfoTagInfos.Add(foo);
+                        Context.SaveChanges();
+                    }
+                }
+            }
+        }
+
+        private void MediaSizeTags()
+        {
+            if(SelectedFileInfo == null)
+            {
+                return;
+            }
+
+            var infn = from vv in Context.TagFileInfos
+                       where vv.FilePath == SelectedFileInfo.FilePath
+                       select vv;
+
+            if (infn.Any() == false)
+            {
+                return;
+            }
+
+            TagFileInfo usetfi = infn.First();
+
+            if (mediaInfo["Width"] == "640" && mediaInfo["Height"] == "480")
+            {
+                TagInfo inf1 = Tag480p;
+
+                var ifoo = from gg in Context.TagFileInfoTagInfos
+                           where gg.TagFileInfoId == usetfi.Id &&
+                           gg.TagInfoId ==  inf1.Id
+                           select gg;
+
+                if (ifoo.Any())
+                {
+                    return;
+                }
+
+                if (inf1 != null)
+                {
+                    TagFileInfoTagInfo ofoo = new()
+                    {
+                        TagFileInfoId = usetfi.Id,
+                        TagInfoId = inf1.Id,
+                    };
+                    Context.TagFileInfoTagInfos.Add(ofoo);
+                    Context.SaveChanges();
+                    return;
+                }
+            }
+            if (mediaInfo["Width"] == "1280" && mediaInfo["Height"] == "720")
+            {
+                TagInfo inf1 = Tag720p;
+
+                var ifoo = from gg in Context.TagFileInfoTagInfos
+                           where gg.TagFileInfoId == usetfi.Id &&
+                           gg.TagInfoId ==  inf1.Id
+                           select gg;
+
+                if(ifoo.Any())
+                {
+                    return;
+                }
+
+                if (inf1 != null)
+                {
+                    TagFileInfoTagInfo ofoo = new()
+                    {
+                        TagFileInfoId = usetfi.Id,
+                        TagInfoId = inf1.Id,
+                    };
+                    Context.TagFileInfoTagInfos.Add(ofoo);
+                    Context.SaveChanges();
+                    return;
+                }
+            }
+            if (mediaInfo["Width"] == "1920" && mediaInfo["Height"] == "1080")
+            {
+                TagInfo inf1 = Tag1080p;
+
+                var ifoo = from gg in Context.TagFileInfoTagInfos
+                           where gg.TagFileInfoId == usetfi.Id &&
+                           gg.TagInfoId ==  inf1.Id
+                           select gg;
+
+                if (ifoo.Any())
+                {
+                    return;
+                }
+
+                if (inf1 != null)
+                {
+                    TagFileInfoTagInfo ofoo = new()
+                    {
+                        TagFileInfoId = usetfi.Id,
+                        TagInfoId = inf1.Id,
+                    };
+                    Context.TagFileInfoTagInfos.Add(ofoo);
+                    Context.SaveChanges();
+                    return;
+                }
+            }
+            if (mediaInfo["Width"] == "2560" && mediaInfo["Height"] == "1440")
+            {
+                TagInfo inf1 = Tag1440p;
+                var ifoo = from gg in Context.TagFileInfoTagInfos
+                           where gg.TagFileInfoId == usetfi.Id &&
+                           gg.TagInfoId ==  inf1.Id
+                           select gg;
+
+                if (ifoo.Any())
+                {
+                    return;
+                }
+
+                if (inf1 != null)
+                {
+                    TagFileInfoTagInfo ofoo = new()
+                    {
+                        TagFileInfoId = usetfi.Id,
+                        TagInfoId = inf1.Id,
+                    };
+                    Context.TagFileInfoTagInfos.Add(ofoo);
+                    Context.SaveChanges();
+                    return;
+                }
+            }
+            if (mediaInfo["Width"] == "3840" && mediaInfo["Height"] == "2160")
+            {
+                TagInfo inf1 = Tag4k;
+                var ifoo = from gg in Context.TagFileInfoTagInfos
+                           where gg.TagFileInfoId == usetfi.Id &&
+                           gg.TagInfoId ==  inf1.Id
+                           select gg;
+
+                if (ifoo.Any())
+                {
+                    return;
+                }
+
+                if (inf1 != null)
+                {
+                    TagFileInfoTagInfo ofoo = new()
+                    {
+                        TagFileInfoId = usetfi.Id,
+                        TagInfoId = inf1.Id,
+                    };
+                    Context.TagFileInfoTagInfos.Add(ofoo);
+                    Context.SaveChanges();
+                    return;
+                }
+            }
+
+            if (mediaInfo["Width"] == "7680" && mediaInfo["Height"] == "4320")
+            {
+                TagInfo inf1 = Tag8k;
+                var ifoo = from gg in Context.TagFileInfoTagInfos
+                           where gg.TagFileInfoId == usetfi.Id &&
+                           gg.TagInfoId ==  inf1.Id
+                           select gg;
+
+                if (ifoo.Any())
+                {
+                    return;
+                }
+
+                if (inf1 != null)
+                {
+                    TagFileInfoTagInfo ofoo = new()
+                    {
+                        TagFileInfoId = SelectedFileInfo.Id,
+                        TagInfoId = inf1.Id,
+                    };
+                    Context.TagFileInfoTagInfos.Add(ofoo);
+                    Context.SaveChanges();
+                    return;
+                }
             }
         }
 
@@ -1208,6 +1607,18 @@ namespace VidFileTag
             }
         }
 
+        private void CreatedTagTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(CreatedTagTextBox.Text) == false)
+            {
+                CreateTagButton.IsEnabled = true;
+            }
+            else
+            {
+                CreateTagButton.IsEnabled = false;
+            }
+        }
+
         #endregion
 
         #region playlists
@@ -1724,7 +2135,7 @@ namespace VidFileTag
             _VLCfileformats[".M2V"] = "MPEG - 2 Video";
             _VLCfileformats[".M4A"] = "MPEG - 4 Audio File";
             _VLCfileformats[".M4B"] = "MPEG - 4 Audio Book File";
-            _VLCfileformats[".M4V"] = "  iTunes Video File";
+            _VLCfileformats[".M4V"] = "iTunes Video File";
             _VLCfileformats[".MKA"] = "Matroska Audio File";
             _VLCfileformats[".MKS"] = "Matroska Elementary Stream File";
             _VLCfileformats[".MOV"] = "Apple QuickTime Movie";
@@ -1837,15 +2248,120 @@ namespace VidFileTag
 
         #endregion
 
-        private void CreatedTagTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        
+        private void ReplaceATagWithSelectedTags(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(CreatedTagTextBox.Text) == false)
+
+        }
+
+        private void TagAllMediaInLocWithSelectedTags(object sender, RoutedEventArgs e)
+        {
+            FolderBrowserDialog dlg = new System.Windows.Forms.FolderBrowserDialog();
+
+            string folderName = string.Empty;
+            dlg.RootFolder = Environment.SpecialFolder.Personal;
+            dlg.Description = "Select the directory where you want to tag all media files with the selected tags";
+
+            // Do not allow the user to create new folders via the FolderBrowserDialog.
+            dlg.ShowNewFolderButton = false;
+
+
+            var ffti = from TagInfo su in TagsListView.SelectedItems
+                       select su;
+            if(!ffti.Any())
             {
-                CreateTagButton.IsEnabled = true;
+                System.Windows.MessageBox.Show("No Tags are selected");
+                return;
             }
-            else
+
+            try
             {
-                CreateTagButton.IsEnabled = false;
+                System.Windows.Forms.DialogResult result = dlg.ShowDialog();
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    Cursor = System.Windows.Input.Cursors.Wait;
+                    folderName = dlg.SelectedPath;
+
+                    List<string> afilenames = new List<string>(Directory.EnumerateFiles(folderName, "*", SearchOption.TopDirectoryOnly));
+                    List<TagFileInfo> tflist = new List<TagFileInfo>();
+
+                    foreach (string st in afilenames)
+                    {
+                        string finame = System.IO.Path.GetFileName(st);
+
+                        if (string.IsNullOrWhiteSpace(finame))
+                        {
+                            continue;
+                        }
+
+                        // if a file's info is already in tyhe database read it from there abd add it to the file list view
+                        TagFileInfo fti = null;
+                        var ff = from su in Context.TagFileInfos
+                                 where su.FilePath == st
+                                 select su;
+                        if (ff.Any())
+                        {
+                            fti = ff.First();
+                            tflist.Add(fti);
+                        }
+                        else  // when it is not in the database create an info class
+                        {
+                            FileInfo vv = new FileInfo(st);
+
+                            fti = new TagFileInfo
+                            {
+                                FilePath = st,
+                                FileName = finame,
+                                FileSize = vv.Length,
+                                FileExtension = vv.Extension
+                            };
+                            if (_VLCfileformats.Keys.Contains<string>(fti.FileExtension.ToUpper()) == true)
+                            {
+                                Context.TagFileInfos.Add(fti);
+                                Context.SaveChanges();
+                                var vc = from hh in Context.TagFileInfos
+                                         where hh.FilePath == st
+                                         select hh;
+                                if (vc.Any())
+                                {
+                                    tflist.Add((vc.First() as TagFileInfo));
+                                }
+                            }
+                        }
+                    }
+                    foreach (TagFileInfo fti in tflist)
+                    {
+                        
+
+                        foreach (TagInfo ti in ffti)
+                        {
+                            // does the file have this tag
+                            var qq = from tftf in Context.TagFileInfoTagInfos
+                                     where tftf.TagInfoId == ti.Id &&
+                                     tftf.TagFileInfoId == fti.Id
+                                     select tftf;
+
+                            // if not add it
+                            if (!qq.Any())
+                            {
+                                var rr = new TagFileInfoTagInfo
+                                {
+                                    TagFileInfoId = fti.Id,
+                                    TagInfoId = ti.Id,
+                                };
+
+                                Context.TagFileInfoTagInfos.Add(rr);
+                                Context.SaveChanges();
+                            }
+                        }
+                    }
+                }
+                Cursor = System.Windows.Input.Cursors.Arrow;
+            }
+            catch (Exception ee)
+            {
+                System.Windows.MessageBox.Show("Error -- The system message was " + ee.Message);
+                Cursor = System.Windows.Input.Cursors.Arrow;
             }
         }
 
@@ -2044,6 +2560,9 @@ namespace VidFileTag
                 string folderName = string.Empty;
                 dlg.RootFolder = Environment.SpecialFolder.Personal;
 
+                dlg.Description = "Select the directory that you want to copy media files with the selected Tags to";
+                dlg.ShowNewFolderButton = true;
+
                 System.Windows.Forms.DialogResult result = dlg.ShowDialog();
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
@@ -2135,10 +2654,6 @@ namespace VidFileTag
                             {
                                 string nope = ee.Message;
                             }
-
-
-
-
                         }
                     }
 
@@ -2165,6 +2680,9 @@ namespace VidFileTag
                 string folderName = string.Empty;
                 dlg.RootFolder = Environment.SpecialFolder.Personal;
 
+                dlg.Description = "Select the directory that you want to move media with the selected Tags to";
+                dlg.ShowNewFolderButton = true;
+
                 System.Windows.Forms.DialogResult result = dlg.ShowDialog();
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
@@ -2175,7 +2693,7 @@ namespace VidFileTag
                     return;
                 }
 
-                // a list for moved files
+              
 
                 List<TagFileInfo> done = new List<TagFileInfo>();
 
@@ -3450,6 +3968,8 @@ namespace VidFileTag
 
                 string folderName = string.Empty;
                 dlg.RootFolder = Environment.SpecialFolder.Personal;
+                dlg.Description = "Select the directory that you want as the root of the media search";
+                dlg.ShowNewFolderButton = false;
 
                 System.Windows.Forms.DialogResult result = dlg.ShowDialog();
                 if (result == System.Windows.Forms.DialogResult.OK)
@@ -3801,10 +4321,17 @@ namespace VidFileTag
                         break;
                 }
             }
+            AnalizeSelectedFile();
+
+            if (mediaInfo.Keys.Contains("Width") && mediaInfo.Keys.Contains("Height"))
+            {
+                MediaSizeTags();
+            }
 
             FileInfoList.Items.Clear();
             foreach (var kk in mediaInfo.Keys)
             {
+
                 string aa = kk + " is " + mediaInfo[kk];
 
                 FileInfoList.Items.Add(aa);
