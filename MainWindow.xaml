@@ -630,7 +630,7 @@
                                             </Button.ToolTip>
                                         </Button>
 
-                                        <Button  BorderThickness="2"
+                                        <Button  BorderThickness="2" x:Name="WriteTagsButton"
                                      Click="WriteTagsTextFile_Click"  Margin="3" Background="Linen" FontSize="13">
                                             <TextBlock Text="Write Tags" FontSize="13" Foreground="Purple">
                                             </TextBlock>
@@ -640,7 +640,7 @@
                                                 </Style>
                                             </Button.Resources>
                                             <Button.ToolTip>
-                                                <TextBlock Text="Write all tags to a text file" Foreground="DarkGreen" FontSize="12" />
+                                                <TextBlock Text="Write all tags in the selected TagSet to a text file" Foreground="DarkGreen" FontSize="12" />
                                             </Button.ToolTip>
                                         </Button>
 

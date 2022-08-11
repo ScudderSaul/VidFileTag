@@ -67,17 +67,34 @@
             </Paragraph>
 
             <Paragraph>
-                <Figure 
-                             
-                               TextAlignment="Left" 
-                                 HorizontalAnchor="ContentLeft">
+                <Figure TextAlignment="Left"   HorizontalAnchor="ContentLeft">
                     <Paragraph Margin="1" >
+                        Colections of Tags in VidFileTag are organised into groups named TagSets.
+                        The VidFileTag program user can create as many TagSets as desired each defining 
+                        a group of Tags for media files. In the TagSet Creation area The selected TagSet is show, 
+                        and Tagsets may be Created, Selected, Deleted or Modified.
+                        
+                    </Paragraph>
+                    <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                        <StackPanel>
+                            <Border BorderBrush="Purple" BorderThickness="2">
+                                <StackPanel>
 
-                        Tags selected in the 'Tag Selection" area may be associated in the database with 
-                                the currently selected file using "Add Tags" or the association may be removed with "Remove Tags"
+                                    <Image x:Name="TagSetAreaImage" MaxWidth="450"
+                                        Visibility="Visible"  Source="TagSetArea.png" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </BlockUIContainer>
+                </Figure>
+            </Paragraph>
+            
+            <Paragraph>
+                <Figure TextAlignment="Left"  HorizontalAnchor="ContentLeft">
+                    <Paragraph Margin="1" >
+                        In the TagSet Creation area The selected Tags are show, 
+                        and Tags may be Created, Selected, Deleted or Modified.
                         <LineBreak/>
-                        Pressing the 'List Files with Tag' button will list all file 
-                                associated with a selected tag.
 
                     </Paragraph>
                     <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
@@ -92,9 +109,9 @@
                         </StackPanel>
                     </BlockUIContainer>
                     <Paragraph  Margin="1">
-                        Type in tag creation and press "Create Tag" to create a tag and add it to the database.
-                                
-                                Select a tag in the 'Tag Selection' list when it is the only selected tag it will show in the 
+                        Type in the Tag Creation box and press "Create Tag in Tagset" to create a tag and add it
+                        to the current selected TagSet.
+                         Select a tag in the 'Tag Selection' list when it is the only selected tag it will show in the 
                                 Tag Operations area and may be deleted using "Delete Tag" or if differing text is input may be 
                                 modified using the "Update Tag" button.
 
@@ -103,25 +120,20 @@
             </Paragraph>
 
             <Paragraph>
-                <Figure 
-                              
-                               TextAlignment="Left" 
-                                 HorizontalAnchor="ContentLeft">
+                <Figure TextAlignment="Left"  HorizontalAnchor="ContentLeft">
                     <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
 
                         <Border BorderBrush="Purple" BorderThickness="2">
                             <StackPanel>
-                              
-                                <Image x:Name="FileListImage"  Margin="3" 
+                               <Image x:Name="FileListImage"  Margin="3" 
                                              Visibility="Visible"  Source="mediaListOne.png" />
                             </StackPanel>
                         </Border>
 
                     </BlockUIContainer>
                     <Paragraph  Margin="1">
-
-                        Files in the current directory are listed in the media file list. 
-                                        Pressing the "Show all Media files" button will show all file.
+                      Files in the current directory are listed in the media file list. 
+                        Pressing the "Show all Media files" button will show all files.
 
                     </Paragraph>
                 </Figure>
@@ -140,7 +152,7 @@
                     </BlockUIContainer>
                     <Paragraph  Margin="1">
                         The list can also filtered using a simple pattern like
-                        <Italic>*text*</Italic>
+                        <Italic>*bach*</Italic>
 
                     </Paragraph>
                 </Figure>
@@ -151,7 +163,6 @@
                     <BlockUIContainer  BorderBrush="Purple" BorderThickness="1">
                         <Border BorderBrush="Purple" BorderThickness="2">
                             <StackPanel>
-                               
                                 <Image x:Name="FileTagImage" Margin="3"
                                                 Visibility="Visible"  Source="TagSearcgFiles1.png" />
                             </StackPanel>
@@ -166,14 +177,11 @@
 
             <Paragraph>
 
-                <Figure   
-                               TextAlignment="Left" 
-                                 HorizontalAnchor="ContentLeft">
+                <Figure  TextAlignment="Left"  HorizontalAnchor="ContentLeft">
                     <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
                         <StackPanel>
                             <Border BorderBrush="Purple" BorderThickness="2">
                                 <StackPanel>
-                                    
                                     <Image x:Name="AfterFileSelect"  Margin="3" 
                                              Visibility="Visible"  Source="AfterMediaSelected.png" />
                                 </StackPanel>
@@ -227,6 +235,71 @@
                             <Border BorderBrush="Purple" BorderThickness="2">
                                 <StackPanel>
                                     <Label Target="{Binding ElementName=PlayListOperationsImage}" BorderBrush="Purple" BorderThickness="1">
+                                        <TextBlock Text="Simple Operations" />
+                                    </Label>
+                                    <Image x:Name="SimpleOperationsImage"  Margin="3" 
+                                             Visibility="Visible"  Source="SimpleOperations.png" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </BlockUIContainer>
+                    <Paragraph  Margin="1">
+                        Simple Operations Tag a media file with the selected Tag or Tags, 
+                        Undo the Tag for the selected Tags on the selected file, or list the media files Tagged with the
+                        selected tags in the curent directory.
+
+                    </Paragraph>
+                </Figure>
+
+
+            </Paragraph>
+
+            <Paragraph>
+                <Figure  TextAlignment="Left"  HorizontalAnchor="ContentLeft">
+                    <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                        <StackPanel>
+                            <Border BorderBrush="Purple" BorderThickness="2">
+                                <StackPanel>
+                                    <Label Target="{Binding ElementName=PlayListOperationsImage}" BorderBrush="Purple" BorderThickness="1">
+                                        <TextBlock Text="Tag Operations" />
+                                    </Label>
+                                    <Image x:Name="TagOperationsImage"  Margin="3" 
+                                             Visibility="Visible"  Source="TagOperations.png" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </BlockUIContainer>
+                    <Paragraph  Margin="1">
+                      Tag Operatons:
+                        <LineBreak/>
+                        --- Tag any media files in the current directory with the selected Tags 
+                        if the Tag name is in the medis file name.
+                        <LineBreak/>
+                        --- Tag any media file is the curent directory with the slected Tags.
+                        <LineBreak/>
+                        --- Tag any media files in the current directory that are identical to media files Tagged 
+                        in other locations with the same Tags used on the other media files.
+                        <LineBreak/>
+                        --- Chose a top directory and Tag any media files in the directorys underneath that 
+                        are identical to the selected file with the same Tags as the
+                        selected file.
+
+                    </Paragraph>
+                </Figure>
+
+
+            </Paragraph>
+
+            <Paragraph>
+
+                <Figure   
+                               TextAlignment="Left" 
+                                 HorizontalAnchor="ContentLeft">
+                    <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
+                        <StackPanel>
+                            <Border BorderBrush="Purple" BorderThickness="2">
+                                <StackPanel>
+                                    <Label Target="{Binding ElementName=PlayListOperationsImage}" BorderBrush="Purple" BorderThickness="1">
                                         <TextBlock Text="Playlist Operations" />
                                     </Label>
                                     <Image x:Name="PlayListOperationsImage"  Margin="3" 
@@ -250,9 +323,7 @@
 
             <Paragraph>
 
-                <Figure   
-                               TextAlignment="Left" 
-                                 HorizontalAnchor="ContentLeft">
+                <Figure  TextAlignment="Left" HorizontalAnchor="ContentLeft">
                     <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
                         <StackPanel>
                             <Border BorderBrush="Purple" BorderThickness="2">
@@ -265,9 +336,9 @@
                         </StackPanel>
                     </BlockUIContainer>
                     <Paragraph  Margin="1">
-                        The source for the media copy or move oOperations is either the curent selected 
-                        directory or else the any media location in the database. The media tagged with selected  tags are the media 
-                        that is copied or moved. 
+                        The source for the media copy or move Operations is either the curent selected 
+                        directory or else the any media location in the database. The media tagged with the selected 
+                        tags are the media files that are copied or moved. 
 
                     </Paragraph>
                 </Figure>
@@ -366,42 +437,7 @@
                                 <Button HorizontalAlignment="Left"
                                    BorderThickness="2" BorderBrush="Purple" 
                                       Margin="3" Background="Linen" FontSize="13">
-                                    <TextBlock Text="Tag files in the currenty directory if the selected tag is in their filename" FontSize="13" Foreground="Purple">
-                                    </TextBlock>
-                                    <Button.Resources>
-                                        <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="5"/>
-                                        </Style>
-                                    </Button.Resources>
-                                </Button>
-                            </BlockUIContainer>
-                        </Figure>
-                        Opens a popup so parts of the tag name or a custom string can be used to search.
-                         Tags media with the part of tag name in the filename. it searches in the current directory
-                        <LineBreak/>
-                        <Figure>
-                            <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
-                                <StackPanel Width="250" HorizontalAlignment="Left">
-                                    <Border BorderBrush="Purple" BorderThickness="2">
-                                        <StackPanel>
-                                            <Label Target="{Binding ElementName=PopUpParts}" BorderBrush="Purple" BorderThickness="1">
-                                                <TextBlock Text="Chose tag name parts" />
-                                            </Label>
-                                            <Image x:Name="PopUpParts"  Margin="3" 
-                                             Visibility="Visible"  Source="PopUpParts.png" />
-                                        </StackPanel>
-                                    </Border>
-                                </StackPanel>
-                            </BlockUIContainer>
-                        </Figure>
-                        <LineBreak/>
-                       
-                        <Figure>
-                            <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
-                                <Button HorizontalAlignment="Left"
-                                   BorderThickness="2" BorderBrush="Purple" 
-                                      Margin="3" Background="Linen" FontSize="13">
-                                    <TextBlock Text="Tag any files in the current directory identical to files already tagged with those tags" FontSize="13" Foreground="Purple">
+                                    <TextBlock Text="About VidFileTag" FontSize="13" Foreground="Purple">
                                     </TextBlock>
                                     <Button.Resources>
                                         <Style TargetType="Border">
@@ -412,25 +448,9 @@
                             </BlockUIContainer>
                         </Figure>
                        
-                        Tags any files located in the current directory if identical copies of the files were tagged elsewhere.
+                        Opens or Closes a page About VidFileTag
                         <LineBreak/>
-                        <Figure>
-                            <BlockUIContainer BorderBrush="Purple" BorderThickness="1">
-                                <Button HorizontalAlignment="Left"
-                                   BorderThickness="2" BorderBrush="Purple" 
-                                      Margin="3" Background="Linen" FontSize="13">
-                                    <TextBlock Text="Find files identical to the selected file and give them the same tags" FontSize="13" Foreground="Purple">
-                                    </TextBlock>
-                                    <Button.Resources>
-                                        <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="5"/>
-                                        </Style>
-                                    </Button.Resources>
-                                </Button>
-                            </BlockUIContainer>
-                        </Figure>
-                        
-                        Any files identical to the current selected file below a chosen directory are tagged with the same tags
+                       
                     </Paragraph>
                 </Figure>
 

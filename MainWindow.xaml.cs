@@ -3831,14 +3831,32 @@ namespace VidFileTag
 
                     using (StreamWriter outputFile = new StreamWriter(fileName, false))
                     {
-                        var cc = from nn in Context.TagInfos
-                                 select nn;
-                        if (cc.Any())
+                        var gtsi = from it in Context.TagSetInfos where
+                                    it.TagSet == LastTagSet
+                                   select it;
+                        if(gtsi.Any())
                         {
-                            foreach (TagInfo ti in cc)
+                            TagSetInfo tsi = gtsi.First();
+                            var ww = from rr in Context.TagInfoTagSetInfos
+                                     where rr.TagSetInfoId == tsi.Id
+                                     select rr;
+                            if(ww.Any())
                             {
-                                outputFile.WriteLine(ti.Tag);
+                                foreach(TagInfoTagSetInfo titsi in ww)
+                                {
+                                    var cc = from uu in Context.TagInfos
+                                             where uu.Id == titsi.TagInfoId
+                                             select uu;
+                                    if (cc.Any())
+                                    {
+                                        foreach (TagInfo ti in cc)
+                                        {
+                                            outputFile.WriteLine(ti.Tag);
+                                        }
+                                    }
+                                }
                             }
+
                         }
                     }
                 }

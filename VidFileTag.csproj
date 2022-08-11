@@ -25,7 +25,10 @@
     <None Remove="OtherOperations.png" />
     <None Remove="PlayListoperations.png" />
     <None Remove="PopUpParts.png" />
+    <None Remove="SimpleOperations.png" />
+    <None Remove="TagOperations.png" />
     <None Remove="TagSearcgFiles1.png" />
+    <None Remove="TagSetArea.png" />
     <None Remove="vidieoshed.png" />
     <None Remove="WildCardfILES7.png" />
   </ItemGroup>
@@ -63,7 +66,16 @@
     <Content Include="PopUpParts.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="SimpleOperations.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TagOperations.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TagSearcgFiles1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TagSetArea.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="vidieoshed.png">
