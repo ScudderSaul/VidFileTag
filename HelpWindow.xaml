@@ -21,12 +21,12 @@
                 <LineBreak/>
             </Paragraph>
             <Paragraph>
-                VidFileTag is a program that is used to add tags to media files of many kinds, images, music, and vidieo. 
-                    It maintains all tag information in a local own database and never modifies media files.
+                VidFileTag is a program that is used to add tags to media files of many kinds, images, music, and video. 
+                    It maintains all tag information in a local database and never modifies media files.
                     Operations like copying all files tagged with a particualar tag to a location, or 
                     saving a playlist of files with a selected set of tags are available. 
-                    Tagging copies of files tagged in another location is another job the VidFileTag cam perform.
-                    VidFileTag has a media player to allow viewing or listining to media file to help chose tags.
+                    Tagging copies of files tagged in another location is another job the VidFileTag performs.
+                    VidFileTag has a media player to allow viewing or listening to media file to help chose tags.
                     The VideoLan.LibVLC.Windows media library is used.
 
             </Paragraph>
@@ -53,7 +53,7 @@
                         <Run>
                             To Set the current directory location use three controls, 
                                         the "disk drive selector" to choose a disk drive,
-                                        , a mouse "click on a child directory" in the list of child directorys to move to that child. 
+                                        a mouse "click on a child directory" in the list of child directories to move to that child. 
                                         and the "up arrow" to move to the parent of the current directory.
                         </Run>
                         <LineBreak/>
@@ -69,7 +69,7 @@
             <Paragraph>
                 <Figure TextAlignment="Left"   HorizontalAnchor="ContentLeft">
                     <Paragraph Margin="1" >
-                        Colections of Tags in VidFileTag are organised into groups named TagSets.
+                        Collections of Tags in VidFileTag are organized into groups named TagSets.
                         The VidFileTag program user can create as many TagSets as desired each defining 
                         a group of Tags for media files. In the TagSet Creation area The selected TagSet is show, 
                         and Tagsets may be Created, Selected, Deleted or Modified.
@@ -190,8 +190,8 @@
                     </BlockUIContainer>
                     <Paragraph  Margin="1">
                         When a file is selected in the file list The file names is displayed in the Selected file box and any 
-                            tags in the database for that file instance are shown also. If the file is a media file media 
-                            information is displayed in the File information area.
+                            tags in the database for that file instance are shown. If the file is a media file, media 
+                            information is displayed in the File Information area.
 
                     </Paragraph>
                 </Figure>
@@ -246,7 +246,7 @@
                     <Paragraph  Margin="1">
                         Simple Operations Tag a media file with the selected Tag or Tags, 
                         Undo the Tag for the selected Tags on the selected file, or list the media files Tagged with the
-                        selected tags in the curent directory.
+                        selected tags in the current directory.
 
                     </Paragraph>
                 </Figure>
@@ -273,14 +273,14 @@
                       Tag Operatons:
                         <LineBreak/>
                         --- Tag any media files in the current directory with the selected Tags 
-                        if the Tag name is in the medis file name.
+                        if the Tag name is in the media file name.
                         <LineBreak/>
-                        --- Tag any media file is the curent directory with the slected Tags.
+                        --- Tag any media file is the current directory with the selected Tags.
                         <LineBreak/>
                         --- Tag any media files in the current directory that are identical to media files Tagged 
                         in other locations with the same Tags used on the other media files.
                         <LineBreak/>
-                        --- Chose a top directory and Tag any media files in the directorys underneath that 
+                        --- Chose a top directory and Tag any media files in the directories underneath that 
                         are identical to the selected file with the same Tags as the
                         selected file.
 
@@ -309,7 +309,7 @@
                         </StackPanel>
                     </BlockUIContainer>
                     <Paragraph  Margin="1">
-                       The source for the media listed in a playlist is either the curent selected 
+                       The source for the media listed in a playlist is either the current selected 
                         directory or the entire database. The current selected tags determine the media 
                         that is chosen for the playlist, media tagged with any of the selected tags, 
                         media tagged with all of the selected tags, and media tagged with only a single 
@@ -336,7 +336,7 @@
                         </StackPanel>
                     </BlockUIContainer>
                     <Paragraph  Margin="1">
-                        The source for the media copy or move Operations is either the curent selected 
+                        The source for the media copy or move Operations is either the current selected 
                         directory or else the any media location in the database. The media tagged with the selected 
                         tags are the media files that are copied or moved. 
 
@@ -381,7 +381,7 @@
                                 </Button>
                             </BlockUIContainer>
                         </Figure>
-                        Reads a comma deliomited list of tags names from a 
+                        Reads a comma delimited list of tags names from a 
                         text file and inserts them into the existing tags.
                         Existing tags are unchanged.
                         <LineBreak/>
@@ -411,8 +411,8 @@
                                 </Button>
                             </BlockUIContainer>
                         </Figure>
-                        
-                        Writes a comma deliomited list of tags names to a text file.
+
+                        Writes a comma delimited list of tags names to a text file.
                        
                         <Figure>
                             <BlockUIContainer BorderBrush="Purple" BorderThickness="1">

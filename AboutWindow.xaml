@@ -15,7 +15,7 @@
                                VerticalAlignment="Top" x:Name="HelpClose" Click="AboutClose_Click" />
             </BlockUIContainer>
             <Paragraph>
-                <Bold>VidFileTag</Bold> is a tool to help maintain media colections using tags describing media files 
+                <Bold>VidFileTag</Bold> is a tool to help maintain media collections using tags describing media files 
                 that are kept in a sqlite database. The media files themselves are never modified. 
                 It's helpful in organizing collections of media and in creating media playlists by actor, 
                 location, or reminder  

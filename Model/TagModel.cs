@@ -40,20 +40,23 @@ namespace VidFileTag.Model
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if(Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + $"\\VidFileTag") == false)
+
+            // would need admin setup
+            //if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + $"\\VidFileTag") == false)
+            //{
+            //    Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + $"\\VidFileTag");
+            //}
+
+            //string apath = "Filename=" + Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + $"\\VidFileTag\\dbVidFileTag.db";
+
+
+            if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + $"\\VidFileTag") == false)
             {
                 Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + $"\\VidFileTag");
             }
-            string apath = "Filename=" + Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + $"\\VidFileTag\\dbFileTag.db";
+            string apath = "Filename=" + Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + $"\\VidFileTag\\dbVidFileTag.db";
             optionsBuilder.UseSqlite(apath);
-         //   optionsBuilder.UseSqlite("Filename=dbFileTag.db");
-
-         //   string apath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData
-
         }
-
-
-
     }
 
 }
