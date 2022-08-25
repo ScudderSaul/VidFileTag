@@ -18,9 +18,9 @@
                 <Bold>VidFileTag</Bold> is a tool to help maintain media collections using tags describing media files 
                 that are kept in a sqlite database. The media files themselves are never modified. 
                 It's helpful in organizing collections of media and in creating media playlists by actor, 
-                location, or reminder  
+                location, or reminder.  
                 
-                VidFileTag provide a media player using VideoLAN's LibVLC to play media to make adding tags simple.
+                VidFileTag provides a media player using VideoLAN's LibVLC to play media to help when choosing tags.
 
             </Paragraph>
             <Paragraph FontSize="13" Foreground="Purple">
