@@ -77,16 +77,22 @@ namespace VidFileTag
             ReadTags();         // read tags from database
             AddMediaInfoTagSet();
 
+            ShowFileButton.Content = "Show \u25b6";
+            PauseFileButton.Content = "Pause \u23F8";
+            StopFileButton.Content = "Stop \u23F9";
+
+            _libVLC = new LibVLC();    // lib vlc
+
             Closing +=MainWindow_Closing;
 
         }
 
         private void MainWindow_Closing(object? sender, CancelEventArgs e)
         {
-            if (cntrlWindow != null)
-            {
-                cntrlWindow.Close();
-            }
+            //if (cntrlWindow != null)
+            //{
+            //    cntrlWindow.Close();
+            //}
             if (helpWindow != null)
             {
                 helpWindow.Close();
@@ -94,6 +100,14 @@ namespace VidFileTag
             if (_aboutWindow != null)
             {
                 _aboutWindow.Close();
+            }
+            if (MediaPlayer != null)
+            {
+                MediaPlayer.Stop();
+            }
+            if (Vid != null)
+            {
+                Vid.Close();
             }
         }
 
@@ -383,6 +397,54 @@ namespace VidFileTag
         {
             get => _mediaPlayer;
             private set => Set(nameof(MediaPlayer), ref _mediaPlayer, value);
+        }
+
+        string _filePath = string.Empty;
+    //    private LibVLC _libVLC;
+     //   private LibVLCSharp.Shared.MediaPlayer _mediaPlayer;
+
+
+        private float _positionSlider_value;
+
+        bool MediaAdvanced = false;
+        private VidWindow vid;
+        private LibVLCSharp.Shared.MediaPlayer mediaPlayer;
+
+        private VidWindow Vid { get => vid; set => vid = value; }
+
+        public string FilePath
+        {
+            get
+            {
+                return _filePath;
+            }
+            set
+            {
+                _filePath = value;
+                Title = _filePath;
+                ShowFileButton.IsEnabled = true;
+                PauseFileButton.IsEnabled = true;
+                StopFileButton.IsEnabled = true;
+            }
+        }
+
+        //public LibVLC LibVLC
+        //{
+        //    get => _libVLC;
+        //    private set => Set(nameof(LibVLC), ref _libVLC, value);
+        //}
+
+        public float PositionSlider_Value
+        {
+            get
+            {
+                return _positionSlider_value;
+            }
+            set
+            {
+                _positionSlider_value = value;
+                OnPropertyChanged("PositionSlider_Value");
+            }
         }
 
 
@@ -919,14 +981,16 @@ namespace VidFileTag
 
                     if (_VLCfileformats.Keys.Contains<string>(SelectedFileInfo.FileExtension.ToUpper()) == true)
                     {
-                        Cntrl.FilePath = SelectedFileInfo.FilePath;
-                        Cntrl.Show();
+                        FilePath = SelectedFileInfo.FilePath;
+                       
                         FillMediaInfo(SelectedFileInfo.FilePath);
                     }
                     else
                     {
-                        Cntrl.Hide();
+                        FilePath = string.Empty;
+                        
                     }
+
 
                     //  ShowFileButton.IsEnabled = true;
                     //  PauseFileButton.IsEnabled = true;
@@ -937,7 +1001,7 @@ namespace VidFileTag
                 else
                 {
 
-                    Cntrl.Hide();
+                    //Cntrl.Hide();
                     //    ShowFileButton.IsEnabled = false;
                     //     PauseFileButton.IsEnabled = false;
                     //    StopFileButton.IsEnabled = false;
@@ -2184,25 +2248,25 @@ namespace VidFileTag
         //   VidWindow vid { get; set; }
 
 
-        private CntrlWindow cntrlWindow;
-        private CntrlWindow Cntrl
-        {
-            get
-            {
-                if (cntrlWindow == null)
-                {
-                    cntrlWindow = new CntrlWindow();
-                    cntrlWindow.Closing += Cntrl_Closing;
-                }
-                return cntrlWindow;
-            }
-        }
+        //private CntrlWindow cntrlWindow;
+        //private CntrlWindow Cntrl
+        //{
+        //    get
+        //    {
+        //        if (cntrlWindow == null)
+        //        {
+        //            cntrlWindow = new CntrlWindow();
+        //            cntrlWindow.Closing += Cntrl_Closing;
+        //        }
+        //        return cntrlWindow;
+        //    }
+        //}
 
-        private void Cntrl_Closing(object sender, CancelEventArgs e)
-        {
-            cntrlWindow = null;
-            e.Cancel = false;
-        }
+        //private void Cntrl_Closing(object sender, CancelEventArgs e)
+        //{
+        //    cntrlWindow = null;
+        //    e.Cancel = false;
+        //}
 
         private HelpWindow helpWindow;
 
@@ -3268,6 +3332,145 @@ namespace VidFileTag
 
         #endregion
 
+
+        #region Vid cntrol
+
+        private void ShowFileButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            //   if (_VLCfileformats.Keys.Contains<string>(SelectedFileInfo.FileExtension.ToUpper()) == true)
+            if (string.IsNullOrWhiteSpace(FilePath) == false)
+            {
+                if (Vid is null)
+                {
+                    Vid = new VidWindow();
+                    Vid.Closing += Vid_Closing;
+                }
+                else
+                {
+                    Vid.Show();
+                }
+
+                var media = new LibVLCSharp.Shared.Media(LibVLC, FilePath);
+
+
+
+
+                string titl = media.Meta(MetadataType.Title);
+
+
+                if (MediaPlayer != null)
+                {
+                    MediaPlayer.Stop();
+                }
+
+
+
+                MediaPlayer = new LibVLCSharp.Shared.MediaPlayer(media) { EnableHardwareDecoding = true };
+
+                Vid.RunMedia(MediaPlayer, FilePath);
+
+                //  MediaPlayer = OtherView.MediaPlayer;
+
+                MediaPlayer.PositionChanged += MediaPlayer_PositionChanged;
+
+                MediaPlayer.Play();
+
+                MediaPlayer.EnableKeyInput = true;
+
+                PositionSlider.IsEnabled = true;
+                PositionSlider.Value = MediaPlayer.Position; // (float)0.0;
+
+                VolumeSlider.IsEnabled = true;
+                VolumeSlider.Value = MediaPlayer.Volume;
+
+            }
+
+        }
+
+        private void Vid_Closing(object sender, CancelEventArgs e)
+        {
+            MediaPlayer.Stop();
+            Vid = null;
+        }
+
+    //    LibVLCSharp.Shared.MediaPlayer MediaPlayer { get => mediaPlayer; set => mediaPlayer = value; }
+
+        private void MediaPlayer_PositionChanged(object sender, MediaPlayerPositionChangedEventArgs e)
+        {
+            MediaAdvanced = true;
+
+
+            OnPositionSlider_ValueChanged(sender, e.Position);
+        }
+
+        private void PositionSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (MediaAdvanced == true)
+            {
+                MediaAdvanced = false;
+                InvalidateArrange();
+                InvalidateVisual();
+                return;
+            }
+
+
+            if (MediaPlayer != null && MediaPlayer.IsPlaying)
+            {
+                double dd = PositionSlider.Value;
+                MediaPlayer.Position = (float)dd;
+            }
+        }
+
+        void OnPositionSlider_ValueChanged(object it, float ff)
+        {
+            try
+            {
+                MediaAdvanced = true;
+                PositionSlider_Value = ff;
+            }
+            catch (Exception e)
+            {
+                string rr = e.Message;
+            }
+        }
+
+        private void PauseFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MediaPlayer != null)
+            {
+                MediaPlayer.Pause();
+            }
+
+        }
+
+        private void StopFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MediaPlayer != null)
+            {
+                MediaPlayer.Stop();
+                Vid.Hide();
+            }
+        }
+
+        private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (MediaPlayer != null && MediaPlayer.IsPlaying)
+            {
+                double dd = VolumeSlider.Value;
+                MediaPlayer.Volume = (int)dd;
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MediaPlayer.Stop();
+            vid.Close();
+            Vid = null;
+            this.Hide();
+        }
+
+        #endregion
 
         private void ResetpathsButton_Click(object sender, RoutedEventArgs e)
         {

@@ -18,9 +18,6 @@
     </Window.Resources>
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
         <StackPanel>
-
-
-
             <Grid x:Name="DirectoryGrid" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="45*" ></ColumnDefinition>
@@ -644,29 +641,9 @@
                                             </Button.ToolTip>
                                         </Button>
 
-                                        <Button  BorderThickness="2" x:Name="HelpButton"
-                                  Click="HelpButton_Click" 
-                                 Margin="3" Background="Linen" FontSize="13">
-                                            <TextBlock Text="Show/Close help" FontSize="13" Foreground="Purple">
-                                            </TextBlock>
-                                            <Button.Resources>
-                                                <Style TargetType="Border">
-                                                    <Setter Property="CornerRadius" Value="5"/>
-                                                </Style>
-                                            </Button.Resources>
-                                        </Button>
+                                        
 
-                                        <Button  BorderThickness="2" x:Name="AboutButton"
-                                  Click="AboutButton_Click" 
-                                 Margin="3" Background="Linen" FontSize="13">
-                                            <TextBlock Text="About VidFileTag" FontSize="13" Foreground="Purple">
-                                            </TextBlock>
-                                            <Button.Resources>
-                                                <Style TargetType="Border">
-                                                    <Setter Property="CornerRadius" Value="5"/>
-                                                </Style>
-                                            </Button.Resources>
-                                        </Button>
+                                       
 
                                        
 
@@ -722,6 +699,139 @@
 
 
 
+                            </Expander>
+                            <Expander x:Name="PlayExpander" BorderThickness="3" Margin="1,2,2,1" HorizontalAlignment="Left"
+                                      BorderBrush="BlueViolet">
+                                <Expander.Header>
+                                    <TextBlock Text="Play"  FontWeight="DemiBold"  /> 
+                                </Expander.Header>
+                               
+                                    <StackPanel Orientation="Vertical" Margin="0,0,0,0">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button Content="Show" x:Name="ShowFileButton"  Width="91" FontSize="14" FontWeight="ExtraBlack"
+                                    HorizontalAlignment="Left" IsEnabled="False" Background="WhiteSmoke" BorderThickness="3" BorderBrush="DarkGray" 
+                                    Click="ShowFileButton_Click"  Margin="2">
+                                                <Button.Resources>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="CornerRadius" Value="5"/>
+                                                    </Style>
+                                                </Button.Resources>
+                                                <Button.ToolTip>
+                                                    <TextBlock Text="Play the selected file if it is a video or music, show it if it is an image." Foreground="DarkGreen" FontSize="12" />
+                                                </Button.ToolTip>
+                                            </Button>
+                                            <Button Content="Pause" x:Name="PauseFileButton"  Width="91" FontSize="14" FontWeight="Heavy"
+                                    HorizontalAlignment="Left" IsEnabled="False" Background="WhiteSmoke" BorderThickness="3" BorderBrush="DarkGray"
+                                    Click="PauseFileButton_Click"  Margin="2">
+                                                <Button.Resources>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="CornerRadius" Value="5"/>
+                                                    </Style>
+                                                </Button.Resources>
+                                                <Button.ToolTip>
+                                                    <TextBlock Text="Pause display of the selected file." Foreground="DarkGreen" FontSize="12" />
+                                                </Button.ToolTip>
+                                            </Button>
+                                            <Button Content="Stop Play" x:Name="StopFileButton"  Width="91" FontSize="14" FontWeight="Heavy"
+                                    HorizontalAlignment="Left" IsEnabled="False" Background="WhiteSmoke" BorderThickness="3" BorderBrush="DarkGray"
+                                    Click="StopFileButton_Click"  Margin="2">
+                                                <Button.Resources>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="CornerRadius" Value="5"/>
+                                                    </Style>
+                                                </Button.Resources>
+                                                <Button.ToolTip>
+                                                    <TextBlock Text="Stop" Foreground="DarkGreen" FontSize="12" />
+                                                </Button.ToolTip>
+                                            </Button>
+
+                                        </StackPanel>
+                                        <GroupBox x:Name="PositionWrapper" BorderBrush="Black" BorderThickness="2" Width="294">
+                                            <GroupBox.Header>
+                                                <TextBlock Text="Position" FontSize="12" FontWeight="Heavy"/>
+                                            </GroupBox.Header>
+                                            <Slider Name="PositionSlider"
+                            ValueChanged="PositionSlider_ValueChanged"
+                            Value= "{Binding PositionSlider_Value, Mode=TwoWay}"                                       
+                            HorizontalAlignment="Left" 
+                            Maximum="1.0" Minimum="0.0" 
+                            IsEnabled="False"
+                            Background="WhiteSmoke"                                         
+                            FontWeight="Heavy" 
+                            FontSize="14" 
+                            Foreground="Black"                                        
+                            Orientation="Horizontal"
+                            Height="30" BorderBrush="Transparent"  
+                            BorderThickness="3"
+                            Width="280" 
+                            TickFrequency=".2"
+                            Margin="6" >
+                                                <Slider.ToolTip>
+                                                    <TextBlock Text="Position in file" FontSize="12" Foreground="DarkGreen" Margin="2" />
+                                                </Slider.ToolTip>
+                                            </Slider>
+                                        </GroupBox>
+                                        <GroupBox x:Name="VolumeWrapper" BorderBrush="Black" BorderThickness="2" Width="294">
+                                            <GroupBox.Header>
+                                                <TextBlock Text="Volume" FontSize="12" FontWeight="Heavy"/>
+                                            </GroupBox.Header>
+                                            <Slider x:Name="VolumeSlider" 
+                            HorizontalAlignment="Left" 
+                            Background="WhiteSmoke" 
+                            Foreground="Black"
+                            ValueChanged="VolumeSlider_ValueChanged"
+                            Maximum="100.0" 
+                            Minimum="0.0" 
+                            Value="0.0" 
+                            IsEnabled="False" 
+                            FontWeight="Heavy"
+                            FontSize="14"
+                            Orientation="Horizontal" 
+                            Height="32" 
+                            BorderBrush="Transparent" 
+                            BorderThickness="2"
+                            Width="280" 
+                            TickFrequency="20.0"
+                            Margin="6" >
+                                                <Slider.ToolTip>
+                                                    <TextBlock Text="Volume as % of system" FontSize="12" Foreground="DarkGreen" Margin="2" />
+                                                </Slider.ToolTip>
+                                            </Slider>
+                                        </GroupBox>
+
+                                    </StackPanel>
+                               
+
+                            </Expander>
+                            <Expander  x:Name="HelpExpander" BorderThickness="3" Margin="1,2,2,1" HorizontalAlignment="Left"
+                                       BorderBrush="BlueViolet">
+                                <Expander.Header>
+                                    <TextBlock Text="Help"></TextBlock>
+                                </Expander.Header>
+                                   <StackPanel Orientation="Horizontal">
+                                       <Button  BorderThickness="2" x:Name="HelpButton"
+                                                Click="HelpButton_Click" 
+                                                Margin="3" Background="Linen" FontSize="13">
+                                           <TextBlock Text="Show/Close help" FontSize="13" Foreground="Purple">
+                                           </TextBlock>
+                                           <Button.Resources>
+                                               <Style TargetType="Border">
+                                                   <Setter Property="CornerRadius" Value="5"/>
+                                               </Style>
+                                           </Button.Resources>
+                                       </Button>
+                                       <Button  BorderThickness="2" x:Name="AboutButton"
+                                                Click="AboutButton_Click" 
+                                                Margin="3" Background="Linen" FontSize="13">
+                                           <TextBlock Text="About VidFileTag" FontSize="13" Foreground="Purple">
+                                           </TextBlock>
+                                           <Button.Resources>
+                                               <Style TargetType="Border">
+                                                   <Setter Property="CornerRadius" Value="5"/>
+                                               </Style>
+                                           </Button.Resources>
+                                       </Button>
+                                </StackPanel>
                             </Expander>
                         </StackPanel>
                     </GroupBox>
@@ -965,8 +1075,6 @@
                     </StackPanel>
                 </Grid>
             </Grid>
-
-
 
 
             <Popup IsOpen="False" x:Name="LocationChangePopup" PlacementTarget="{Binding ElementName=Back}" Width="600" Placement="Top" Margin="5" 
