@@ -1,5 +1,5 @@
 # VidFileTag
-A video file Tagging application
+File Tagging for media files application
 
 VidFileTag is a program that is used to add tags to a database describing media files of many kinds, images, music, and video. 
 It maintains all tag information in a local database and never modifies the media files. 
