@@ -3353,9 +3353,6 @@ namespace VidFileTag
 
                 var media = new LibVLCSharp.Shared.Media(LibVLC, FilePath);
 
-
-
-
                 string titl = media.Meta(MetadataType.Title);
 
 
@@ -3370,11 +3367,36 @@ namespace VidFileTag
 
                 Vid.RunMedia(MediaPlayer, FilePath);
 
+               
+
                 //  MediaPlayer = OtherView.MediaPlayer;
 
                 MediaPlayer.PositionChanged += MediaPlayer_PositionChanged;
 
                 MediaPlayer.Play();
+
+                int sn;
+                int.TryParse(SnapInterval.Text, out sn);
+
+                if (SnapCheckBox.IsChecked == true)
+                {
+                    SnapTimer = new System.Timers.Timer(sn * 1000);
+                    // set the timer event handler
+                    SnapTimer.Elapsed += (sender, e) =>
+                    {
+                        // get the current video time
+                        var time = MediaPlayer.Time;
+                        // create a file name based on the time
+                        var fileName = $"image_{time}.png";
+                        // create a file path based on the file name
+                        var filePath = SnapFolder + "\\" + fileName;
+                        // take a snapshot of the video and save it to the file path
+                        MediaPlayer.TakeSnapshot(0, filePath, 0, 0);
+                    };
+
+
+                    SnapTimer.Start();
+                }
 
                 MediaPlayer.EnableKeyInput = true;
 
@@ -3390,6 +3412,13 @@ namespace VidFileTag
 
         private void Vid_Closing(object sender, CancelEventArgs e)
         {
+
+           
+            if (SnapTimer != null)
+            {
+                SnapTimer.Stop();
+                SnapTimer.Dispose();
+            }
             MediaPlayer.Stop();
             Vid = null;
         }
@@ -3439,6 +3468,8 @@ namespace VidFileTag
         {
             if (MediaPlayer != null)
             {
+                SnapTimer.Stop();
+              //  SnapCheckBox_OnUnchecked(sender, e);
                 MediaPlayer.Pause();
             }
 
@@ -3446,6 +3477,12 @@ namespace VidFileTag
 
         private void StopFileButton_Click(object sender, RoutedEventArgs e)
         {
+
+            if (SnapTimer != null)
+            {
+                SnapTimer.Stop();
+                SnapTimer.Dispose();
+            }
             if (MediaPlayer != null)
             {
                 MediaPlayer.Stop();
@@ -3464,6 +3501,12 @@ namespace VidFileTag
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+
+            if (SnapTimer != null)
+            {
+                SnapTimer.Stop();
+                SnapTimer.Dispose();
+            }
             MediaPlayer.Stop();
             vid.Close();
             Vid = null;
@@ -5006,5 +5049,49 @@ namespace VidFileTag
 
         #endregion
 
+        System.Timers.Timer SnapTimer = null;
+
+
+
+        private void SnapCheckBox_OnChecked(object sender, RoutedEventArgs e)
+        {
+            SnapOnOff.Text="On";
+            if (string.IsNullOrEmpty(SnapInterval.Text))
+            {
+                SnapInterval.Text = "10";
+            }
+
+            int vv;
+            if (int.TryParse(SnapInterval.Text, out vv) == false)
+            {
+                SnapInterval.Text = "10";
+            }
+
+            if (vv < 3)
+            {
+                SnapInterval.Text = "3";
+            }
+
+          
+        }
+
+        private void SnapCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+            SnapOnOff.Text="Off";
+        }
+
+        string SnapFolder =  @"C:\\Users\Public\Pictures";
+
+        // opens a folder browser dialog to select the snapshot folder aves the path in SnapFolder
+        private void SetSnapShotPathButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                SnapFolder = dialog.SelectedPath;
+                SnapShotPath.Text = SnapFolder;
+            }
+        }
     }
 }
