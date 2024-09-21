@@ -1,21 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>True</UseWindowsForms>
-	<ApplicationIcon>FileTag128.ico</ApplicationIcon>
+    <ApplicationIcon>FileTag128.ico</ApplicationIcon>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="CntrlWindow.xaml.cs" />
     <Compile Remove="MediaInfo.cs" />
     <Compile Remove="SearchInFilename.xaml.cs" />
     <Compile Remove="ShowMediaInfo.xaml.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <None Remove="AfterMediaSelected.png" />
     <None Remove="BasicTagOperations.png" />
@@ -33,13 +30,11 @@
     <None Remove="vidieoshed.png" />
     <None Remove="WildCardfILES7.png" />
   </ItemGroup>
-
   <ItemGroup>
     <Page Remove="CntrlWindow.xaml" />
     <Page Remove="SearchInFilename.xaml" />
     <Page Remove="ShowMediaInfo.xaml" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="AfterMediaSelected.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -87,17 +82,13 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="CRC.Fast.Net" Version="1.1.0" />
-    <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="LibVLCSharp" Version="3.6.7" />
     <PackageReference Include="LibVLCSharp.WPF" Version="3.6.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.2" />
-    <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.8" />
     <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.18" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -105,12 +96,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-
 </Project>
