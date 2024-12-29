@@ -14,8 +14,7 @@ namespace VidFileTag.Model
         [Key]
         public int Id { get; set; }
 
-         [Required]
-        public bool IsSelected { get; set; }
+    
 
         [Required]
         [MaxLength(40, ErrorMessage = "The Tag length cannot exceed 40 characters. ")]
